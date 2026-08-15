@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>56 Blossoms — Ethnic Groups of China</title>
+    <title>56 Blossoms — Interactive Mandala</title>
     <style>
-        /* ===== 56 Blossoms - Flower Mandala Theme ===== */
+        /* =============================================
+                   GREEN/JADE THEME + MANDALA STYLES
+                   ============================================= */
         :root {
-            --blossom-red: #C5283D;
-            --gold-petal: #F5A623;
-            --soft-pink: #F8D7DA;
-            --cream-base: #FFF8F0;
-            --earth-brown: #8B6B4A;
-            --mandala-gradient: linear-gradient(135deg, #C5283D, #F5A623, #E87A5D, #C5283D);
-            --text-dark: #2C1810;
-            --card-shadow: 0 8px 25px rgba(197, 40, 61, 0.15);
+            --jade-dark: #1A3C2A;
+            --jade-bright: #2D8A4E;
+            --jade-light: #74C69D;
+            --jade-pale: #D8F3DC;
+            --gold-accent: #C9A96E;
+            --cream-base: #F4FAF5;
+            --earth-brown: #5C6B4B;
+            --mandala-gradient: linear-gradient(135deg, #1A3C2A, #2D6A4F, #40916C, #74C69D);
+            --text-dark: #1A2E1A;
+            --card-shadow: 0 8px 25px rgba(26, 60, 42, 0.15);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--cream-base);
@@ -25,7 +33,7 @@
         }
         header {
             background: var(--mandala-gradient);
-            padding: 2.5rem 1.5rem 2rem;
+            padding: 2rem 1.5rem 1.5rem;
             text-align: center;
             color: white;
             position: relative;
@@ -34,8 +42,8 @@
         header::before {
             content: "🌸";
             position: absolute;
-            font-size: 12rem;
-            right: -3rem;
+            font-size: 10rem;
+            right: -2rem;
             top: -3rem;
             opacity: 0.08;
             transform: rotate(15deg);
@@ -44,38 +52,57 @@
             font-size: 2.8rem;
             font-weight: 800;
             letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            position: relative;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
         header p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.95;
-            margin-top: 0.3rem;
             font-weight: 300;
-            letter-spacing: 1px;
         }
         .stats-bar {
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            padding: 1.2rem;
-            background: rgba(197, 40, 61, 0.05);
-            border-bottom: 2px solid var(--gold-petal);
+            align-items: center;
+            gap: 2rem;
+            padding: 0.8rem 1rem;
+            background: rgba(26, 60, 42, 0.05);
+            border-bottom: 2px solid var(--jade-bright);
             flex-wrap: wrap;
         }
-        .stats-bar span { font-size: 0.95rem; font-weight: 500; }
-        .stats-bar strong { color: var(--blossom-red); font-size: 1.2rem; }
+        .stats-bar span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .stats-bar strong {
+            color: var(--jade-dark);
+            font-size: 1.1rem;
+        }
+        .toggle-btn {
+            background: var(--jade-dark);
+            color: white;
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .toggle-btn:hover {
+            background: var(--jade-bright);
+            transform: scale(1.05);
+        }
         .search-wrapper {
             display: flex;
             justify-content: center;
-            padding: 1.5rem 1rem;
+            padding: 1rem;
             background: white;
             border-bottom: 1px solid #eee;
         }
         #searchInput {
-            padding: 0.8rem 1.5rem;
+            padding: 0.6rem 1.5rem;
             width: 100%;
-            max-width: 500px;
+            max-width: 400px;
             border: 2px solid #eee;
             border-radius: 50px;
             font-size: 1rem;
@@ -84,13 +111,18 @@
             background: var(--cream-base);
         }
         #searchInput:focus {
-            border-color: var(--gold-petal);
-            box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.2);
+            border-color: var(--jade-bright);
+            box-shadow: 0 0 0 4px rgba(45, 138, 78, 0.2);
+        }
+
+        /* --- Grid View (Cards) --- */
+        #gridView {
+            display: block;
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.5rem;
             padding: 2rem;
             max-width: 1400px;
             margin: 0 auto;
@@ -98,55 +130,93 @@
         .card {
             background: white;
             border-radius: 20px;
-            padding: 1.5rem 1.2rem;
+            padding: 1.2rem 1rem;
             box-shadow: var(--card-shadow);
             cursor: pointer;
             transition: all 0.3s ease;
-            border-left: 5px solid var(--gold-petal);
-            position: relative;
-            overflow: hidden;
-        }
-        .card::after {
-            content: "";
-            position: absolute;
-            top: -30%;
-            right: -30%;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(245, 166, 35, 0.05), transparent);
-            transition: 0.5s;
-            pointer-events: none;
+            border-left: 5px solid var(--jade-bright);
         }
         .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 40px rgba(197, 40, 61, 0.2);
-            border-left-color: var(--blossom-red);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(26, 60, 42, 0.2);
+            border-left-color: var(--gold-accent);
         }
-        .card:hover::after { transform: scale(2); opacity: 0.5; }
         .card .id {
-            font-size: 0.75rem;
-            color: var(--gold-petal);
+            font-size: 0.7rem;
+            color: var(--jade-bright);
             font-weight: 700;
-            background: rgba(245, 166, 35, 0.15);
+            background: rgba(45, 138, 78, 0.1);
             display: inline-block;
-            padding: 0.2rem 0.8rem;
+            padding: 0.1rem 0.7rem;
             border-radius: 50px;
-            margin-bottom: 0.5rem;
         }
-        .card h3 { font-size: 1.4rem; color: var(--blossom-red); margin-bottom: 0.1rem; }
-        .card .chinese-name { font-size: 1.1rem; font-weight: 300; color: #888; margin-bottom: 0.4rem; }
+        .card h3 {
+            font-size: 1.3rem;
+            color: var(--jade-dark);
+        }
+        .card .chinese-name {
+            font-size: 1rem;
+            font-weight: 300;
+            color: #888;
+        }
         .card .region {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--earth-brown);
-            background: #f5ede4;
+            background: #f0f5ed;
             display: inline-block;
-            padding: 0.2rem 0.8rem;
+            padding: 0.1rem 0.8rem;
             border-radius: 50px;
-            margin: 0.3rem 0 0.6rem;
+            margin: 0.3rem 0 0.4rem;
         }
-        .card .intro-preview { font-size: 0.9rem; color: #555; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .card .population { font-size: 0.8rem; color: var(--gold-petal); font-weight: 600; margin-top: 0.5rem; }
+        .card .intro-preview {
+            font-size: 0.85rem;
+            color: #555;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card .population {
+            font-size: 0.75rem;
+            color: var(--jade-bright);
+            font-weight: 600;
+            margin-top: 0.3rem;
+        }
+
+        /* --- Mandala View --- */
+        #mandalaView {
+            display: none;
+            text-align: center;
+            padding: 1.5rem 0.5rem 2rem;
+        }
+        #mandalaView canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 20px 60px rgba(26, 60, 42, 0.2);
+            background: white;
+            cursor: pointer;
+            touch-action: none;
+        }
+        #mandalaTooltip {
+            margin-top: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--jade-dark);
+            min-height: 3rem;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            display: inline-block;
+            border: 2px solid var(--jade-pale);
+        }
+        #mandalaTooltip small {
+            font-weight: 300;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* --- Modal (Popup) --- */
         .modal {
             display: none;
             position: fixed;
@@ -154,64 +224,111 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
             z-index: 999;
             padding: 1rem;
         }
-        .modal.open { display: flex; }
+        .modal.open {
+            display: flex;
+        }
         .modal-content {
             background: white;
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
-            padding: 2.5rem 2rem;
+            padding: 2rem 1.8rem;
             border-radius: 30px;
             position: relative;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
             animation: popIn 0.3s ease-out;
-            border-top: 8px solid var(--gold-petal);
+            border-top: 8px solid var(--jade-bright);
         }
         .modal-content .close-btn {
             position: absolute;
-            top: 1rem;
-            right: 1.5rem;
+            top: 0.8rem;
+            right: 1.2rem;
             font-size: 2rem;
             cursor: pointer;
             color: #aaa;
-            transition: 0.3s;
             background: none;
             border: none;
+            transition: 0.3s;
         }
-        .modal-content .close-btn:hover { color: var(--blossom-red); transform: rotate(90deg); }
-        .modal-content h2 { color: var(--blossom-red); font-size: 2rem; }
-        .modal-content .chinese-name { font-size: 1.3rem; color: #999; margin-bottom: 0.5rem; }
+        .modal-content .close-btn:hover {
+            color: var(--jade-dark);
+            transform: rotate(90deg);
+        }
+        .modal-content h2 {
+            color: var(--jade-dark);
+            font-size: 2rem;
+        }
+        .modal-content .chinese-name {
+            font-size: 1.2rem;
+            color: #999;
+        }
         .modal-content .detail-region {
-            background: #f5ede4;
-            padding: 0.3rem 1rem;
+            background: #f0f5ed;
+            padding: 0.2rem 1rem;
             border-radius: 50px;
             display: inline-block;
             margin: 0.5rem 0;
-            font-size: 0.9rem;
         }
-        .modal-content .detail-population { font-weight: 700; color: var(--gold-petal); font-size: 1.1rem; }
-        .modal-content .full-intro { margin-top: 1.2rem; line-height: 1.8; color: #333; }
+        .modal-content .detail-population {
+            font-weight: 700;
+            color: var(--jade-bright);
+        }
+        .modal-content .full-intro {
+            margin-top: 1rem;
+            line-height: 1.7;
+            color: #333;
+        }
+
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             background: var(--text-dark);
-            color: rgba(255,255,255,0.7);
-            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
         }
-        footer .mandala-icon { font-size: 1.5rem; display: block; margin-bottom: 0.5rem; }
-        @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        footer .mandala-icon {
+            font-size: 1.3rem;
+            display: block;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
         @media (max-width: 600px) {
-            header h1 { font-size: 2rem; }
-            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); padding: 1rem; gap: 1rem; }
-            .card { padding: 1rem; }
-            .modal-content { padding: 1.5rem; }
-            .stats-bar { gap: 1rem; font-size: 0.8rem; }
+            header h1 {
+                font-size: 2rem;
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                padding: 1rem;
+                gap: 1rem;
+            }
+            .card {
+                padding: 0.8rem;
+            }
+            .modal-content {
+                padding: 1.5rem;
+            }
+            .stats-bar {
+                gap: 0.8rem;
+                font-size: 0.75rem;
+            }
+            #mandalaTooltip {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -219,23 +336,33 @@
 
     <header>
         <h1>🌸 56 Blossoms</h1>
-        <p>Exploring the cultural tapestry of China's 56 ethnic groups</p>
+        <p>Explore the cultural tapestry of China's 56 ethnic groups</p>
     </header>
 
     <div class="stats-bar">
         <span>🏮 <strong id="groupCount">56</strong> Groups</span>
-        <span>👥 <strong id="popCount">~1.4 billion</strong> Combined</span>
-        <span>🌸 <strong>56</strong> Petals</span>
+        <span>👥 <strong id="popCount">~1.4B</strong> Combined</span>
+        <button class="toggle-btn" id="toggleViewBtn">🌀 View Mandala</button>
     </div>
 
     <div class="search-wrapper">
-        <input type="text" id="searchInput" placeholder="Search by name, region, or Chinese name..." />
+        <input type="text" id="searchInput" placeholder="Search for a group..." />
     </div>
 
-    <main id="app">
-        <p style="text-align:center;padding:3rem;color:#888;">🌺 Loading the 56 blossoms...</p>
-    </main>
+    <!-- ===== GRID VIEW ===== -->
+    <div id="gridView">
+        <main id="app">
+            <p style="text-align:center;padding:3rem;color:#888;">🌺 Loading...</p>
+        </main>
+    </div>
 
+    <!-- ===== MANDALA VIEW ===== -->
+    <div id="mandalaView">
+        <canvas id="mandalaCanvas" width="600" height="600"></canvas>
+        <div id="mandalaTooltip">🌸 Hover over a petal <small>(click to open)</small></div>
+    </div>
+
+    <!-- ===== MODAL ===== -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">✕</button>
@@ -243,101 +370,157 @@
             <div class="chinese-name" id="modalChinese">中文名</div>
             <div class="detail-region" id="modalRegion">📍 Region</div>
             <div class="detail-population" id="modalPopulation">👥 Population</div>
-            <div class="full-intro" id="modalIntro">Full introduction goes here...</div>
+            <div class="full-intro" id="modalIntro">Description here...</div>
         </div>
     </div>
 
     <footer>
         <span class="mandala-icon">🌸</span>
-        56 Blossoms — Built with ❤️ to celebrate China's cultural diversity
+        56 Blossoms — A living mandala of China's diversity
     </footer>
 
     <script>
-        // ============================================================
-        // THE COMPLETE DATA FOR ALL 56 GROUPS (embedded directly here)
-        // ============================================================
+        // ================================================================
+        // 1. DATA (All 56 groups)
+        // ================================================================
         const allGroups = [
-          {"id":"01","name":"Han","chineseName":"汉族","population":"1.28 billion","region":"Nationwide","intro":"The largest ethnic group in the world, forming the majority of China's population. Han culture has profoundly shaped Chinese civilization for millennia."},
-          {"id":"02","name":"Zhuang","chineseName":"壮族","population":"19.5 million","region":"Guangxi","intro":"China's largest minority group, famous for their colorful brocade textiles, the spectacular Torch Festival, and their unique bronze drum culture."},
-          {"id":"03","name":"Hui","chineseName":"回族","population":"11.3 million","region":"Ningxia, Gansu","intro":"Muslim ethnic group spread across China. Known for their distinctive halal cuisine, including hand-pulled noodles and beef dishes."},
-          {"id":"04","name":"Manchu","chineseName":"满族","population":"10.4 million","region":"Northeast China","intro":"Founded the Qing Dynasty. Known for their elaborate traditional headdresses, the 'Eight Banners' system, and contributions to Peking opera."},
-          {"id":"05","name":"Uyghur","chineseName":"维吾尔族","population":"11.7 million","region":"Xinjiang","intro":"Turkic ethnic group with a rich Islamic heritage. Famous for their lively dance, sweet melons, and the ancient city of Kashgar."},
-          {"id":"06","name":"Miao","chineseName":"苗族","population":"11.0 million","region":"Guizhou, Yunnan","intro":"Known for stunning silver jewelry, intricate embroidery, and the vibrant Lusheng festival. Their batik dyeing technique is world-renowned."},
-          {"id":"07","name":"Yi","chineseName":"彝族","population":"9.8 million","region":"Sichuan, Yunnan","intro":"Famous for their Torch Festival, elaborate horn-shaped headdresses, and ancient pictographic script that dates back thousands of years."},
-          {"id":"08","name":"Tujia","chineseName":"土家族","population":"9.5 million","region":"Hunan, Hubei","intro":"Known for the 'Hand-Waving Dance', stilted wooden houses, and their unique wedding traditions where the bride sings farewell."},
-          {"id":"09","name":"Tibetan","chineseName":"藏族","population":"7.0 million","region":"Tibet, Qinghai","intro":"Deeply spiritual with Tibetan Buddhism at its heart. Famous for the Potala Palace, colorful prayer flags, and butter tea."},
-          {"id":"10","name":"Mongol","chineseName":"蒙古族","population":"6.2 million","region":"Inner Mongolia","intro":"Nomadic herders of the steppe. Known for their throat singing, horse-head fiddle, and the grand Naadam festival with wrestling and archery."},
-          {"id":"11","name":"Dong","chineseName":"侗族","population":"3.5 million","region":"Guizhou, Hunan","intro":"Master architects of wooden 'wind and rain bridges' without using a single nail. Famous for their polyphonic folk chorus singing."},
-          {"id":"12","name":"Buyei","chineseName":"布依族","population":"3.5 million","region":"Guizhou","intro":"Known for their exquisite batik and brocade textiles. Their rice terraces and traditional stone houses blend beautifully with the landscape."},
-          {"id":"13","name":"Yao","chineseName":"瑶族","population":"3.3 million","region":"Guangxi, Hunan","intro":"Famous for their vibrant red and blue embroidered costumes. The 'Panwang Festival' is their most important celebration."},
-          {"id":"14","name":"Bai","chineseName":"白族","population":"2.1 million","region":"Yunnan","intro":"Live around picturesque Erhai Lake. Known for their white attire (symbolizing purity), three-course tea ceremony, and the grand 'March Street' fair."},
-          {"id":"15","name":"Korean","chineseName":"朝鲜族","population":"1.7 million","region":"Jilin, Liaoning","intro":"Known for their love of music, dance, and spicy kimchi. They celebrate the 'Dano' festival with swinging competitions and wrestling."},
-          {"id":"16","name":"Hani","chineseName":"哈尼族","population":"1.7 million","region":"Yunnan","intro":"World-famous for the breathtaking Yuanyang Rice Terraces. Their 'Guzang Jie' festival honors ancestors with elaborate buffalo sacrifices."},
-          {"id":"17","name":"Li","chineseName":"黎族","population":"1.6 million","region":"Hainan","intro":"Indigenous people of tropical Hainan Island. Masters of brocade weaving using ancient techniques, and known for their tattoo traditions."},
-          {"id":"18","name":"Kazakh","chineseName":"哈萨克族","population":"1.5 million","region":"Xinjiang","intro":"Nomadic eagle hunters of the Altai mountains. Famous for their sweet fermented mare's milk (kumis) and felt yurts."},
-          {"id":"19","name":"Dai","chineseName":"傣族","population":"1.3 million","region":"Yunnan","intro":"Known for the lively Water Splashing Festival (Thai New Year). They excel in bamboo architecture, peacock dances, and hand-painted Buddhist murals."},
-          {"id":"20","name":"She","chineseName":"畲族","population":"700,000","region":"Fujian, Zhejiang","intro":"Known for their beautiful phoenix headdresses and folk songs. They have a unique mythological origin story involving a dragon-pupiled ancestor."},
-          {"id":"21","name":"Lisu","chineseName":"傈僳族","population":"700,000","region":"Yunnan","intro":"Famous for their 'Knife-Grinding Festival' where they climb sword ladders and walk on hot coals. Known for their bold woven bags."},
-          {"id":"22","name":"Gelao","chineseName":"仡佬族","population":"600,000","region":"Guizhou","intro":"One of the oldest groups in southern China. Known for their distinctive ox-horn shaped headdresses and the annual 'Eating New Rice' festival."},
-          {"id":"23","name":"Lahu","chineseName":"拉祜族","population":"500,000","region":"Yunnan","intro":"Known as the 'Tiger Hunters'. They have a strong tradition of oral poetry and polyphonic singing, often accompanied by the reed pipe."},
-          {"id":"24","name":"Dongxiang","chineseName":"东乡族","population":"500,000","region":"Gansu","intro":"A Muslim ethnic group with a rich tradition of oral storytelling and folk ballads. Known for their resilient spirit in arid mountain regions."},
-          {"id":"25","name":"Va","chineseName":"佤族","population":"480,000","region":"Yunnan","intro":"Known for their striking wooden drum rituals and the vibrant 'New Water Festival'. Their traditional villages feature intricate wood carvings."},
-          {"id":"26","name":"Sui","chineseName":"水族","population":"450,000","region":"Guizhou","intro":"One of the few groups with their own ancient script (Shui script). Famous for their horse racing festival and exquisite textile dyeing."},
-          {"id":"27","name":"Naxi","chineseName":"纳西族","population":"320,000","region":"Yunnan","intro":"Keepers of the unique Dongba pictographic script – the only living pictographic language in the world. Live in the old town of Lijiang."},
-          {"id":"28","name":"Qiang","chineseName":"羌族","population":"310,000","region":"Sichuan","intro":"Known as the 'people of the clouds'. Masters of stone tower architecture and famous for their elaborate embroidery and warrior dances."},
-          {"id":"29","name":"Tu","chineseName":"土族","population":"300,000","region":"Qinghai","intro":"Known for their colorful woven rainbow belts and lively 'Nadun' festival featuring masked dances and acrobatics."},
-          {"id":"30","name":"Xibe","chineseName":"锡伯族","population":"250,000","region":"Xinjiang, Liaoning","intro":"Descendants of Manchurian hunters. Fiercely proud of their archery heritage and unique language derived from Manchu."},
-          {"id":"31","name":"Mulam","chineseName":"仫佬族","population":"240,000","region":"Guangxi","intro":"Known for their dragon-boat racing and distinctive phoenix headdresses. They celebrate a unique 'Fish Festival' annually."},
-          {"id":"32","name":"Kyrgyz","chineseName":"柯尔克孜族","population":"200,000","region":"Xinjiang","intro":"Epic storytellers of the 'Manas' – one of the longest epic poems in the world. Traditional eagle hunters and felt crafters."},
-          {"id":"33","name":"Daur","chineseName":"达斡尔族","population":"130,000","region":"Inner Mongolia","intro":"Known for their hockey-like sport (Beikou) and rich oral literature. They are skilled farmers and blacksmiths."},
-          {"id":"34","name":"Jingpo","chineseName":"景颇族","population":"150,000","region":"Yunnan","intro":"Famous for their 'Wooden Drum Dance' and the grand 'Gunao Jie' festival celebrating unity. Known for vibrant red and black costumes."},
-          {"id":"35","name":"Salar","chineseName":"撒拉族","population":"160,000","region":"Qinghai","intro":"A Muslim Turkic ethnic group known for their poetic folk songs called 'Hua'er' and delicious sweet pastries."},
-          {"id":"36","name":"Blang","chineseName":"布朗族","population":"130,000","region":"Yunnan","intro":"Master tea growers of the ancient Pu'er tea region. They have unique teeth-blackening traditions and worship the tea tree spirit."},
-          {"id":"37","name":"Maonan","chineseName":"毛南族","population":"130,000","region":"Guangxi","intro":"Known as the 'people of the bamboo hats'. Famous for their intricate wood carving and the unique 'Huaji' opera performances."},
-          {"id":"38","name":"Tajik","chineseName":"塔吉克族","population":"50,000","region":"Xinjiang","intro":"Highland Pamir people known for their striking facial features and vibrant red costumes. Famous for their eagle dance and hospitality."},
-          {"id":"39","name":"Pumi","chineseName":"普米族","population":"45,000","region":"Yunnan","intro":"Known for their intricate woven blankets and the 'Chuanzha' festival where young people exchange gifts as a sign of love."},
-          {"id":"40","name":"Achang","chineseName":"阿昌族","population":"42,000","region":"Yunnan","intro":"Legendary blacksmiths and knife-makers. Their carved iron knives are famous across Southeast Asia."},
-          {"id":"41","name":"Nu","chineseName":"怒族","population":"36,000","region":"Yunnan","intro":"Indigenous people of the Nu River valley. Known for their cliffside villages and the unique 'Fairy Festival' with offerings of flowers."},
-          {"id":"42","name":"Ewenki","chineseName":"鄂温克族","population":"34,000","region":"Inner Mongolia","intro":"Reindeer herders of the Greater Khingan Range. One of the few groups in China that still practices traditional shamanism."},
-          {"id":"43","name":"Gin","chineseName":"京族","population":"33,000","region":"Guangxi","intro":"Ethnic Vietnamese group living on the coast. Known for their unique 'Ha' opera and ceremonial fishing festivals."},
-          {"id":"44","name":"Jino","chineseName":"基诺族","population":"25,000","region":"Yunnan","intro":"One of China's smallest ethnic groups. Famous for their sun drum dance and the ancestral 'Fertility Festival'."},
-          {"id":"45","name":"De'ang","chineseName":"德昂族","population":"22,000","region":"Yunnan","intro":"Known as the 'tea people'. They have ancient tea-growing traditions and wear heavy silver earrings as a sign of beauty."},
-          {"id":"46","name":"Uzbek","chineseName":"乌孜别克族","population":"13,000","region":"Xinjiang","intro":"Turkic Muslim group with a rich tradition of silk weaving and intricate gold embroidery."},
-          {"id":"47","name":"Russian","chineseName":"俄罗斯族","population":"15,000","region":"Xinjiang, Inner Mongolia","intro":"Descendants of Russian immigrants. Known for their traditional Orthodox Easter celebrations, accordion music, and dancing."},
-          {"id":"48","name":"Yugur","chineseName":"裕固族","population":"14,000","region":"Gansu","intro":"Descendants of the ancient Uyghur kingdom. Known for their epic folk songs and deep connection to the Tibetan plateau."},
-          {"id":"49","name":"Bonan","chineseName":"保安族","population":"20,000","region":"Gansu","intro":"Skilled craftsmen known for their handmade knives and intricate brocade. A Muslim group with a strong warrior tradition."},
-          {"id":"50","name":"Monba","chineseName":"门巴族","population":"11,000","region":"Tibet","intro":"Live in the lower reaches of the Himalayas. Known for their unique bamboo hats and the 'Horse Festival' celebrated with races."},
-          {"id":"51","name":"Oroqen","chineseName":"鄂伦春族","population":"9,000","region":"Inner Mongolia","intro":"One of China's smallest groups. Traditional hunters who used dog sleds and wore clothing made of animal hide with intricate patterns."},
-          {"id":"52","name":"Derung","chineseName":"独龙族","population":"7,000","region":"Yunnan","intro":"One of the least populated groups. Famous for their unique face-tattooing tradition (now rare) and the 'Kaquewa' festival."},
-          {"id":"53","name":"Tatar","chineseName":"塔塔尔族","population":"3,500","region":"Xinjiang","intro":"A small Turkic Muslim group known for their delicate embroidery, ornamental hats, and sweet pastries."},
-          {"id":"54","name":"Hezhen","chineseName":"赫哲族","population":"5,000","region":"Heilongjiang","intro":"One of the smallest, living along the Amur River. Known for their fish-skin clothing and fishing culture."},
-          {"id":"55","name":"Lhoba","chineseName":"珞巴族","population":"3,700","region":"Tibet","intro":"Live in the eastern Himalayas. Known for their woven cane helmets and deep shamanic traditions linked to nature spirits."},
-          {"id":"56","name":"Gaoshan","chineseName":"高山族","population":"300,000 (in Taiwan)","region":"Taiwan","intro":"Indigenous peoples of Taiwan. Comprising multiple tribes, known for their wood carving, weaving, and the spectacular 'Harvest Festival'."}
+            { "id": "01", "name": "Han", "chineseName": "汉族", "population": "1.28 billion", "region": "Nationwide",
+                "intro": "The largest ethnic group in the world, forming the majority of China's population. Han culture has profoundly shaped Chinese civilization for millennia." },
+            { "id": "02", "name": "Zhuang", "chineseName": "壮族", "population": "19.5 million", "region": "Guangxi",
+                "intro": "China's largest minority group, famous for their colorful brocade textiles, the spectacular Torch Festival, and their unique bronze drum culture." },
+            { "id": "03", "name": "Hui", "chineseName": "回族", "population": "11.3 million", "region": "Ningxia, Gansu",
+                "intro": "Muslim ethnic group spread across China. Known for their distinctive halal cuisine, including hand-pulled noodles and beef dishes." },
+            { "id": "04", "name": "Manchu", "chineseName": "满族", "population": "10.4 million", "region": "Northeast China",
+                "intro": "Founded the Qing Dynasty. Known for their elaborate traditional headdresses, the 'Eight Banners' system, and contributions to Peking opera." },
+            { "id": "05", "name": "Uyghur", "chineseName": "维吾尔族", "population": "11.7 million", "region": "Xinjiang",
+                "intro": "Turkic ethnic group with a rich Islamic heritage. Famous for their lively dance, sweet melons, and the ancient city of Kashgar." },
+            { "id": "06", "name": "Miao", "chineseName": "苗族", "population": "11.0 million", "region": "Guizhou, Yunnan",
+                "intro": "Known for stunning silver jewelry, intricate embroidery, and the vibrant Lusheng festival. Their batik dyeing technique is world-renowned." },
+            { "id": "07", "name": "Yi", "chineseName": "彝族", "population": "9.8 million", "region": "Sichuan, Yunnan",
+                "intro": "Famous for their Torch Festival, elaborate horn-shaped headdresses, and ancient pictographic script that dates back thousands of years." },
+            { "id": "08", "name": "Tujia", "chineseName": "土家族", "population": "9.5 million", "region": "Hunan, Hubei",
+                "intro": "Known for the 'Hand-Waving Dance', stilted wooden houses, and their unique wedding traditions where the bride sings farewell." },
+            { "id": "09", "name": "Tibetan", "chineseName": "藏族", "population": "7.0 million", "region": "Tibet, Qinghai",
+                "intro": "Deeply spiritual with Tibetan Buddhism at its heart. Famous for the Potala Palace, colorful prayer flags, and butter tea." },
+            { "id": "10", "name": "Mongol", "chineseName": "蒙古族", "population": "6.2 million", "region": "Inner Mongolia",
+                "intro": "Nomadic herders of the steppe. Known for their throat singing, horse-head fiddle, and the grand Naadam festival with wrestling and archery." },
+            { "id": "11", "name": "Dong", "chineseName": "侗族", "population": "3.5 million", "region": "Guizhou, Hunan",
+                "intro": "Master architects of wooden 'wind and rain bridges' without using a single nail. Famous for their polyphonic folk chorus singing." },
+            { "id": "12", "name": "Buyei", "chineseName": "布依族", "population": "3.5 million", "region": "Guizhou",
+                "intro": "Known for their exquisite batik and brocade textiles. Their rice terraces and traditional stone houses blend beautifully with the landscape." },
+            { "id": "13", "name": "Yao", "chineseName": "瑶族", "population": "3.3 million", "region": "Guangxi, Hunan",
+                "intro": "Famous for their vibrant red and blue embroidered costumes. The 'Panwang Festival' is their most important celebration." },
+            { "id": "14", "name": "Bai", "chineseName": "白族", "population": "2.1 million", "region": "Yunnan",
+                "intro": "Live around picturesque Erhai Lake. Known for their white attire (symbolizing purity), three-course tea ceremony, and the grand 'March Street' fair." },
+            { "id": "15", "name": "Korean", "chineseName": "朝鲜族", "population": "1.7 million", "region": "Jilin, Liaoning",
+                "intro": "Known for their love of music, dance, and spicy kimchi. They celebrate the 'Dano' festival with swinging competitions and wrestling." },
+            { "id": "16", "name": "Hani", "chineseName": "哈尼族", "population": "1.7 million", "region": "Yunnan",
+                "intro": "World-famous for the breathtaking Yuanyang Rice Terraces. Their 'Guzang Jie' festival honors ancestors with elaborate buffalo sacrifices." },
+            { "id": "17", "name": "Li", "chineseName": "黎族", "population": "1.6 million", "region": "Hainan",
+                "intro": "Indigenous people of tropical Hainan Island. Masters of brocade weaving using ancient techniques, and known for their tattoo traditions." },
+            { "id": "18", "name": "Kazakh", "chineseName": "哈萨克族", "population": "1.5 million", "region": "Xinjiang",
+                "intro": "Nomadic eagle hunters of the Altai mountains. Famous for their sweet fermented mare's milk (kumis) and felt yurts." },
+            { "id": "19", "name": "Dai", "chineseName": "傣族", "population": "1.3 million", "region": "Yunnan",
+                "intro": "Known for the lively Water Splashing Festival (Thai New Year). They excel in bamboo architecture, peacock dances, and hand-painted Buddhist murals." },
+            { "id": "20", "name": "She", "chineseName": "畲族", "population": "700,000", "region": "Fujian, Zhejiang",
+                "intro": "Known for their beautiful phoenix headdresses and folk songs. They have a unique mythological origin story involving a dragon-pupiled ancestor." },
+            { "id": "21", "name": "Lisu", "chineseName": "傈僳族", "population": "700,000", "region": "Yunnan",
+                "intro": "Famous for their 'Knife-Grinding Festival' where they climb sword ladders and walk on hot coals. Known for their bold woven bags." },
+            { "id": "22", "name": "Gelao", "chineseName": "仡佬族", "population": "600,000", "region": "Guizhou",
+                "intro": "One of the oldest groups in southern China. Known for their distinctive ox-horn shaped headdresses and the annual 'Eating New Rice' festival." },
+            { "id": "23", "name": "Lahu", "chineseName": "拉祜族", "population": "500,000", "region": "Yunnan",
+                "intro": "Known as the 'Tiger Hunters'. They have a strong tradition of oral poetry and polyphonic singing, often accompanied by the reed pipe." },
+            { "id": "24", "name": "Dongxiang", "chineseName": "东乡族", "population": "500,000", "region": "Gansu",
+                "intro": "A Muslim ethnic group with a rich tradition of oral storytelling and folk ballads. Known for their resilient spirit in arid mountain regions." },
+            { "id": "25", "name": "Va", "chineseName": "佤族", "population": "480,000", "region": "Yunnan",
+                "intro": "Known for their striking wooden drum rituals and the vibrant 'New Water Festival'. Their traditional villages feature intricate wood carvings." },
+            { "id": "26", "name": "Sui", "chineseName": "水族", "population": "450,000", "region": "Guizhou",
+                "intro": "One of the few groups with their own ancient script (Shui script). Famous for their horse racing festival and exquisite textile dyeing." },
+            { "id": "27", "name": "Naxi", "chineseName": "纳西族", "population": "320,000", "region": "Yunnan",
+                "intro": "Keepers of the unique Dongba pictographic script – the only living pictographic language in the world. Live in the old town of Lijiang." },
+            { "id": "28", "name": "Qiang", "chineseName": "羌族", "population": "310,000", "region": "Sichuan",
+                "intro": "Known as the 'people of the clouds'. Masters of stone tower architecture and famous for their elaborate embroidery and warrior dances." },
+            { "id": "29", "name": "Tu", "chineseName": "土族", "population": "300,000", "region": "Qinghai",
+                "intro": "Known for their colorful woven rainbow belts and lively 'Nadun' festival featuring masked dances and acrobatics." },
+            { "id": "30", "name": "Xibe", "chineseName": "锡伯族", "population": "250,000", "region": "Xinjiang, Liaoning",
+                "intro": "Descendants of Manchurian hunters. Fiercely proud of their archery heritage and unique language derived from Manchu." },
+            { "id": "31", "name": "Mulam", "chineseName": "仫佬族", "population": "240,000", "region": "Guangxi",
+                "intro": "Known for their dragon-boat racing and distinctive phoenix headdresses. They celebrate a unique 'Fish Festival' annually." },
+            { "id": "32", "name": "Kyrgyz", "chineseName": "柯尔克孜族", "population": "200,000", "region": "Xinjiang",
+                "intro": "Epic storytellers of the 'Manas' – one of the longest epic poems in the world. Traditional eagle hunters and felt crafters." },
+            { "id": "33", "name": "Daur", "chineseName": "达斡尔族", "population": "130,000", "region": "Inner Mongolia",
+                "intro": "Known for their hockey-like sport (Beikou) and rich oral literature. They are skilled farmers and blacksmiths." },
+            { "id": "34", "name": "Jingpo", "chineseName": "景颇族", "population": "150,000", "region": "Yunnan",
+                "intro": "Famous for their 'Wooden Drum Dance' and the grand 'Gunao Jie' festival celebrating unity. Known for vibrant red and black costumes." },
+            { "id": "35", "name": "Salar", "chineseName": "撒拉族", "population": "160,000", "region": "Qinghai",
+                "intro": "A Muslim Turkic ethnic group known for their poetic folk songs called 'Hua'er' and delicious sweet pastries." },
+            { "id": "36", "name": "Blang", "chineseName": "布朗族", "population": "130,000", "region": "Yunnan",
+                "intro": "Master tea growers of the ancient Pu'er tea region. They have unique teeth-blackening traditions and worship the tea tree spirit." },
+            { "id": "37", "name": "Maonan", "chineseName": "毛南族", "population": "130,000", "region": "Guangxi",
+                "intro": "Known as the 'people of the bamboo hats'. Famous for their intricate wood carving and the unique 'Huaji' opera performances." },
+            { "id": "38", "name": "Tajik", "chineseName": "塔吉克族", "population": "50,000", "region": "Xinjiang",
+                "intro": "Highland Pamir people known for their striking facial features and vibrant red costumes. Famous for their eagle dance and hospitality." },
+            { "id": "39", "name": "Pumi", "chineseName": "普米族", "population": "45,000", "region": "Yunnan",
+                "intro": "Known for their intricate woven blankets and the 'Chuanzha' festival where young people exchange gifts as a sign of love." },
+            { "id": "40", "name": "Achang", "chineseName": "阿昌族", "population": "42,000", "region": "Yunnan",
+                "intro": "Legendary blacksmiths and knife-makers. Their carved iron knives are famous across Southeast Asia." },
+            { "id": "41", "name": "Nu", "chineseName": "怒族", "population": "36,000", "region": "Yunnan",
+                "intro": "Indigenous people of the Nu River valley. Known for their cliffside villages and the unique 'Fairy Festival' with offerings of flowers." },
+            { "id": "42", "name": "Ewenki", "chineseName": "鄂温克族", "population": "34,000", "region": "Inner Mongolia",
+                "intro": "Reindeer herders of the Greater Khingan Range. One of the few groups in China that still practices traditional shamanism." },
+            { "id": "43", "name": "Gin", "chineseName": "京族", "population": "33,000", "region": "Guangxi",
+                "intro": "Ethnic Vietnamese group living on the coast. Known for their unique 'Ha' opera and ceremonial fishing festivals." },
+            { "id": "44", "name": "Jino", "chineseName": "基诺族", "population": "25,000", "region": "Yunnan",
+                "intro": "One of China's smallest ethnic groups. Famous for their sun drum dance and the ancestral 'Fertility Festival'." },
+            { "id": "45", "name": "De'ang", "chineseName": "德昂族", "population": "22,000", "region": "Yunnan",
+                "intro": "Known as the 'tea people'. They have ancient tea-growing traditions and wear heavy silver earrings as a sign of beauty." },
+            { "id": "46", "name": "Uzbek", "chineseName": "乌孜别克族", "population": "13,000", "region": "Xinjiang",
+                "intro": "Turkic Muslim group with a rich tradition of silk weaving and intricate gold embroidery." },
+            { "id": "47", "name": "Russian", "chineseName": "俄罗斯族", "population": "15,000", "region": "Xinjiang, Inner Mongolia",
+                "intro": "Descendants of Russian immigrants. Known for their traditional Orthodox Easter celebrations, accordion music, and dancing." },
+            { "id": "48", "name": "Yugur", "chineseName": "裕固族", "population": "14,000", "region": "Gansu",
+                "intro": "Descendants of the ancient Uyghur kingdom. Known for their epic folk songs and deep connection to the Tibetan plateau." },
+            { "id": "49", "name": "Bonan", "chineseName": "保安族", "population": "20,000", "region": "Gansu",
+                "intro": "Skilled craftsmen known for their handmade knives and intricate brocade. A Muslim group with a strong warrior tradition." },
+            { "id": "50", "name": "Monba", "chineseName": "门巴族", "population": "11,000", "region": "Tibet",
+                "intro": "Live in the lower reaches of the Himalayas. Known for their unique bamboo hats and the 'Horse Festival' celebrated with races." },
+            { "id": "51", "name": "Oroqen", "chineseName": "鄂伦春族", "population": "9,000", "region": "Inner Mongolia",
+                "intro": "One of China's smallest groups. Traditional hunters who used dog sleds and wore clothing made of animal hide with intricate patterns." },
+            { "id": "52", "name": "Derung", "chineseName": "独龙族", "population": "7,000", "region": "Yunnan",
+                "intro": "One of the least populated groups. Famous for their unique face-tattooing tradition (now rare) and the 'Kaquewa' festival." },
+            { "id": "53", "name": "Tatar", "chineseName": "塔塔尔族", "population": "3,500", "region": "Xinjiang",
+                "intro": "A small Turkic Muslim group known for their delicate embroidery, ornamental hats, and sweet pastries." },
+            { "id": "54", "name": "Hezhen", "chineseName": "赫哲族", "population": "5,000", "region": "Heilongjiang",
+                "intro": "One of the smallest, living along the Amur River. Known for their fish-skin clothing and fishing culture." },
+            { "id": "55", "name": "Lhoba", "chineseName": "珞巴族", "population": "3,700", "region": "Tibet",
+                "intro": "Live in the eastern Himalayas. Known for their woven cane helmets and deep shamanic traditions linked to nature spirits." },
+            { "id": "56", "name": "Gaoshan", "chineseName": "高山族", "population": "300,000 (in Taiwan)", "region": "Taiwan",
+                "intro": "Indigenous peoples of Taiwan. Comprising multiple tribes, known for their wood carving, weaving, and the spectacular 'Harvest Festival'." }
         ];
 
-        // ============================================================
-        // THE WEBSITE LOGIC (Search, Render, Modal)
-        // ============================================================
+        // ================================================================
+        // 2. GRID VIEW LOGIC (Cards + Search)
+        // ================================================================
         let currentGroups = allGroups;
 
         function renderGrid(groups) {
             const app = document.getElementById('app');
             if (!groups.length) {
-                app.innerHTML = '<p style="text-align:center;padding:3rem;color:#888;">🌸 No groups found. Try a different search.</p>';
+                app.innerHTML = '<p style="text-align:center;padding:3rem;color:#888;">🌸 No groups found.</p>';
                 return;
             }
             let html = '<div class="grid">';
             groups.forEach(g => {
                 html += `
-                    <div class="card" onclick="openDetail('${g.id}')">
-                        <div class="id">#${g.id}</div>
-                        <h3>${g.name}</h3>
-                        <div class="chinese-name">${g.chineseName}</div>
-                        <div class="region">📍 ${g.region}</div>
-                        <div class="intro-preview">${g.intro.slice(0, 70)}...</div>
-                        <div class="population">👥 ${g.population}</div>
-                    </div>
-                `;
+                        <div class="card" onclick="openDetail('${g.id}')">
+                            <div class="id">#${g.id}</div>
+                            <h3>${g.name}</h3>
+                            <div class="chinese-name">${g.chineseName}</div>
+                            <div class="region">📍 ${g.region}</div>
+                            <div class="intro-preview">${g.intro.slice(0, 60)}...</div>
+                            <div class="population">👥 ${g.population}</div>
+                        </div>
+                    `;
             });
             html += '</div>';
             app.innerHTML = html;
@@ -350,24 +533,38 @@
                 const num = parseFloat(g.population.replace(/[^0-9.]/g, ''));
                 if (!isNaN(num)) total += num;
             });
-            document.getElementById('popCount').textContent = (total > 1000) ? (total / 1000).toFixed(1) + ' billion' : total.toLocaleString() + ' million';
+            document.getElementById('popCount').textContent = (total > 1000) ? (total / 1000).toFixed(1) + 'B' : total
+                .toLocaleString() + 'M';
         }
 
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const q = e.target.value.toLowerCase();
+            const filtered = allGroups.filter(g =>
+                g.name.toLowerCase().includes(q) ||
+                g.chineseName.includes(q) ||
+                g.region.toLowerCase().includes(q)
+            );
+            renderGrid(filtered);
+            updateStats(filtered);
+        });
+
+        // ================================================================
+        // 3. MODAL (Popup Detail)
+        // ================================================================
         function openDetail(id) {
-            const group = allGroups.find(g => g.id === id);
-            if (!group) return;
-            document.getElementById('modalName').textContent = group.name;
-            document.getElementById('modalChinese').textContent = group.chineseName;
-            document.getElementById('modalRegion').textContent = '📍 ' + group.region;
-            document.getElementById('modalPopulation').textContent = '👥 Population: ' + group.population;
-            document.getElementById('modalIntro').textContent = group.intro;
+            const g = allGroups.find(x => x.id === id);
+            if (!g) return;
+            document.getElementById('modalName').textContent = g.name;
+            document.getElementById('modalChinese').textContent = g.chineseName;
+            document.getElementById('modalRegion').textContent = '📍 ' + g.region;
+            document.getElementById('modalPopulation').textContent = '👥 Population: ' + g.population;
+            document.getElementById('modalIntro').textContent = g.intro;
             document.getElementById('detailModal').classList.add('open');
         }
 
         function closeModal() {
             document.getElementById('detailModal').classList.remove('open');
         }
-
         document.getElementById('detailModal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeModal();
         });
@@ -375,20 +572,191 @@
             if (e.key === 'Escape') closeModal();
         });
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = allGroups.filter(g => 
-                g.name.toLowerCase().includes(query) ||
-                g.chineseName.includes(query) ||
-                g.region.toLowerCase().includes(query)
-            );
-            renderGrid(filtered);
-            updateStats(filtered);
+        // ================================================================
+        // 4. TOGGLE: Grid <-> Mandala
+        // ================================================================
+        let isMandalaView = false;
+        const gridView = document.getElementById('gridView');
+        const mandalaView = document.getElementById('mandalaView');
+        const toggleBtn = document.getElementById('toggleViewBtn');
+
+        toggleBtn.addEventListener('click', () => {
+            isMandalaView = !isMandalaView;
+            if (isMandalaView) {
+                gridView.style.display = 'none';
+                mandalaView.style.display = 'block';
+                toggleBtn.textContent = '📋 View Grid';
+                drawMandala();
+            } else {
+                gridView.style.display = 'block';
+                mandalaView.style.display = 'none';
+                toggleBtn.textContent = '🌀 View Mandala';
+            }
         });
 
-        // Start the website!
+        // ================================================================
+        // 5. THE INTERACTIVE MANDALA (Canvas)
+        // ================================================================
+        const canvas = document.getElementById('mandalaCanvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('mandalaTooltip');
+
+        const total = allGroups.length;
+        const centerX = 300,
+            centerY = 300;
+        const radius = 240;
+        let hoveredIndex = -1;
+
+        function getColor(index, highlight = false) {
+            // Green gradient around the circle (dark green -> light green -> teal)
+            const hue = 120 + (index / total) * 60; // 120 (green) to 180 (teal)
+            const sat = highlight ? 90 : 70;
+            const lig = highlight ? 65 : 45;
+            return `hsl(${hue}, ${sat}%, ${lig}%)`;
+        }
+
+        function drawMandala() {
+            const w = canvas.width,
+                h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const slice = (2 * Math.PI) / total;
+
+            for (let i = 0; i < total; i++) {
+                const start = i * slice - Math.PI / 2;
+                const end = start + slice;
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, start, end);
+                ctx.closePath();
+
+                // Color: highlight if hovered
+                const isHover = (i === hoveredIndex);
+                ctx.fillStyle = getColor(i, isHover);
+                ctx.fill();
+
+                // Stroke (separator lines)
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Draw the group number on the petal
+                const midAngle = start + slice / 2;
+                const labelR = radius * 0.7;
+                const x = centerX + Math.cos(midAngle) * labelR;
+                const y = centerY + Math.sin(midAngle) * labelR;
+
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = 'rgba(0,0,0,0.4)';
+                ctx.shadowBlur = 4;
+                ctx.fillText(i + 1, x, y);
+                ctx.shadowBlur = 0;
+            }
+
+            // Draw center circle
+            const grad = ctx.createRadialGradient(centerX - 10, centerY - 10, 5, centerX, centerY, 35);
+            grad.addColorStop(0, '#C9A96E');
+            grad.addColorStop(1, '#1A3C2A');
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 32, 0, 2 * Math.PI);
+            ctx.fillStyle = grad;
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = 'rgba(201, 169, 110, 0.5)';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('56', centerX, centerY - 2);
+            ctx.font = '8px sans-serif';
+            ctx.fillText('Blossoms', centerX, centerY + 14);
+        }
+
+        // --- Mouse / Touch Detection ---
+        function getGroupIndex(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            let clientX, clientY;
+            if (e.touches) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+                e.preventDefault();
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            const x = (clientX - rect.left) * scaleX;
+            const y = (clientY - rect.top) * scaleY;
+
+            const dx = x - centerX;
+            const dy = y - centerY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > radius || dist < 20) return -1;
+
+            let angle = Math.atan2(dy, dx); // -PI to PI
+            // Shift so 0 is at top (12 o'clock)
+            let adjusted = angle + Math.PI / 2;
+            if (adjusted < 0) adjusted += 2 * Math.PI;
+
+            const slice = (2 * Math.PI) / total;
+            const index = Math.floor(adjusted / slice);
+            if (index >= total) return 0;
+            return index;
+        }
+
+        function onCanvasMove(e) {
+            const idx = getGroupIndex(e);
+            if (idx !== hoveredIndex) {
+                hoveredIndex = idx;
+                drawMandala();
+                if (idx >= 0 && idx < total) {
+                    const g = allGroups[idx];
+                    tooltip.innerHTML = `🌸 ${g.name} (${g.chineseName}) <small>📍 ${g.region}</small>`;
+                    canvas.style.cursor = 'pointer';
+                } else {
+                    tooltip.innerHTML = '🌸 Hover over a petal <small>(click to open)</small>';
+                    canvas.style.cursor = 'default';
+                }
+            }
+        }
+
+        function onCanvasClick(e) {
+            const idx = getGroupIndex(e);
+            if (idx >= 0 && idx < total) {
+                openDetail(allGroups[idx].id);
+            }
+        }
+
+        canvas.addEventListener('mousemove', onCanvasMove);
+        canvas.addEventListener('click', onCanvasClick);
+        canvas.addEventListener('touchstart', (e) => {
+            onCanvasMove(e);
+            onCanvasClick(e);
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            onCanvasMove(e);
+        });
+
+        // ================================================================
+        // 6. START THE APP
+        // ================================================================
         renderGrid(allGroups);
         updateStats(allGroups);
+        drawMandala(); // pre-draw the mandala (hidden until toggle)
     </script>
+
 </body>
 </html>
