@@ -54,7 +54,7 @@
 
         /* --- Header --- */
         header {
-            padding: 1.8rem 0 1rem;
+            padding: 1.2rem 0 1rem;
             border-bottom: 1px solid rgba(166, 139, 122, 0.15);
             background: rgba(250, 247, 242, 0.85);
             backdrop-filter: blur(12px);
@@ -111,7 +111,7 @@
 
         /* --- Hero --- */
         .hero {
-            padding: 3.5rem 0 2rem;
+            padding: 2.5rem 0 1.5rem;
             text-align: center;
         }
 
@@ -125,11 +125,11 @@
             background: rgba(180, 101, 74, 0.08);
             padding: 0.3rem 1.2rem;
             border-radius: 60px;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             font-weight: 800;
             letter-spacing: -1px;
             line-height: 1.1;
@@ -141,34 +141,83 @@
             position: relative;
         }
 
-        .hero h1 .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: rgba(180, 101, 74, 0.15);
-            border-radius: 4px;
-        }
-
         .hero p {
-            font-size: 1.05rem;
+            font-size: 1rem;
             color: var(--text-muted);
             max-width: 520px;
-            margin: 0.6rem auto 0;
+            margin: 0.4rem auto 0;
             font-weight: 400;
         }
 
-        /* --- Quiz Container --- */
+        /* --- Controls Row: Category + Difficulty --- */
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .controls-row label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .controls-row select {
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            border: 2px solid var(--sand);
+            background: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--charcoal);
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .controls-row select:focus {
+            border-color: var(--steppe);
+            box-shadow: 0 0 0 4px rgba(58, 90, 64, 0.10);
+        }
+
+        .controls-row select:hover {
+            border-color: var(--clay);
+        }
+
+        .controls-row .start-btn {
+            background: var(--steppe);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 60px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .controls-row .start-btn:hover {
+            background: var(--moss);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(58, 90, 64, 0.20);
+        }
+
+        /* --- Quiz Box --- */
         .quiz-box {
             background: white;
             border-radius: var(--radius);
             padding: 2.2rem 2.5rem;
             box-shadow: var(--shadow);
-            margin: 1.5rem 0 2.5rem;
+            margin: 1rem 0 2.5rem;
             border: 1px solid rgba(166, 139, 122, 0.08);
-            min-height: 420px;
+            min-height: 380px;
             display: flex;
             flex-direction: column;
         }
@@ -210,6 +259,20 @@
 
         .progress-text strong {
             color: var(--steppe);
+        }
+
+        .streak-display {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gold);
+            background: rgba(201, 169, 110, 0.12);
+            padding: 0.2rem 0.8rem;
+            border-radius: 60px;
+            display: none;
+        }
+
+        .streak-display.show {
+            display: inline-block;
         }
 
         /* --- Question --- */
@@ -402,7 +465,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 1rem;
             box-shadow: 0 12px 40px rgba(58, 90, 64, 0.20);
         }
 
@@ -419,10 +482,16 @@
             margin-top: 0.2rem;
         }
 
+        .results .stars {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.4rem;
+        }
+
         .results h2 {
             font-size: 1.8rem;
             color: var(--steppe);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.2rem;
         }
 
         .results p {
@@ -432,11 +501,16 @@
             font-size: 0.95rem;
         }
 
-        .results .restart-btn {
-            background: transparent;
-            border: 2px solid var(--steppe);
-            color: var(--steppe);
-            padding: 0.7rem 2.4rem;
+        .results .result-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .results .result-actions button {
+            padding: 0.7rem 1.8rem;
             border-radius: 60px;
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
@@ -445,10 +519,32 @@
             transition: var(--transition);
         }
 
+        .results .restart-btn {
+            background: transparent;
+            border: 2px solid var(--steppe);
+            color: var(--steppe);
+        }
+
         .results .restart-btn:hover {
             background: var(--steppe);
             color: white;
             transform: translateY(-2px);
+        }
+
+        .results .share-btn {
+            background: var(--terracotta);
+            border: none;
+            color: white;
+        }
+
+        .results .share-btn:hover {
+            background: #9E5A42;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(180, 101, 74, 0.25);
+        }
+
+        .results .share-btn.copied {
+            background: var(--steppe);
         }
 
         /* --- Footer --- */
@@ -469,7 +565,7 @@
         /* --- Responsive --- */
         @media (max-width: 640px) {
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2rem;
             }
 
             .quiz-box {
@@ -489,6 +585,16 @@
             .option-btn {
                 padding: 0.7rem 1rem;
                 font-size: 0.85rem;
+            }
+
+            .controls-row select {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+            }
+
+            .controls-row .start-btn {
+                font-size: 0.75rem;
+                padding: 0.4rem 1.2rem;
             }
 
             .progress-text {
@@ -516,11 +622,20 @@
             .results .score-circle .number {
                 font-size: 2.4rem;
             }
+
+            .results .stars {
+                font-size: 2rem;
+            }
+
+            .results .result-actions button {
+                font-size: 0.8rem;
+                padding: 0.5rem 1.2rem;
+            }
         }
 
         @media (max-width: 400px) {
             .hero h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .quiz-box {
@@ -534,6 +649,10 @@
             .option-btn {
                 font-size: 0.8rem;
                 padding: 0.6rem 0.8rem;
+            }
+
+            .controls-row {
+                gap: 0.4rem;
             }
         }
     </style>
@@ -566,8 +685,32 @@
         </div>
     </section>
 
-    <!-- ===== QUIZ ===== -->
-    <main class="container">
+    <!-- ===== CONTROLS ===== -->
+    <div class="container">
+        <div class="controls-row">
+            <label for="categorySelect">📂 Category</label>
+            <select id="categorySelect">
+                <option value="all">🌾 All Categories</option>
+                <option value="Festivals & Traditions">🎉 Festivals & Traditions</option>
+                <option value="Food & Drink">🍲 Food & Drink</option>
+                <option value="Clothing & Art">👘 Clothing & Art</option>
+                <option value="Yugur · Tibetan · Mongol">🏔️ Yugur · Tibetan · Mongol</option>
+                <option value="Yugur">🏔️ Yugur</option>
+                <option value="Tibetan">🏔️ Tibetan</option>
+                <option value="Mongol">🏔️ Mongol</option>
+            </select>
+
+            <label for="difficultySelect">📊 Difficulty</label>
+            <select id="difficultySelect">
+                <option value="easy">🌱 Easy</option>
+                <option value="medium" selected>🌿 Medium</option>
+                <option value="hard">🌲 Hard</option>
+            </select>
+
+            <button class="start-btn" id="startBtn">🔄 New Game</button>
+        </div>
+
+        <!-- ===== QUIZ BOX ===== -->
         <div class="quiz-box" id="quizBox">
 
             <!-- Progress -->
@@ -576,8 +719,9 @@
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
                 <span class="progress-text" id="progressText">
-                    <strong id="currentQ">1</strong> / <span id="totalQ">0</span>
+                    <strong id="currentQ">0</strong> / <span id="totalQ">0</span>
                 </span>
+                <span class="streak-display" id="streakDisplay">🔥 Streak: <span id="streakCount">0</span></span>
             </div>
 
             <!-- Question Area -->
@@ -600,17 +744,21 @@
 
             <!-- Results Area -->
             <div class="results" id="resultsArea">
+                <div class="stars" id="starsDisplay">⭐⭐⭐</div>
                 <div class="score-circle">
                     <span class="number" id="finalScore">0</span>
                     <span class="label">/ <span id="finalTotal">0</span></span>
                 </div>
                 <h2 id="resultTitle">You're a Steppe Scholar! 🌾</h2>
                 <p id="resultDesc">You have a deep understanding of China's rich cultural tapestry.</p>
-                <button class="restart-btn" id="restartBtn">🔄 Play Again</button>
+                <div class="result-actions">
+                    <button class="restart-btn" id="restartBtn">🔄 Play Again</button>
+                    <button class="share-btn" id="shareBtn">📤 Share Score</button>
+                </div>
             </div>
 
         </div>
-    </main>
+    </div>
 
     <!-- ===== FOOTER ===== -->
     <footer>
@@ -619,9 +767,12 @@
         </div>
     </footer>
 
+    <!-- ================================================================
+    JAVASCRIPT — Full Quiz Engine
+    ================================================================ -->
     <script>
         // ================================================================
-        // 1. QUESTION BANK — 140+ questions, 8 categories
+        // 1. QUESTION BANK — 166+ questions, 8 categories
         // ================================================================
 
         const QUESTIONS = [{
@@ -813,1021 +964,4 @@
             correct: 0,
             knowledge: 'Shoton literally translates to "yogurt banquet" as yogurt is consumed abundantly during the festival.'
         }, {
-            category: 'Festivals & Traditions',
-            question: '"Naadam" in Mongolian means:',
-            options: ['Entertainment, games', 'Horse racing', 'Wrestling', 'Archery'],
-            correct: 0,
-            knowledge: 'The word "Naadam" simply means "games" or "entertainment" in the Mongolian language.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Water-Splashing Festival marks the Dai New Year. What else is it known as?',
-            options: ['Songkran', 'Diwali', 'Lunar New Year', 'Harvest Festival'],
-            correct: 0,
-            knowledge: 'The Dai Water-Splashing Festival is the same as Songkran, the Thai New Year, shared across Tai cultures.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'Eid al-Fitr marks the end of what?',
-            options: ['Ramadan', 'Hajj', 'Eid al-Adha', 'Mawlid'],
-            correct: 0,
-            knowledge: 'Eid al-Fitr means "Festival of Breaking the Fast" and celebrates the end of Ramadan.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The "Jumping Flower" Festival is also known as "Tiaohua" in Chinese. What is its main activity?',
-            options: ['Singing and dancing', 'Horse racing', 'Archery', 'Wrestling'],
-            correct: 0,
-            knowledge: 'This Miao festival features singing competitions, socializing, and eating traditional foods.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Ox King Festival is also known as "Niuhuang" in some regions. What is its primary purpose?',
-            options: ['Honoring oxen', 'Harvest celebration', 'Ancestor worship', 'Marriage ceremonies'],
-            correct: 0,
-            knowledge: 'The Zhuang people honor their working oxen with rituals and special foods to thank them for their labor.'
-        }, {
-            category: 'Food & Drink',
-            question: 'Tibetan hosts often welcome guests with which traditional drink?',
-            options: ['Mare\'s milk', 'Barley wine', 'Rice wine', 'Grape wine'],
-            correct: 1,
-            knowledge: 'Tibetan barley wine (青稞酒) is a staple at gatherings and is offered to guests as a sign of respect.'
-        }, {
-            category: 'Food & Drink',
-            question: 'Which of these is a traditional Uyghur dish?',
-            options: ['Roast lamb', 'Pilaf', 'Naan bread', 'All of the above'],
-            correct: 3,
-            knowledge: 'Uyghur cuisine is known for roast lamb, pilaf (抓饭), and naan (馕), reflecting Central Asian influences.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Sachima" (萨其马) is a traditional pastry of which group?',
-            options: ['Manchu', 'Hui', 'Mongol', 'Uyghur'],
-            correct: 0,
-            knowledge: 'Sachima is a sweet, crispy pastry that originated with the Manchu people.'
-        }, {
-            category: 'Food & Drink',
-            question: 'Korean cuisine is famous for many dishes. Which of these is NOT typically Korean?',
-            options: ['Cold noodles', 'Kimchi', 'Rice cakes', 'Butter tea'],
-            correct: 3,
-            knowledge: 'Butter tea (酥油茶) is Tibetan, not Korean. Korean cold noodles, kimchi, and rice cakes are iconic.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Sour Fish Soup" (酸汤鱼) is a classic dish of which group?',
-            options: ['Miao', 'Dong', 'Tujia', 'Yao'],
-            correct: 0,
-            knowledge: 'Miao people are known for their sour fish soup, which uses fermented ingredients for a tangy flavor.'
-        }, {
-            category: 'Food & Drink',
-            question: 'Mongols and Kazakhs traditionally drink what kind of tea?',
-            options: ['Green tea', 'Black tea', 'Milk tea', 'Butter tea'],
-            correct: 2,
-            knowledge: 'Milk tea is a daily staple for many nomads, often made with black tea and fresh or dried milk.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Five-Colored Sticky Rice" (五色糯米饭) is a traditional dish of which group?',
-            options: ['Zhuang', 'Miao', 'Dong', 'Buyei'],
-            correct: 0,
-            knowledge: 'Zhuang people use natural plant dyes to color sticky rice in five colors for festivals.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Hand-Grabbed Mutton" (手扒羊肉) is beloved by which groups?',
-            options: ['Mongol & Kazakh', 'Tibetan & Monba', 'Manchu & Xibe', 'Hui & Uyghur'],
-            correct: 0,
-            knowledge: 'Nomadic pastoral groups eat mutton boiled with minimal seasoning, served with hands for a rustic meal.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Qiegao" (切糕) is a traditional snack of which group?',
-            options: ['Hui', 'Uyghur', 'Kazakh', 'Tajik'],
-            correct: 0,
-            knowledge: 'Qiegao is a dense, sweet snack made from nuts and dried fruit, commonly found in Hui communities.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Yellow Rice Cake" (黄米饽饽) is a traditional food of which group?',
-            options: ['Manchu', 'Mongol', 'Korean', 'Xibe'],
-            correct: 0,
-            knowledge: 'The Manchu prepare this sticky yellow rice cake for festivals and celebrations.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Bamboo Chicken Gizzards" (竹筒焖鸡杂) is a specialty of which group?',
-            options: ['Miao', 'Dai', 'Hani', 'Jino'],
-            correct: 0,
-            knowledge: 'The Miao cook chicken gizzards in bamboo tubes, infusing them with a smoky, earthy flavor.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Torch Meat" (火把肉) is a traditional dish of which group?',
-            options: ['Zhuang', 'Yi', 'Bai', 'Hani'],
-            correct: 0,
-            knowledge: 'The Zhuang people prepare this dish during the Torch Festival, roasting meat over open flames.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Halal Three Foods" refers to which of the following?',
-            options: ['Halal food, halal subsidiary, halal food products',
-                'Halal noodles, halal meat, halal pastries',
-                'Halal tea, halal sugar, halal oil', 'Halal rice, halal flour, halal vegetables'
-            ],
-            correct: 0,
-            knowledge: 'This term is used in Chinese halal certification for a category of food products.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Yangyanzi Baozi" (羊眼儿包子) is a specialty of which group?',
-            options: ['Hui', 'Uyghur', 'Kazakh', 'Dongxiang'],
-            correct: 0,
-            knowledge: 'These small, round buns are a Hui specialty, named for their resemblance to sheep eyes.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Sanza" (馓子) is a traditional fried pastry of which groups?',
-            options: ['Hui', 'Uyghur', 'Kazakh', 'All of the above'],
-            correct: 3,
-            knowledge: 'Sanza is a popular snack across many Muslim-majority communities, especially during holidays.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Youxiang" (油香) is a traditional fried bread of which group?',
-            options: ['Hui', 'Uyghur', 'Kazakh', 'Dongxiang'],
-            correct: 0,
-            knowledge: 'Youxiang is a simple, fried flatbread traditionally eaten by Hui people during religious festivals.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Dagao" (打糕) is a traditional rice cake of which group?',
-            options: ['Korean', 'Manchu', 'Mongol', 'Xibe'],
-            correct: 0,
-            knowledge: 'Korean people make dagao by pounding steamed rice, often for holidays and celebrations.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Milk skin, butter, cheese, and curds" are traditional dairy products of which group?',
-            options: ['Kazakh', 'Mongol', 'Uyghur', 'Kyrgyz'],
-            correct: 0,
-            knowledge: 'Kazakh nomads produce a variety of dairy products from mare\'s, cow\'s, and sheep\'s milk.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Mare\'s milk, camel\'s milk, and yogurt" are traditional drinks of which group?',
-            options: ['Kazakh', 'Mongol', 'Uyghur', 'Kyrgyz'],
-            correct: 0,
-            knowledge: 'Kazakh people traditionally consume these fresh and fermented dairy drinks as part of their diet.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Ningming Zhuang Zongzi" is a traditional food of which group?',
-            options: ['Zhuang', 'Han', 'Miao', 'Dong'],
-            correct: 0,
-            knowledge: 'The Zhuang people in Ningming county are known for their distinctive large, pyramid-shaped zongzi.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Phoenix Attire" (凤凰装) is the traditional costume of which group?',
-            options: ['She', 'Miao', 'Yao', 'Tujia'],
-            correct: 0,
-            knowledge: 'The She people\'s traditional attire features intricate phoenix motifs, symbolizing beauty and prosperity.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'Tibetans often wear their chuba (藏袍) with one sleeve off. Why?',
-            options: ['For aesthetics', 'To regulate temperature while working', 'To show respect',
-                'To prepare for dancing'
-            ],
-            correct: 1,
-            knowledge: 'The chuba is a thick robe. Removing one sleeve allows for easier movement and temperature control.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'Which of these musical instruments was introduced to the Han from minority regions?',
-            options: ['Pipa', 'Piano', 'Suona', 'Erhu'],
-            correct: 0,
-            knowledge: 'The pipa, a pear-shaped lute, originated in Central Asia and was brought to China via the Silk Road.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The Peacock Dance is a traditional dance of which group?',
-            options: ['Dai', 'Yi', 'Bai', 'Hani'],
-            correct: 0,
-            knowledge: 'The Dai people are known for their graceful Peacock Dance, which mimics the movements of the bird.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The Long Drum Dance is a traditional dance of which group?',
-            options: ['Korean', 'Mongol', 'Tibetan', 'Uyghur'],
-            correct: 0,
-            knowledge: 'Korean people perform the Long Drum Dance with large, barrel-shaped drums at celebrations.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The traditional instrument of the Mongols is the:',
-            options: ['Morin khuur', 'Dombra', 'Rawap', 'Lusheng'],
-            correct: 0,
-            knowledge: 'The morin khuur, or horse-head fiddle, is the most iconic instrument of Mongolian music.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'Miao traditional costumes are most famous for their elaborate:',
-            options: ['Silver ornaments', 'Gold ornaments', 'Jade ornaments', 'Pearls'],
-            correct: 0,
-            knowledge: 'Miao silverwork is renowned for its intricate designs and is worn as jewelry and ceremonial regalia.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'Uyghur men often wear which type of traditional headwear?',
-            options: ['Embroidered cap', 'Felt hat', 'Leather hat', 'Straw hat'],
-            correct: 0,
-            knowledge: 'The Uyghur embroidered cap (多帕) is a symbol of cultural identity and is worn by men and women.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Atlas silk" (艾德莱斯绸) is a traditional fabric of which group?',
-            options: ['Uyghur', 'Uzbek', 'Tajik', 'Kyrgyz'],
-            correct: 0,
-            knowledge: 'Uyghur women weave and wear Atlas silk, known for its bright colors and floral patterns.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The Hand Drum Dance (手鼓舞) is a traditional dance of which group?',
-            options: ['Uyghur', 'Tajik', 'Uzbek', 'Kyrgyz'],
-            correct: 0,
-            knowledge: 'The Uyghur Hand Drum Dance features a small tambourine-like drum and is performed at festivities.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Springboard" (跳板) is a traditional sport of which group?',
-            options: ['Korean', 'Mongol', 'Manchu', 'Xibe'],
-            correct: 0,
-            knowledge: 'Korean women traditionally perform on the springboard, a playful test of balance and agility.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Guozhuang" Dance (锅庄舞) is a traditional dance of which group?',
-            options: ['Tibetan', 'Mongol', 'Yi', 'Qiang'],
-            correct: 0,
-            knowledge: 'Tibetans perform the Guozhuang dance in a circle, often at festivals and gatherings.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The "Phoenix Attire" headpiece symbolizes which of the following?',
-            options: ['Phoenix bun', 'Phoenix crown', 'Phoenix hairpin', 'Phoenix tail'],
-            correct: 0,
-            knowledge: 'The She people\'s phoenix attire includes a distinctive headpiece resembling a phoenix bun.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The Mongolian traditional belt serves what primary purpose?',
-            options: ['Windproof and cold-resistant', 'Decorative', 'Symbol of status', 'Convenient for riding'],
-            correct: 3,
-            knowledge: 'The belt secures the deel (robe) and provides back support during long hours of horseback riding.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'Dai women traditionally wear which type of skirt?',
-            options: ['Tube skirt', 'Long robe', 'Cheongsam', 'Pleated skirt'],
-            correct: 0,
-            knowledge: 'The Dai tube skirt (筒裙) is a long, straight skirt that fits snugly around the body.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'Tibetan men traditionally wear which type of garment?',
-            options: ['Chuba', 'Long robe', 'Short jacket', 'Magua'],
-            correct: 0,
-            knowledge: 'The Tibetan chuba is a thick, heavy robe worn by both men and women for warmth.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'Uyghur women traditionally wear which type of dress?',
-            options: ['Atlas silk dress', 'Cheongsam', 'Tube skirt', 'Pleated skirt'],
-            correct: 0,
-            knowledge: 'Uyghur women\'s dresses are often made from Atlas silk, known for its bright, flowing patterns.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The Lusheng is a traditional instrument of which groups?',
-            options: ['Miao & Dong', 'Yi & Bai', 'Yao & Tujia', 'Hani & Lahu'],
-            correct: 0,
-            knowledge: 'The Miao and Dong are famous for their Lusheng, a multi-piped reed instrument used in festivals.'
-        }, {
-            category: 'Clothing & Art',
-            question: 'The Dombra is a traditional instrument of which group?',
-            options: ['Kazakh', 'Kyrgyz', 'Uyghur', 'Tajik'],
-            correct: 0,
-            knowledge: 'The Kazakh dombra is a long-necked string instrument used to accompany songs and epic poems.'
-        },
-        // ============================================================
-        // Additional questions to reach 140+
-        // ============================================================
-        {
-            category: 'Food & Drink',
-            question: '"Nang" (馕) is a staple bread of which groups?',
-            options: ['Uyghur & Kazakh', 'Tibetan & Mongol', 'Han & Manchu', 'Zhuang & Miao'],
-            correct: 0,
-            knowledge: 'Naan-like bread baked in clay ovens is a daily staple for Uyghur and Kazakh communities.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Mare\'s milk wine" (马奶酒) is a traditional drink of which group?',
-            options: ['Mongol', 'Kazakh', 'Kyrgyz', 'All of the above'],
-            correct: 3,
-            knowledge: 'Mare\'s milk wine (koumiss) is a lightly fermented beverage enjoyed by many nomadic pastoralists.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Thangka" painting is a traditional art form of which group?',
-            options: ['Tibetan', 'Mongol', 'Han', 'Manchu'],
-            correct: 0,
-            knowledge: 'Thangkas are intricate Tibetan Buddhist paintings on cotton or silk, often depicting deities and mandalas.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Batik" (蜡染) is a traditional textile art of which groups?',
-            options: ['Miao & Buyei', 'Han & Manchu', 'Tibetan & Mongol', 'Uyghur & Kazakh'],
-            correct: 0,
-            knowledge: 'The Miao and Buyei are renowned for their intricate batik designs using wax and natural indigo dyes.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Midsummer Festival" (仲夏节) is a traditional celebration of which group?',
-            options: ['Russian', 'Tatar', 'Uzbek', 'Kazakh'],
-            correct: 0,
-            knowledge: 'The Russian community in China celebrates the Midsummer Festival with bonfires and traditional dances.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Borscht" (罗宋汤) is a traditional soup of which group?',
-            options: ['Russian', 'Uyghur', 'Kazakh', 'Tatar'],
-            correct: 0,
-            knowledge: 'Russian people in China make borscht, a beetroot and cabbage soup, a staple of their cuisine.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Ballet" is a traditional performance art of which group?',
-            options: ['Russian', 'Uyghur', 'Kazakh', 'Tatar'],
-            correct: 0,
-            knowledge: 'The Russian community has preserved classical ballet traditions in China, especially in Xinjiang.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Easter" is a traditional religious holiday of which group?',
-            options: ['Russian', 'Hui', 'Uyghur', 'Kazakh'],
-            correct: 0,
-            knowledge: 'Russian Orthodox Christians celebrate Easter with colorful eggs and traditional foods.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Pilaf" (抓饭) is a traditional dish of which Central Asian groups?',
-            options: ['Uyghur & Uzbek', 'Tibetan & Mongol', 'Han & Manchu', 'Zhuang & Miao'],
-            correct: 0,
-            knowledge: 'Pilaf, a rice dish cooked with meat and carrots, is a signature dish of Uyghur and Uzbek cuisine.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Embroidered skullcap" (绣花帽) is a traditional hat of which group?',
-            options: ['Uyghur', 'Kazakh', 'Kyrgyz', 'Tajik'],
-            correct: 0,
-            knowledge: 'Uyghur men and women wear beautiful embroidered skullcaps as part of their traditional attire.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Nowruz" is the Persian New Year celebrated by which groups?',
-            options: ['Kazakh, Kyrgyz, Uzbek, Tajik', 'Mongol, Manchu, Han', 'Tibetan, Monba, Lhoba',
-                'Zhuang, Miao, Dong'
-            ],
-            correct: 0,
-            knowledge: 'Nowruz is celebrated on the spring equinox by many Central Asian peoples, including Kazakhs, Kyrgyz, Uzbeks, and Tajiks.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Manti" is a traditional dumpling of which groups?',
-            options: ['Uyghur & Kazakh', 'Tibetan & Mongol', 'Han & Manchu', 'Zhuang & Miao'],
-            correct: 0,
-            knowledge: 'Manti are large, steamed dumplings filled with meat and onions, popular among Uyghur and Kazakh communities.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Embroidery" is a traditional folk art of which groups?',
-            options: ['Miao & Yi', 'Han & Manchu', 'Tibetan & Mongol', 'All of the above'],
-            correct: 3,
-            knowledge: 'Embroidery is a widespread folk art across many ethnic groups, each with its own distinctive styles and motifs.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Nadam Fair" is a traditional Mongolian festival that includes which activities?',
-            options: ['Horse racing, archery, wrestling', 'Dancing, singing, feasting', 'Rowing, swimming, diving',
-                'Chess, card games, dice'
-            ],
-            correct: 0,
-            knowledge: 'The Nadam Fair features the "Three Manly Games" which test the physical skills of Mongolian men.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Boortsog" is a traditional fried pastry of which group?',
-            options: ['Kazakh', 'Mongol', 'Kyrgyz', 'All of the above'],
-            correct: 3,
-            knowledge: 'Boortsog are small, fried pieces of dough, often served with tea or as a snack among Turkic and Mongol nomads.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Morin khuur" (horse-head fiddle) is a traditional instrument of which group?',
-            options: ['Mongol', 'Kazakh', 'Kyrgyz', 'Tajik'],
-            correct: 0,
-            knowledge: 'The morin khuur is the most iconic Mongolian instrument, with a carved horse head on its neck.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Feast of the White Moon" (白月节) is a Mongolian New Year celebration. What is its Mongolian name?',
-            options: ['Tsagaan Sar', 'Naadam', 'Nadun', 'Qagan'],
-            correct: 0,
-            knowledge: 'Tsagaan Sar (White Moon) is the Mongolian Lunar New Year, celebrated with family gatherings and feasting.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Bunny Chow" is a traditional street food from which group?',
-            options: ['Han', 'Zhuang', 'Hui', 'Not a Chinese ethnic food'],
-            correct: 3,
-            knowledge: 'Bunny Chow is a South African street food and is not related to any Chinese ethnic group.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Blue and white porcelain" is a traditional Han Chinese art form. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Blue and white porcelain originated in the Tang and Song dynasties and is one of China\'s most famous exports.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Dragon Boat Festival" is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Dragon Boat Festival, honoring Qu Yuan, is a traditional Han festival celebrated on the 5th day of the 5th lunar month.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Mooncake" is a traditional Han Chinese pastry. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Mooncakes are a traditional Han pastry eaten during the Mid-Autumn Festival.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Chinese opera" originated from the Han Chinese. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Chinese opera, including Peking opera, has its roots in Han culture and theatrical traditions.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Qingming Festival" is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Qingming, or Tomb-Sweeping Day, is a Han tradition for honoring ancestors and spring outings.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Dim sum" is a traditional Han Chinese cuisine. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Dim sum originated in southern China and is a staple of Han Cantonese cuisine.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Cheongsam" (旗袍) is a traditional Han Chinese dress. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The cheongsam is a form-fitting dress that evolved from Manchu and Han influences.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Spring Festival" (春节) is the most important Han Chinese holiday. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Spring Festival, also known as Lunar New Year, is the most significant celebration for Han Chinese.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Noodles" are a traditional Han Chinese staple. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Noodles have been a Han staple for over 2,000 years, with countless regional variations.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Tang suit" is a traditional Han Chinese clothing style. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Tang suit is a modern adaptation of Han traditional wear, often worn during festivals.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Mid-Autumn Festival" is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Mid-Autumn Festival is a Han harvest celebration held on the 15th day of the 8th lunar month.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Hotpot" is a traditional Han Chinese dining style. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Hotpot has been enjoyed by Han Chinese for over a thousand years, especially in cold regions.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Paper cutting" is a traditional Han Chinese folk art. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Paper cutting is a Han folk art used for decorations, especially during festivals like Spring Festival.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Laba Festival" is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Laba Festival, on the 8th day of the 12th lunar month, involves eating Laba porridge, a Han custom.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Jiaozi" (dumplings) are a traditional Han Chinese food. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Jiaozi are an essential Han dish, especially for the Spring Festival, symbolizing wealth and prosperity.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Silk painting" is a traditional Han Chinese art form. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Silk painting has been a Han art for over 2,000 years, with exquisite examples found from the Tang and Song dynasties.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Chongyang Festival" is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Chongyang, or Double Ninth Festival, is a Han tradition of climbing mountains and honoring the elderly.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Tea" is a traditional Han Chinese beverage. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Tea has been cultivated and consumed by Han Chinese for thousands of years, with a rich cultural tradition.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Chinese calligraphy" is a traditional Han Chinese art. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Calligraphy is one of the highest Han art forms, blending poetry, philosophy, and visual aesthetics.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Ghost Festival" (中元节) is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Ghost Festival is a Han tradition for honoring ancestors and spirits on the 15th day of the 7th lunar month.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Tofu" (豆腐) is a traditional Han Chinese food. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Tofu was invented during the Han Dynasty (around 2000 years ago) and is a staple of Han cuisine.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Chinese brush painting" is a traditional Han Chinese art. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Brush painting is a classical Han art form, using ink and watercolor on silk or paper.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Winter Solstice" (冬至) is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Winter Solstice is an important Han festival where families gather and eat tangyuan (glutinous rice balls).'
-        }, {
-            category: 'Food & Drink',
-            question: '"Stinky tofu" is a traditional Han Chinese street food. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Stinky tofu is a fermented snack popular in Han Chinese street food culture, especially in Taiwan and Hunan.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Chinese opera mask" (脸谱) is a traditional Han performing art. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Masks are used in Peking opera to symbolize character traits, a unique Han theatrical tradition.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Lantern Festival" (元宵节) is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Lantern Festival ends the Spring Festival celebrations with lantern displays and tangyuan eating.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Baozi" (包子) is a traditional Han Chinese steamed bun. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Baozi are filled steamed buns that have been a Han staple for centuries.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Chinese embroidery" is a traditional Han Chinese craft. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Chinese embroidery, especially Suzhou embroidery, is a renowned Han craft with thousands of years of history.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Double Seven Festival" (七夕) is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Double Seven Festival is a Han romantic festival celebrating the legend of the Cowherd and the Weaver Girl.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Cantonese cuisine" is a traditional Han Chinese cuisine. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Cantonese cuisine is one of the eight major Han culinary traditions, known for its fresh ingredients.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Jade carving" is a traditional Han Chinese craft. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Jade carving has been a Han art for over 7,000 years, symbolizing beauty, purity, and status.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Tomb-Sweeping Day" (清明) is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Qingming is a Han tradition for cleaning graves and paying respects to ancestors.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Peking duck" is a traditional Han Chinese dish. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Peking duck is a world-famous Han dish from Beijing, with a history dating back to the Yuan Dynasty.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Chinese knot" (中国结) is a traditional Han Chinese craft. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Chinese knot is a decorative Han folk art, symbolizing unity and good fortune.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"New Year\'s Eve" (除夕) is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'New Year\'s Eve is the most important Han family gathering of the year, celebrated with a reunion dinner.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Sichuan cuisine" is a traditional Han Chinese cuisine. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Sichuan cuisine is one of the eight major Han culinary traditions, famous for its bold use of chili and Sichuan peppercorn.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Terracotta" is a traditional Han Chinese sculpture form. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Terracotta Army is a Han Dynasty funerary art tradition, with thousands of life-size clay soldiers.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Dragon Dance" is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Dragon Dance is a Han performance art for festivals, symbolizing power, dignity, and good fortune.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Dim sum" includes which of the following?',
-            options: ['Har gow (shrimp dumpling)', 'Siu mai (pork dumpling)', 'Char siu bao (BBQ pork bun)',
-                'All of the above'
-            ],
-            correct: 3,
-            knowledge: 'Dim sum is a Han Cantonese tradition with a wide variety of small dishes, including dumplings and buns.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Zhejiang embroidery" is a traditional Han Chinese craft. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Zhejiang embroidery is one of the four major Han embroidery styles, known for its fine stitching.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Eight Immortals Festival" is a Han Chinese tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Eight Immortals are a Han Taoist legend, and their festival is celebrated on the 8th day of the 8th lunar month.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Rice wine" (米酒) is a traditional Han Chinese drink. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Rice wine has been brewed by Han Chinese for thousands of years for cooking, ceremonies, and daily drinking.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Cloisonné" (景泰蓝) is a traditional Han Chinese craft. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Cloisonné is a Han metalworking art using enamel, especially popular during the Ming Dynasty.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Chinese Valentines Day" (七夕) is a Han tradition. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'The Qixi Festival is the Han equivalent of Valentine\'s Day, based on the legend of Niulang and Zhinü.'
-        }, {
-            category: 'Food & Drink',
-            question: '"Shumai" (烧卖) is a traditional Han Chinese dumpling. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Shumai are open-topped steamed dumplings, a staple of Han Cantonese dim sum.'
-        }, {
-            category: 'Clothing & Art',
-            question: '"Song dynasty painting" is a traditional Han Chinese art. True or false?',
-            options: ['True', 'False'],
-            correct: 0,
-            knowledge: 'Song Dynasty landscape painting is a landmark Han art form, emphasizing nature and spiritual harmony.'
-            // ============================================================
-// NEW QUESTIONS: Yugur · Tibetan · Mongol (20 questions)
-// ============================================================
-
-{
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'The Yugur people are descendants of which ancient kingdom?',
-    options: ['Uyghur Khaganate', 'Mongol Empire', 'Tibetan Empire', 'Xiongnu'],
-    correct: 0,
-    knowledge: 'The Yugur are descendants of the Uyghur Khaganate that fled to the Hexi Corridor after its collapse in 840 CE.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the traditional Yugur dwelling called?',
-    options: ['Yurt', 'Black tent', 'Mongolian ger', 'Tibetan tent'],
-    correct: 1,
-    knowledge: 'Yugur nomads traditionally live in black yak-hair tents, similar to Tibetan nomads, reflecting their high-altitude pastoral lifestyle.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'Which religion is most commonly practiced by the Yugur people?',
-    options: ['Tibetan Buddhism', 'Islam', 'Shamanism', 'Christianity'],
-    correct: 0,
-    knowledge: 'The Yugur practice Tibetan Buddhism, with some elements of shamanism, reflecting their long history in the Gansu corridor.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'The Yugur language belongs to which language family?',
-    options: ['Turkic', 'Mongolic', 'Tibeto-Burman', 'Sinitic'],
-    correct: 0,
-    knowledge: 'The Yugur language is a Turkic language, closely related to Uyghur, though written in the Tibetan script.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the traditional Yugur headwear for women called?',
-    options: ['Lapel hat', 'White felt hat', 'Red tassel hat', 'Peaked cap'],
-    correct: 2,
-    knowledge: 'Yugur women wear a distinctive red tassel hat (红缨帽) with long silk tassels that symbolize the sun\'s rays.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the most important Tibetan Buddhist festival in Tibet?',
-    options: ['Losar', 'Shoton', 'Monlam', 'Saga Dawa'],
-    correct: 3,
-    knowledge: 'Saga Dawa commemorates the birth, enlightenment, and passing of the Buddha and is the most sacred Tibetan festival.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'The traditional Tibetan butter tea is made with what key ingredients?',
-    options: ['Black tea, yak butter, salt', 'Green tea, milk, sugar', 'Herbal tea, honey, butter', 'Black tea, milk, salt'],
-    correct: 0,
-    knowledge: 'Tibetan butter tea (酥油茶) is made from black tea, yak butter, and salt, providing energy and hydration at high altitudes.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'Tibetan nomads traditionally live in what type of dwelling?',
-    options: ['Black tent', 'Yurt', 'Ger', 'Stone house'],
-    correct: 0,
-    knowledge: 'Tibetan nomads live in black tents (black yak-hair tents) that are lightweight, warm, and easily transportable.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the traditional Tibetan woven rug called?',
-    options: ['Pulu', 'Gaden', 'Khata', 'Thangka'],
-    correct: 0,
-    knowledge: 'Pulu (氆氇) is a traditional Tibetan woolen rug, used as clothing, blankets, and saddle coverings.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'Which animal is most sacred to Tibetan nomads?',
-    options: ['Yak', 'Horse', 'Sheep', 'Goat'],
-    correct: 0,
-    knowledge: 'The yak is sacred to Tibetan nomads, providing food, clothing, shelter, and transportation – it is called the "boat of the plateau."'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the name of the Mongol traditional fermented mare\'s milk?',
-    options: ['Airag', 'Kumis', 'Koumiss', 'All of the above'],
-    correct: 3,
-    knowledge: 'Airag (or kumis) is fermented mare\'s milk, a traditional Mongol drink with a slightly alcoholic, tangy taste.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'The Mongol ger is traditionally covered with what material?',
-    options: ['Felt', 'Canvas', 'Leather', 'Wood'],
-    correct: 0,
-    knowledge: 'Mongol gers are covered with thick felt made from sheep wool, which insulates against both cold and heat.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the name of the traditional Mongol epic poem about Genghis Khan?',
-    options: ['The Secret History of the Mongols', 'Jangar', 'Manas', 'Epic of King Gesar'],
-    correct: 0,
-    knowledge: 'The Secret History of the Mongols is the oldest surviving Mongol literary work and chronicles Genghis Khan\'s life and rise to power.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'Mongol traditional wrestling is called what?',
-    options: ['Bökh', 'Kurash', 'Shuai Jiao', 'Sambo'],
-    correct: 0,
-    knowledge: 'Bökh (蒙古摔跤) is traditional Mongol wrestling, where competitors wear tight leather jackets and boots, and the first to touch the ground loses.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the traditional Mongol instrument with a horse head carved on the neck?',
-    options: ['Morin khuur', 'Dombra', 'Rawap', 'Lusheng'],
-    correct: 0,
-    knowledge: 'The morin khuur (horse-head fiddle) is the most iconic Mongol instrument, used to accompany songs, poems, and rituals.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'The Mongol festival of Tsagaan Sar means what in English?',
-    options: ['White Moon', 'Harvest Moon', 'Golden Moon', 'New Moon'],
-    correct: 0,
-    knowledge: 'Tsagaan Sar (白月节) is the Mongol Lunar New Year, celebrating the coming of spring and the renewal of life.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the traditional Mongol archery bow made from?',
-    options: ['Horn and wood', 'Bamboo and silk', 'Steel and leather', 'Plastic and fiberglass'],
-    correct: 0,
-    knowledge: 'Traditional Mongol composite bows are made from horn, wood, and sinew, combining strength with flexibility for mounted archery.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'Tibetan prayer flags are traditionally hung in what direction?',
-    options: ['From east to west', 'From south to north', 'From top to bottom', 'In a circle'],
-    correct: 0,
-    knowledge: 'Tibetan prayer flags are hung from east to west so the wind carries the prayers and blessings across the land.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'The Tibetan opera, Lhamo, is traditionally performed during which festival?',
-    options: ['Shoton', 'Losar', 'Saga Dawa', 'Monlam'],
-    correct: 0,
-    knowledge: 'Lhamo (藏戏) is performed during the Shoton Festival, depicting Buddhist stories and Tibetan history.'
-}, {
-    category: 'Yugur · Tibetan · Mongol',
-    question: 'What is the traditional Mongol offering to the spirits of the mountains?',
-    options: ['Ovoo', 'Mani stone', 'Prayer flag', 'Chorten'],
-    correct: 0,
-    knowledge: 'An ovoo (敖包) is a pile of stones with prayer flags, used by Mongols as a sacred site for offerings to mountain spirits.'
-},
-        }];
-
-        // ================================================================
-        // 2. QUIZ ENGINE
-        // ================================================================
-
-        // Shuffle the questions so each game is different
-        function shuffleArray(arr) {
-            for (let i = arr.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]];
-            }
-            return arr;
-        }
-
-        // Set up the game with a random subset
-        function getRandomQuestions(count = 10) {
-            const shuffled = shuffleArray([...QUESTIONS]);
-            return shuffled.slice(0, Math.min(count, shuffled.length));
-        }
-
-        // State
-        let currentQuestions = [];
-        let currentIndex = 0;
-        let score = 0;
-        let answered = false;
-        let totalQuestions = 10;
-
-        // DOM refs
-        const quizBox = document.getElementById('quizBox');
-        const questionArea = document.getElementById('questionArea');
-        const resultsArea = document.getElementById('resultsArea');
-        const progressFill = document.getElementById('progressFill');
-        const currentQ = document.getElementById('currentQ');
-        const totalQ = document.getElementById('totalQ');
-        const qNumber = document.getElementById('qNumber');
-        const qText = document.getElementById('qText');
-        const optionsContainer = document.getElementById('optionsContainer');
-        const feedback = document.getElementById('feedback');
-        const feedbackIcon = document.getElementById('feedbackIcon');
-        const feedbackText = document.getElementById('feedbackText');
-        const feedbackKnowledge = document.getElementById('feedbackKnowledge');
-        const nextBtn = document.getElementById('nextBtn');
-        const headerScore = document.getElementById('headerScore');
-
-        // Results refs
-        const finalScore = document.getElementById('finalScore');
-        const finalTotal = document.getElementById('finalTotal');
-        const resultTitle = document.getElementById('resultTitle');
-        const resultDesc = document.getElementById('resultDesc');
-        const restartBtn = document.getElementById('restartBtn');
-
-        // ================================================================
-        // 3. RENDER QUESTION
-        // ================================================================
-
-        function renderQuestion(index) {
-            const q = currentQuestions[index];
-            if (!q) return;
-
-            answered = false;
-            feedback.classList.remove('show', 'correct', 'wrong');
-            nextBtn.classList.remove('show');
-
-            // Progress
-            const progress = ((index) / totalQuestions) * 100;
-            progressFill.style.width = progress + '%';
-            currentQ.textContent = index + 1;
-            totalQ.textContent = totalQuestions;
-
-            // Question
-            qNumber.textContent = `Question ${index + 1} · ${q.category}`;
-            qText.textContent = q.question;
-
-            // Options
-            const letters = ['A', 'B', 'C', 'D'];
-            optionsContainer.innerHTML = '';
-            q.options.forEach((opt, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerHTML = `<span class="letter">${letters[i]}</span> ${opt}`;
-                btn.dataset.index = i;
-                btn.addEventListener('click', () => handleOptionClick(i, btn));
-                optionsContainer.appendChild(btn);
-            });
-
-            // Update header score
-            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
-            headerScore.classList.add('active');
-        }
-
-        // ================================================================
-        // 4. HANDLE ANSWER
-        // ================================================================
-
-        function handleOptionClick(selectedIndex, btn) {
-            if (answered) return;
-            const q = currentQuestions[currentIndex];
-            const isCorrect = selectedIndex === q.correct;
-
-            // Disable all options
-            const allBtns = document.querySelectorAll('.option-btn');
-            allBtns.forEach(b => b.classList.add('disabled'));
-
-            // Highlight correct/wrong
-            allBtns.forEach((b, i) => {
-                if (i === q.correct) b.classList.add('correct');
-                if (i === selectedIndex && !isCorrect) b.classList.add('wrong');
-            });
-
-            // Show feedback
-            feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
-            feedbackIcon.textContent = isCorrect ? '🌿' : '🌱';
-            feedbackText.textContent = isCorrect ?
-                '✅ Exactly! That\'s correct.' :
-                `❌ Actually, the correct answer is "${q.options[q.correct]}".`;
-
-            feedbackKnowledge.innerHTML = `
-                    <strong>🌾 Nomadic Insight:</strong> ${q.knowledge}
-                `;
-
-            if (isCorrect) score++;
-            answered = true;
-
-            // Update score display
-            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
-
-            // Show next button or results
-            if (currentIndex < totalQuestions - 1) {
-                nextBtn.textContent = 'Next Question →';
-                nextBtn.classList.add('show');
-            } else {
-                nextBtn.textContent = 'See Results →';
-                nextBtn.classList.add('show');
-            }
-        }
-
-        // ================================================================
-        // 5. NEXT / RESTART
-        // ================================================================
-
-        function goToNext() {
-            if (currentIndex < totalQuestions - 1) {
-                currentIndex++;
-                renderQuestion(currentIndex);
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            questionArea.style.display = 'none';
-            resultsArea.classList.add('show');
-            progressFill.style.width = '100%';
-
-            finalScore.textContent = score;
-            finalTotal.textContent = totalQuestions;
-
-            const pct = score / totalQuestions;
-            let title, desc;
-            if (pct >= 0.9) {
-                title = '🏆 Steppe Scholar Extraordinaire!';
-                desc = 'You have a deep, remarkable understanding of China\'s diverse cultures. Your knowledge is truly impressive!';
-            } else if (pct >= 0.7) {
-                title = '🌾 Wise Nomad!';
-                desc = 'You know your cultures well! With a bit more exploration, you\'ll be a true expert.';
-            } else if (pct >= 0.5) {
-                title = '🧭 Curious Traveler';
-                desc = 'You\'re on the right path. Keep exploring the rich traditions of China\'s ethnic groups.';
-            } else {
-                title = '🌱 Apprentice Learner';
-                desc = 'Everyone starts somewhere! Take your time and explore the beautiful diversity of China\'s cultures.';
-            }
-
-            resultTitle.textContent = title;
-            resultDesc.textContent = desc;
-
-            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
-        }
-
-        function restartGame() {
-            // Reset state
-            currentQuestions = getRandomQuestions(10);
-            currentIndex = 0;
-            score = 0;
-            answered = false;
-            totalQuestions = currentQuestions.length;
-
-            // Hide results, show question area
-            resultsArea.classList.remove('show');
-            questionArea.style.display = 'block';
-
-            // Render first question
-            renderQuestion(0);
-
-            // Reset header
-            headerScore.textContent = `✦ 0 / ${totalQuestions}`;
-            headerScore.classList.add('active');
-        }
-
-        // ================================================================
-        // 6. EVENT LISTENERS
-        // ================================================================
-
-        nextBtn.addEventListener('click', goToNext);
-        restartBtn.addEventListener('click', restartGame);
-
-        // Keyboard shortcut: press Enter or Space for next
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                if (nextBtn.classList.contains('show')) {
-                    e.preventDefault();
-                    goToNext();
-                }
-            }
-        });
-
-        // ================================================================
-        // 7. START GAME
-        // ================================================================
-
-        // Start with 10 random questions
-        currentQuestions = getRandomQuestions(10);
-        totalQuestions = currentQuestions.length;
-        renderQuestion(0);
-        headerScore.textContent = `✦ 0 / ${totalQuestions}`;
-        headerScore.classList.add('active');
-    </script>
-
-</body>
-</html>
+            category: 'Fest
