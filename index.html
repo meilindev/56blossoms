@@ -44,7 +44,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Layout --- */
         .container {
             max-width: 820px;
             margin: 0 auto;
@@ -149,7 +148,7 @@
             font-weight: 400;
         }
 
-        /* --- Controls Row: Category + Difficulty --- */
+        /* --- Controls Row --- */
         .controls-row {
             display: flex;
             flex-wrap: wrap;
@@ -186,10 +185,6 @@
             box-shadow: 0 0 0 4px rgba(58, 90, 64, 0.10);
         }
 
-        .controls-row select:hover {
-            border-color: var(--clay);
-        }
-
         .controls-row .start-btn {
             background: var(--steppe);
             color: white;
@@ -206,7 +201,6 @@
         .controls-row .start-btn:hover {
             background: var(--moss);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(58, 90, 64, 0.20);
         }
 
         /* --- Quiz Box --- */
@@ -339,17 +333,9 @@
             color: var(--steppe);
         }
 
-        .option-btn.correct .letter {
-            color: var(--steppe);
-        }
-
         .option-btn.wrong {
             background: #F8DDDD;
             border-color: var(--terracotta);
-            color: var(--terracotta);
-        }
-
-        .option-btn.wrong .letter {
             color: var(--terracotta);
         }
 
@@ -564,96 +550,28 @@
 
         /* --- Responsive --- */
         @media (max-width: 640px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .quiz-box {
-                padding: 1.5rem 1.2rem;
-            }
-
-            .question-text {
-                font-size: 1.1rem;
-                min-height: 2.8rem;
-            }
-
-            .options {
-                grid-template-columns: 1fr;
-                gap: 0.6rem;
-            }
-
-            .option-btn {
-                padding: 0.7rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .controls-row select {
-                font-size: 0.75rem;
-                padding: 0.4rem 1rem;
-            }
-
-            .controls-row .start-btn {
-                font-size: 0.75rem;
-                padding: 0.4rem 1.2rem;
-            }
-
-            .progress-text {
-                font-size: 0.7rem;
-            }
-
-            .header-score {
-                font-size: 0.7rem;
-                padding: 0.2rem 0.8rem;
-            }
-
-            .logo {
-                font-size: 1.1rem;
-            }
-
-            .logo small {
-                display: none;
-            }
-
-            .results .score-circle {
-                width: 110px;
-                height: 110px;
-            }
-
-            .results .score-circle .number {
-                font-size: 2.4rem;
-            }
-
-            .results .stars {
-                font-size: 2rem;
-            }
-
-            .results .result-actions button {
-                font-size: 0.8rem;
-                padding: 0.5rem 1.2rem;
-            }
+            .hero h1 { font-size: 2rem; }
+            .quiz-box { padding: 1.5rem 1.2rem; }
+            .question-text { font-size: 1.1rem; min-height: 2.8rem; }
+            .options { grid-template-columns: 1fr; gap: 0.6rem; }
+            .option-btn { padding: 0.7rem 1rem; font-size: 0.85rem; }
+            .controls-row select { font-size: 0.75rem; padding: 0.4rem 1rem; }
+            .controls-row .start-btn { font-size: 0.75rem; padding: 0.4rem 1.2rem; }
+            .progress-text { font-size: 0.7rem; }
+            .header-score { font-size: 0.7rem; padding: 0.2rem 0.8rem; }
+            .logo { font-size: 1.1rem; }
+            .logo small { display: none; }
+            .results .score-circle { width: 110px; height: 110px; }
+            .results .score-circle .number { font-size: 2.4rem; }
+            .results .stars { font-size: 2rem; }
         }
 
         @media (max-width: 400px) {
-            .hero h1 {
-                font-size: 1.6rem;
-            }
-
-            .quiz-box {
-                padding: 1rem;
-            }
-
-            .question-text {
-                font-size: 1rem;
-            }
-
-            .option-btn {
-                font-size: 0.8rem;
-                padding: 0.6rem 0.8rem;
-            }
-
-            .controls-row {
-                gap: 0.4rem;
-            }
+            .hero h1 { font-size: 1.6rem; }
+            .quiz-box { padding: 1rem; }
+            .question-text { font-size: 1rem; }
+            .option-btn { font-size: 0.8rem; padding: 0.6rem 0.8rem; }
+            .controls-row { gap: 0.4rem; }
         }
     </style>
 </head>
@@ -694,7 +612,6 @@
                 <option value="Festivals & Traditions">🎉 Festivals & Traditions</option>
                 <option value="Food & Drink">🍲 Food & Drink</option>
                 <option value="Clothing & Art">👘 Clothing & Art</option>
-                <option value="Yugur · Tibetan · Mongol">🏔️ Yugur · Tibetan · Mongol</option>
                 <option value="Yugur">🏔️ Yugur</option>
                 <option value="Tibetan">🏔️ Tibetan</option>
                 <option value="Mongol">🏔️ Mongol</option>
@@ -772,196 +689,634 @@
     ================================================================ -->
     <script>
         // ================================================================
-        // 1. QUESTION BANK — 166+ questions, 8 categories
+        // 1. QUESTION BANK — 100+ questions across categories
         // ================================================================
 
-        const QUESTIONS = [{
-            category: 'Festivals & Traditions',
-            question: 'The Water-Splashing Festival is the most important celebration of which ethnic group?',
-            options: ['Yi', 'Dai', 'Bai', 'Zhuang'],
-            correct: 1,
-            knowledge: 'The Dai people celebrate their New Year with the Water-Splashing Festival, symbolizing purification and good fortune.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The "Naadam" festival, featuring wrestling, horse racing, and archery, belongs to which group?',
-            options: ['Tibetan', 'Manchu', 'Mongol', 'Korean'],
-            correct: 2,
-            knowledge: 'Naadam means "games" in Mongolian. The "Three Manly Games" are central to Mongol identity.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'Eid al-Fitr (开斋节) is celebrated by which of the following groups?',
-            options: ['Hui', 'Uyghur', 'Kazakh', 'All of the above'],
-            correct: 3,
-            knowledge: 'Eid al-Fitr marks the end of Ramadan and is observed by all Muslim-majority ethnic groups in China.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Torch Festival of the Yi and Bai peoples was originally linked to what?',
-            options: ['Honoring heroes', 'Protecting crops from pests', 'Celebrating harvest', 'Worshiping mountains'],
-            correct: 1,
-            knowledge: 'The Torch Festival originated as a way to light torches to drive away insects and protect the harvest.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Shoton Festival (雪顿节), famous for unveiling giant thangkas, belongs to which group?',
-            options: ['Tibetan', 'Mongol', 'Monba', 'Lhoba'],
-            correct: 0,
-            knowledge: '"Shoton" means "yogurt banquet" in Tibetan. It\'s a time for opera performances and family gatherings.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"March 3rd" (三月三) is a traditional singing festival of which group?',
-            options: ['Miao', 'Dong', 'Zhuang', 'Yao'],
-            correct: 2,
-            knowledge: 'Zhuang people gather to sing folk songs, dance, and hold traditional competitions on this day.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Munao Zongge" (目瑙纵歌), known as the "Ten-Thousand-People Dance," belongs to which group?',
-            options: ['Jingpo', 'Va', 'Hani', 'Jino'],
-            correct: 0,
-            knowledge: 'This grand festival involves thousands dancing together in a massive procession, celebrating unity and harvest.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Harvest Festival (丰收节) is traditionally celebrated by which group?',
-            options: ['Han', 'Gaoshan', 'Zhuang', 'Buyei'],
-            correct: 1,
-            knowledge: 'Gaoshan (Taiwan\'s indigenous peoples) celebrate the harvest with rituals, dancing, and feasting.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'Eid al-Adha (古尔邦节) is celebrated by which groups?',
-            options: ['Hui & Uyghur', 'Tibetan & Mongol', 'Dai & Zhuang', 'Manchu & Korean'],
-            correct: 0,
-            knowledge: 'Eid al-Adha, the "Festival of Sacrifice," is one of the two major Islamic holidays.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Lusheng Festival, featuring reed-pipe music, belongs to which groups?',
-            options: ['Miao & Dong', 'Yi & Bai', 'Yao & Tujia', 'Hani & Lahu'],
-            correct: 0,
-            knowledge: 'The Lusheng is a traditional reed instrument. The Miao and Dong hold large festivals with Lusheng music and dance.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'Which of the following groups does NOT celebrate the Water-Splashing Festival?',
-            options: ['Dai', 'Achang', 'De\'ang', 'Tibetan'],
-            correct: 3,
-            knowledge: 'The Water-Splashing Festival is specific to Tai-speaking peoples (Dai, Achang, De\'ang) in Yunnan.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The "Wangguo" Festival (望果节), celebrating the harvest, belongs to which group?',
-            options: ['Tibetan', 'Monba', 'Lhoba', 'Yugur'],
-            correct: 0,
-            knowledge: 'Tibetan farmers walk around fields with prayer flags and offerings to give thanks for the harvest.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Jumping Flower" Festival (跳花节) is a traditional celebration of which group?',
-            options: ['Miao', 'Buyei', 'Dong', 'Shui'],
-            correct: 0,
-            knowledge: 'Miao people gather to celebrate with singing, dancing, and eating traditional foods like yellow grain wine.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Ox King Festival (牛王节) features the eating of "black rice" (乌饭) and belongs to which group?',
-            options: ['Zhuang', 'Yi', 'Bai', 'Hani'],
-            correct: 0,
-            knowledge: 'The Zhuang people honor their oxen for their role in farming with special foods and rituals.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The "Ganba" Festival (干巴节) is celebrated by which group?',
-            options: ['Yao', 'Miao', 'Dong', 'Tujia'],
-            correct: 0,
-            knowledge: 'The Yao prepare and eat dried wild meat (干巴) during this festival to honor their hunting traditions.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Norouz" (诺劳孜饭) is the New Year celebration of which group?',
-            options: ['Kyrgyz', 'Kazakh', 'Uzbek', 'Tatar'],
-            correct: 0,
-            knowledge: 'Norouz is the Persian New Year, celebrated by many Central Asian Turkic groups including the Kyrgyz.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Sisters\' Festival (姐妹节) features special "sisters\' rice" and belongs to which group?',
-            options: ['Miao', 'Dong', 'Shui', 'Buyei'],
-            correct: 0,
-            knowledge: 'Miao women prepare colorful "sisters\' rice" and exchange gifts during this festival of love and friendship.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Long Street Banquet (长街宴) is a traditional feast of which group?',
-            options: ['Hani', 'Yi', 'Bai', 'Dai'],
-            correct: 0,
-            knowledge: 'The Hani people line up long tables in the streets to share food and celebrate community during their festivals.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Cuotai Ji" (撮泰吉), a ritual to exorcise evil spirits, belongs to which group?',
-            options: ['Yi', 'Miao', 'Dong', 'Tujia'],
-            correct: 0,
-            knowledge: 'This ancient Yi ritual features masked performers and is considered one of China\'s oldest living theatrical traditions.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Qiang New Year (羌年) has been recognized by UNESCO as which?',
-            options: ['Intangible Cultural Heritage', 'World Heritage Site', 'Biosphere Reserve', 'Memory of the World'],
-            correct: 0,
-            knowledge: 'The Qiang New Year was inscribed on UNESCO\'s list of Intangible Cultural Heritage in 2009.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'Dragon Boat Racing originally belonged to which ethnic group?',
-            options: ['Han', 'Miao', 'Dong', 'Zhuang'],
-            correct: 0,
-            knowledge: 'Dragon Boat Racing originated with the Han people as a ritual to honor Qu Yuan, a poet from the Warring States period.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Bathing Festival (沐浴节) is a traditional celebration of which group?',
-            options: ['Tibetan', 'Monba', 'Lhoba', 'Yugur'],
-            correct: 0,
-            knowledge: 'Tibetans believe that taking a bath during this festival cleanses the body and spirit for the coming year.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The "Borrowing Sun" Festival (借霞节) belongs to which group?',
-            options: ['Shui', 'Miao', 'Dong', 'Buyei'],
-            correct: 0,
-            knowledge: 'The Shui people perform rituals to "borrow" the sun\'s light and warmth to ensure a good harvest.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The "Three Manly Games" of Naadam include:',
-            options: ['Horse racing, archery, wrestling', 'Horse racing, singing, dancing', 'Wrestling, archery, chess',
-                'Horse racing, wrestling, polo'
-            ],
-            correct: 0,
-            knowledge: 'Naadam\'s "Three Manly Games" test the skills of Mongolian men in these three traditional disciplines.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'Which of these groups does NOT celebrate Eid al-Fitr?',
-            options: ['Hui', 'Uyghur', 'Kazakh', 'Tibetan'],
-            correct: 3,
-            knowledge: 'Eid al-Fitr is an Islamic holiday, and Tibetan Buddhists do not observe it.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Lantern Festival (元宵节) is a traditional holiday of which group?',
-            options: ['Han', 'Gaoshan', 'Manchu', 'Korean'],
-            correct: 0,
-            knowledge: 'The Lantern Festival marks the end of the Chinese New Year celebrations for the Han people.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Munao Zongge" is usually held in which season?',
-            options: ['Spring', 'Summer', 'Autumn', 'Winter'],
-            correct: 0,
-            knowledge: 'The Jingpo people hold this festival in early spring, often around the 15th day of the first lunar month.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"March 3rd" is also a traditional festival of which other group besides the Zhuang?',
-            options: ['Han', 'Miao', 'Dong', 'Yao'],
-            correct: 0,
-            knowledge: 'In many parts of China, Han Chinese also celebrate the "Double Third" festival with outdoor activities.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Torch Festival usually falls in which month of the lunar calendar?',
-            options: ['June 24', 'July 15', 'August 15', 'May 5'],
-            correct: 0,
-            knowledge: 'The Torch Festival is celebrated on the 24th day of the sixth lunar month.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: 'The Qiang New Year falls on which lunar date?',
-            options: ['October 1', 'September 9', 'August 15', 'July 7'],
-            correct: 0,
-            knowledge: 'The Qiang New Year is celebrated on the 1st day of the tenth lunar month.'
-        }, {
-            category: 'Festivals & Traditions',
-            question: '"Shoton" in Tibetan means:',
-            options: ['Yogurt banquet', 'Snow mountain', 'Prayer flag', 'Harvest'],
-            correct: 0,
-            knowledge: 'Shoton literally translates to "yogurt banquet" as yogurt is consumed abundantly during the festival.'
-        }, {
-            category: 'Fest
+        const QUESTIONS = [
+            // ----- FESTIVALS & TRADITIONS (30+) -----
+            {
+                category: 'Festivals & Traditions',
+                question: 'The Water-Splashing Festival is the most important celebration of which ethnic group?',
+                options: ['Yi', 'Dai', 'Bai', 'Zhuang'],
+                correct: 1,
+                knowledge: 'The Dai people celebrate their New Year with the Water-Splashing Festival, symbolizing purification and good fortune.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: 'The "Naadam" festival, featuring wrestling, horse racing, and archery, belongs to which group?',
+                options: ['Tibetan', 'Manchu', 'Mongol', 'Korean'],
+                correct: 2,
+                knowledge: 'Naadam means "games" in Mongolian. The "Three Manly Games" are central to Mongol identity.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: 'Eid al-Fitr is celebrated by which of the following groups?',
+                options: ['Hui', 'Uyghur', 'Kazakh', 'All of the above'],
+                correct: 3,
+                knowledge: 'Eid al-Fitr marks the end of Ramadan and is observed by all Muslim-majority ethnic groups in China.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: 'The Shoton Festival, famous for unveiling giant thangkas, belongs to which group?',
+                options: ['Tibetan', 'Mongol', 'Monba', 'Lhoba'],
+                correct: 0,
+                knowledge: '"Shoton" means "yogurt banquet" in Tibetan. It\'s a time for opera performances and family gatherings.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: '"March 3rd" is a traditional singing festival of which group?',
+                options: ['Miao', 'Dong', 'Zhuang', 'Yao'],
+                correct: 2,
+                knowledge: 'Zhuang people gather to sing folk songs, dance, and hold traditional competitions on this day.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: '"Munao Zongge", known as the "Ten-Thousand-People Dance," belongs to which group?',
+                options: ['Jingpo', 'Va', 'Hani', 'Jino'],
+                correct: 0,
+                knowledge: 'This grand festival involves thousands dancing together in a massive procession, celebrating unity and harvest.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: 'The Torch Festival of the Yi and Bai peoples was originally linked to what?',
+                options: ['Honoring heroes', 'Protecting crops from pests', 'Celebrating harvest', 'Worshiping mountains'],
+                correct: 1,
+                knowledge: 'The Torch Festival originated as a way to light torches to drive away insects and protect the harvest.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: 'The Harvest Festival is traditionally celebrated by which group?',
+                options: ['Han', 'Gaoshan', 'Zhuang', 'Buyei'],
+                correct: 1,
+                knowledge: 'Gaoshan (Taiwan\'s indigenous peoples) celebrate the harvest with rituals, dancing, and feasting.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: 'Which of these groups does NOT celebrate Eid al-Fitr?',
+                options: ['Hui', 'Uyghur', 'Kazakh', 'Tibetan'],
+                correct: 3,
+                knowledge: 'Eid al-Fitr is an Islamic holiday, and Tibetan Buddhists do not observe it.'
+            }, {
+                category: 'Festivals & Traditions',
+                question: 'The "Three Manly Games" of Naadam include:',
+                options: ['Horse racing, archery, wrestling', 'Horse racing, singing, dancing', 'Wrestling, archery, chess',
+                    'Horse racing, wrestling, polo'
+                ],
+                correct: 0,
+                knowledge: 'Naadam\'s "Three Manly Games" test the skills of Mongolian men in these three traditional disciplines.'
+            },
+            // ----- FOOD & DRINK (20+) -----
+            {
+                category: 'Food & Drink',
+                question: 'Tibetan hosts often welcome guests with which traditional drink?',
+                options: ['Mare\'s milk', 'Barley wine', 'Rice wine', 'Grape wine'],
+                correct: 1,
+                knowledge: 'Tibetan barley wine is a staple at gatherings and is offered to guests as a sign of respect.'
+            }, {
+                category: 'Food & Drink',
+                question: 'Which of these is a traditional Uyghur dish?',
+                options: ['Roast lamb', 'Pilaf', 'Naan bread', 'All of the above'],
+                correct: 3,
+                knowledge: 'Uyghur cuisine is known for roast lamb, pilaf, and naan, reflecting Central Asian influences.'
+            }, {
+                category: 'Food & Drink',
+                question: '"Sachima" is a traditional pastry of which group?',
+                options: ['Manchu', 'Hui', 'Mongol', 'Uyghur'],
+                correct: 0,
+                knowledge: 'Sachima is a sweet, crispy pastry that originated with the Manchu people.'
+            }, {
+                category: 'Food & Drink',
+                question: 'Which of these is NOT typically Korean cuisine?',
+                options: ['Cold noodles', 'Kimchi', 'Rice cakes', 'Butter tea'],
+                correct: 3,
+                knowledge: 'Butter tea is Tibetan, not Korean. Korean cold noodles, kimchi, and rice cakes are iconic.'
+            }, {
+                category: 'Food & Drink',
+                question: '"Sour Fish Soup" is a classic dish of which group?',
+                options: ['Miao', 'Dong', 'Tujia', 'Yao'],
+                correct: 0,
+                knowledge: 'Miao people are known for their sour fish soup, which uses fermented ingredients for a tangy flavor.'
+            }, {
+                category: 'Food & Drink',
+                question: '"Five-Colored Sticky Rice" is a traditional dish of which group?',
+                options: ['Zhuang', 'Miao', 'Dong', 'Buyei'],
+                correct: 0,
+                knowledge: 'Zhuang people use natural plant dyes to color sticky rice in five colors for festivals.'
+            }, {
+                category: 'Food & Drink',
+                question: '"Hand-Grabbed Mutton" is beloved by which groups?',
+                options: ['Mongol & Kazakh', 'Tibetan & Monba', 'Manchu & Xibe', 'Hui & Uyghur'],
+                correct: 0,
+                knowledge: 'Nomadic pastoral groups eat mutton boiled with minimal seasoning, served with hands for a rustic meal.'
+            }, {
+                category: 'Food & Drink',
+                question: '"Dagao" is a traditional rice cake of which group?',
+                options: ['Korean', 'Manchu', 'Mongol', 'Xibe'],
+                correct: 0,
+                knowledge: 'Korean people make dagao by pounding steamed rice, often for holidays and celebrations.'
+            },
+            // ----- CLOTHING & ART (15+) -----
+            {
+                category: 'Clothing & Art',
+                question: '"Phoenix Attire" is the traditional costume of which group?',
+                options: ['She', 'Miao', 'Yao', 'Tujia'],
+                correct: 0,
+                knowledge: 'The She people\'s traditional attire features intricate phoenix motifs, symbolizing beauty and prosperity.'
+            }, {
+                category: 'Clothing & Art',
+                question: 'The Peacock Dance is a traditional dance of which group?',
+                options: ['Dai', 'Yi', 'Bai', 'Hani'],
+                correct: 0,
+                knowledge: 'The Dai people are known for their graceful Peacock Dance, which mimics the movements of the bird.'
+            }, {
+                category: 'Clothing & Art',
+                question: 'The traditional instrument of the Mongols is the:',
+                options: ['Morin khuur', 'Dombra', 'Rawap', 'Lusheng'],
+                correct: 0,
+                knowledge: 'The morin khuur, or horse-head fiddle, is the most iconic instrument of Mongolian music.'
+            }, {
+                category: 'Clothing & Art',
+                question: 'The Long Drum Dance is a traditional dance of which group?',
+                options: ['Korean', 'Mongol', 'Tibetan', 'Uyghur'],
+                correct: 0,
+                knowledge: 'Korean people perform the Long Drum Dance with large, barrel-shaped drums at celebrations.'
+            }, {
+                category: 'Clothing & Art',
+                question: '"Thangka" painting is a traditional art form of which group?',
+                options: ['Tibetan', 'Mongol', 'Han', 'Manchu'],
+                correct: 0,
+                knowledge: 'Thangkas are intricate Tibetan Buddhist paintings on cotton or silk, often depicting deities and mandalas.'
+            },
+            // ----- YUGUR (5+) -----
+            {
+                category: 'Yugur',
+                question: 'The Yugur people are descendants of which ancient kingdom?',
+                options: ['Uyghur Khaganate', 'Mongol Empire', 'Tibetan Empire', 'Xiongnu'],
+                correct: 0,
+                knowledge: 'The Yugur are descendants of the Uyghur Khaganate that fled to the Hexi Corridor after its collapse in 840 CE.'
+            }, {
+                category: 'Yugur',
+                question: 'What is the traditional Yugur dwelling called?',
+                options: ['Yurt', 'Black tent', 'Mongolian ger', 'Tibetan tent'],
+                correct: 1,
+                knowledge: 'Yugur nomads traditionally live in black yak-hair tents, similar to Tibetan nomads.'
+            }, {
+                category: 'Yugur',
+                question: 'Which religion is most commonly practiced by the Yugur people?',
+                options: ['Tibetan Buddhism', 'Islam', 'Shamanism', 'Christianity'],
+                correct: 0,
+                knowledge: 'The Yugur practice Tibetan Buddhism, with some elements of shamanism.'
+            }, {
+                category: 'Yugur',
+                question: 'The Yugur language belongs to which language family?',
+                options: ['Turkic', 'Mongolic', 'Tibeto-Burman', 'Sinitic'],
+                correct: 0,
+                knowledge: 'The Yugur language is a Turkic language, closely related to Uyghur, though written in the Tibetan script.'
+            }, {
+                category: 'Yugur',
+                question: 'What is the traditional Yugur headwear for women called?',
+                options: ['Lapel hat', 'White felt hat', 'Red tassel hat', 'Peaked cap'],
+                correct: 2,
+                knowledge: 'Yugur women wear a distinctive red tassel hat with long silk tassels that symbolize the sun\'s rays.'
+            },
+            // ----- TIBETAN (8+) -----
+            {
+                category: 'Tibetan',
+                question: 'What is the most important Tibetan Buddhist festival in Tibet?',
+                options: ['Losar', 'Shoton', 'Monlam', 'Saga Dawa'],
+                correct: 3,
+                knowledge: 'Saga Dawa commemorates the birth, enlightenment, and passing of the Buddha and is the most sacred Tibetan festival.'
+            }, {
+                category: 'Tibetan',
+                question: 'The traditional Tibetan butter tea is made with what key ingredients?',
+                options: ['Black tea, yak butter, salt', 'Green tea, milk, sugar', 'Herbal tea, honey, butter',
+                    'Black tea, milk, salt'
+                ],
+                correct: 0,
+                knowledge: 'Tibetan butter tea is made from black tea, yak butter, and salt, providing energy and hydration at high altitudes.'
+            }, {
+                category: 'Tibetan',
+                question: 'Tibetan nomads traditionally live in what type of dwelling?',
+                options: ['Black tent', 'Yurt', 'Ger', 'Stone house'],
+                correct: 0,
+                knowledge: 'Tibetan nomads live in black tents that are lightweight, warm, and easily transportable.'
+            }, {
+                category: 'Tibetan',
+                question: 'What is the traditional Tibetan woven rug called?',
+                options: ['Pulu', 'Gaden', 'Khata', 'Thangka'],
+                correct: 0,
+                knowledge: 'Pulu is a traditional Tibetan woolen rug, used as clothing, blankets, and saddle coverings.'
+            }, {
+                category: 'Tibetan',
+                question: 'Which animal is most sacred to Tibetan nomads?',
+                options: ['Yak', 'Horse', 'Sheep', 'Goat'],
+                correct: 0,
+                knowledge: 'The yak is sacred to Tibetan nomads, providing food, clothing, shelter, and transportation.'
+            }, {
+                category: 'Tibetan',
+                question: 'Tibetan prayer flags are traditionally hung in what direction?',
+                options: ['East to west', 'South to north', 'Top to bottom', 'In a circle'],
+                correct: 0,
+                knowledge: 'Tibetan prayer flags are hung from east to west so the wind carries the prayers and blessings across the land.'
+            }, {
+                category: 'Tibetan',
+                question: 'The Tibetan opera, Lhamo, is traditionally performed during which festival?',
+                options: ['Shoton', 'Losar', 'Saga Dawa', 'Monlam'],
+                correct: 0,
+                knowledge: 'Lhamo is performed during the Shoton Festival, depicting Buddhist stories and Tibetan history.'
+            }, {
+                category: 'Tibetan',
+                question: 'Tibetans often wear their chuba with one sleeve off. Why?',
+                options: ['For aesthetics', 'To regulate temperature while working', 'To show respect',
+                    'To prepare for dancing'
+                ],
+                correct: 1,
+                knowledge: 'The chuba is a thick robe. Removing one sleeve allows for easier movement and temperature control.'
+            },
+            // ----- MONGOL (10+) -----
+            {
+                category: 'Mongol',
+                question: 'What is the name of the Mongol traditional fermented mare\'s milk?',
+                options: ['Airag', 'Kumis', 'Koumiss', 'All of the above'],
+                correct: 3,
+                knowledge: 'Airag (or kumis) is fermented mare\'s milk, a traditional Mongol drink with a slightly alcoholic, tangy taste.'
+            }, {
+                category: 'Mongol',
+                question: 'The Mongol ger is traditionally covered with what material?',
+                options: ['Felt', 'Canvas', 'Leather', 'Wood'],
+                correct: 0,
+                knowledge: 'Mongol gers are covered with thick felt made from sheep wool, which insulates against both cold and heat.'
+            }, {
+                category: 'Mongol',
+                question: 'Mongol traditional wrestling is called what?',
+                options: ['Bökh', 'Kurash', 'Shuai Jiao', 'Sambo'],
+                correct: 0,
+                knowledge: 'Bökh is traditional Mongol wrestling, where competitors wear tight leather jackets and boots.'
+            }, {
+                category: 'Mongol',
+                question: 'What is the traditional Mongol instrument with a horse head carved on the neck?',
+                options: ['Morin khuur', 'Dombra', 'Rawap', 'Lusheng'],
+                correct: 0,
+                knowledge: 'The morin khuur is the most iconic Mongol instrument, used to accompany songs, poems, and rituals.'
+            }, {
+                category: 'Mongol',
+                question: 'The Mongol festival of Tsagaan Sar means what in English?',
+                options: ['White Moon', 'Harvest Moon', 'Golden Moon', 'New Moon'],
+                correct: 0,
+                knowledge: 'Tsagaan Sar is the Mongol Lunar New Year, celebrating the coming of spring and the renewal of life.'
+            }, {
+                category: 'Mongol',
+                question: 'What is the traditional Mongol archery bow made from?',
+                options: ['Horn and wood', 'Bamboo and silk', 'Steel and leather', 'Plastic and fiberglass'],
+                correct: 0,
+                knowledge: 'Traditional Mongol composite bows are made from horn, wood, and sinew, combining strength with flexibility.'
+            }, {
+                category: 'Mongol',
+                question: 'What is the traditional Mongol offering to the spirits of the mountains?',
+                options: ['Ovoo', 'Mani stone', 'Prayer flag', 'Chorten'],
+                correct: 0,
+                knowledge: 'An ovoo is a pile of stones with prayer flags, used by Mongols as a sacred site for offerings to mountain spirits.'
+            }, {
+                category: 'Mongol',
+                question: 'Mongols traditionally drink what kind of tea?',
+                options: ['Green tea', 'Black tea', 'Milk tea', 'Butter tea'],
+                correct: 2,
+                knowledge: 'Milk tea is a daily staple for many nomads, often made with black tea and fresh or dried milk.'
+            }, {
+                category: 'Mongol',
+                question: 'What is the name of the traditional Mongol epic about Genghis Khan?',
+                options: ['The Secret History of the Mongols', 'Jangar', 'Manas', 'Epic of King Gesar'],
+                correct: 0,
+                knowledge: 'The Secret History of the Mongols is the oldest surviving Mongol literary work.'
+            }, {
+                category: 'Mongol',
+                question: 'The "Naadam" festival is celebrated by which group?',
+                options: ['Mongol', 'Tibetan', 'Manchu', 'Korean'],
+                correct: 0,
+                knowledge: 'Naadam means "games" in Mongolian and is the most important annual festival for Mongol people.'
+            }
+        ];
+
+        // ================================================================
+        // 2. QUIZ ENGINE
+        // ================================================================
+
+        // Shuffle function
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Get questions based on category and difficulty
+        function getFilteredQuestions(category, difficulty) {
+            let filtered = QUESTIONS;
+
+            // Filter by category
+            if (category !== 'all') {
+                filtered = filtered.filter(q => q.category === category);
+            }
+
+            // If no questions in category, fall back to all
+            if (filtered.length === 0) {
+                filtered = QUESTIONS;
+            }
+
+            // Shuffle and return
+            return shuffleArray([...filtered]);
+        }
+
+        // State
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 10;
+        let streak = 0;
+        let currentCategory = 'all';
+        let currentDifficulty = 'medium';
+
+        // DOM refs
+        const questionArea = document.getElementById('questionArea');
+        const resultsArea = document.getElementById('resultsArea');
+        const progressFill = document.getElementById('progressFill');
+        const currentQ = document.getElementById('currentQ');
+        const totalQ = document.getElementById('totalQ');
+        const qNumber = document.getElementById('qNumber');
+        const qText = document.getElementById('qText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const feedbackIcon = document.getElementById('feedbackIcon');
+        const feedbackText = document.getElementById('feedbackText');
+        const feedbackKnowledge = document.getElementById('feedbackKnowledge');
+        const nextBtn = document.getElementById('nextBtn');
+        const headerScore = document.getElementById('headerScore');
+        const streakDisplay = document.getElementById('streakDisplay');
+        const streakCount = document.getElementById('streakCount');
+
+        // Results refs
+        const finalScore = document.getElementById('finalScore');
+        const finalTotal = document.getElementById('finalTotal');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultDesc = document.getElementById('resultDesc');
+        const starsDisplay = document.getElementById('starsDisplay');
+        const restartBtn = document.getElementById('restartBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        const startBtn = document.getElementById('startBtn');
+        const categorySelect = document.getElementById('categorySelect');
+        const difficultySelect = document.getElementById('difficultySelect');
+
+        // ================================================================
+        // 3. RENDER QUESTION
+        // ================================================================
+
+        function renderQuestion(index) {
+            const q = currentQuestions[index];
+            if (!q) return;
+
+            answered = false;
+            feedback.classList.remove('show', 'correct', 'wrong');
+            nextBtn.classList.remove('show');
+
+            // Progress
+            const progress = ((index) / totalQuestions) * 100;
+            progressFill.style.width = progress + '%';
+            currentQ.textContent = index + 1;
+            totalQ.textContent = totalQuestions;
+
+            // Question
+            qNumber.textContent = `Question ${index + 1} · ${q.category}`;
+            qText.textContent = q.question;
+
+            // Options
+            const letters = ['A', 'B', 'C', 'D'];
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="letter">${letters[i]}</span> ${opt}`;
+                btn.dataset.index = i;
+                btn.addEventListener('click', () => handleOptionClick(i, btn));
+                optionsContainer.appendChild(btn);
+            });
+
+            // Update header score
+            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
+            headerScore.classList.add('active');
+
+            // Update streak
+            if (streak > 0) {
+                streakDisplay.classList.add('show');
+                streakCount.textContent = streak;
+            } else {
+                streakDisplay.classList.remove('show');
+            }
+        }
+
+        // ================================================================
+        // 4. HANDLE ANSWER
+        // ================================================================
+
+        function handleOptionClick(selectedIndex, btn) {
+            if (answered) return;
+            const q = currentQuestions[currentIndex];
+            const isCorrect = selectedIndex === q.correct;
+
+            // Disable all options
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.classList.add('disabled'));
+
+            // Highlight correct/wrong
+            allBtns.forEach((b, i) => {
+                if (i === q.correct) b.classList.add('correct');
+                if (i === selectedIndex && !isCorrect) b.classList.add('wrong');
+            });
+
+            // Show feedback
+            feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+            feedbackIcon.textContent = isCorrect ? '🌿' : '🌱';
+            feedbackText.textContent = isCorrect ?
+                '✅ Exactly! That\'s correct.' :
+                `❌ Actually, the correct answer is "${q.options[q.correct]}".`;
+
+            feedbackKnowledge.innerHTML = `
+                    <strong>🌾 Nomadic Insight:</strong> ${q.knowledge}
+                `;
+
+            if (isCorrect) {
+                score++;
+                streak++;
+            } else {
+                streak = 0;
+            }
+
+            answered = true;
+
+            // Update score display
+            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
+
+            // Update streak
+            if (streak > 1) {
+                streakDisplay.classList.add('show');
+                streakCount.textContent = streak;
+            } else {
+                streakDisplay.classList.remove('show');
+            }
+
+            // Show next button or results
+            if (currentIndex < totalQuestions - 1) {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.classList.add('show');
+            } else {
+                nextBtn.textContent = 'See Results →';
+                nextBtn.classList.add('show');
+            }
+        }
+
+        // ================================================================
+        // 5. NEXT / RESULTS / RESTART
+        // ================================================================
+
+        function goToNext() {
+            if (currentIndex < totalQuestions - 1) {
+                currentIndex++;
+                renderQuestion(currentIndex);
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            questionArea.style.display = 'none';
+            resultsArea.classList.add('show');
+            progressFill.style.width = '100%';
+
+            finalScore.textContent = score;
+            finalTotal.textContent = totalQuestions;
+
+            // Stars
+            const pct = score / totalQuestions;
+            let stars = '⭐';
+            if (pct >= 0.9) stars = '⭐⭐⭐';
+            else if (pct >= 0.7) stars = '⭐⭐';
+            starsDisplay.textContent = stars;
+
+            // Title & Description
+            let title, desc;
+            if (pct >= 0.9) {
+                title = '🏆 Steppe Scholar Extraordinaire!';
+                desc = 'You have a deep, remarkable understanding of China\'s diverse cultures. Your knowledge is truly impressive!';
+            } else if (pct >= 0.7) {
+                title = '🌾 Wise Nomad!';
+                desc = 'You know your cultures well! With a bit more exploration, you\'ll be a true expert.';
+            } else if (pct >= 0.5) {
+                title = '🧭 Curious Traveler';
+                desc = 'You\'re on the right path. Keep exploring the rich traditions of China\'s ethnic groups.';
+            } else {
+                title = '🌱 Apprentice Learner';
+                desc = 'Everyone starts somewhere! Take your time and explore the beautiful diversity of China\'s cultures.';
+            }
+
+            resultTitle.textContent = title;
+            resultDesc.textContent = desc;
+
+            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
+        }
+
+        function startGame() {
+            currentCategory = categorySelect.value;
+            currentDifficulty = difficultySelect.value;
+
+            // Get questions
+            let filtered = getFilteredQuestions(currentCategory, currentDifficulty);
+
+            // Determine number of questions based on difficulty
+            let count = 10;
+            if (currentDifficulty === 'easy') count = 8;
+            else if (currentDifficulty === 'hard') count = 12;
+
+            // If we have fewer questions than count, use all
+            if (filtered.length < count) count = filtered.length;
+
+            currentQuestions = filtered.slice(0, count);
+            currentIndex = 0;
+            score = 0;
+            streak = 0;
+            answered = false;
+            totalQuestions = currentQuestions.length;
+
+            // Hide results, show question area
+            resultsArea.classList.remove('show');
+            questionArea.style.display = 'block';
+
+            // Render first question
+            if (totalQuestions > 0) {
+                renderQuestion(0);
+            } else {
+                // No questions
+                qText.textContent = 'No questions found in this category. Try selecting "All Categories".';
+                optionsContainer.innerHTML = '';
+                feedback.classList.remove('show');
+                nextBtn.classList.remove('show');
+            }
+
+            // Reset header
+            headerScore.textContent = `✦ 0 / ${totalQuestions}`;
+            headerScore.classList.add('active');
+            streakDisplay.classList.remove('show');
+        }
+
+        // ================================================================
+        // 6. SHARE FUNCTION
+        // ================================================================
+
+        function shareScore() {
+            const text = `🌾 I scored ${score}/${totalQuestions} on the Steppe & Sky quiz! Can you beat me?`;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    shareBtn.textContent = '✅ Copied!';
+                    shareBtn.classList.add('copied');
+                    setTimeout(() => {
+                        shareBtn.textContent = '📤 Share Score';
+                        shareBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            } else {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                shareBtn.textContent = '✅ Copied!';
+                shareBtn.classList.add('copied');
+                setTimeout(() => {
+                    shareBtn.textContent = '📤 Share Score';
+                    shareBtn.classList.remove('copied');
+                }, 2000);
+            }
+        }
+
+        // ================================================================
+        // 7. EVENT LISTENERS
+        // ================================================================
+
+        nextBtn.addEventListener('click', goToNext);
+        restartBtn.addEventListener('click', startGame);
+        startBtn.addEventListener('click', startGame);
+        shareBtn.addEventListener('click', shareScore);
+
+        // Keyboard: Enter/Space for next
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (nextBtn.classList.contains('show')) {
+                    e.preventDefault();
+                    goToNext();
+                }
+            }
+        });
+
+        // ================================================================
+        // 8. START THE GAME
+        // ================================================================
+
+        startGame();
+    </script>
+
+</body>
+</html>
