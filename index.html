@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌾 Nomadic Knowledge Atlas — New Nomad Institute</title>
+    <title>🌿 游牧智识 · 中华民族互动图鉴</title>
+    <!-- ECharts CDN -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js">
     </script>
     <style>
-        /* ============================================================
-                   NOMADIC STEPPE THEME — Earthy · Scholarly · Rooted
-                   ============================================================ */
+        /* --- 全局重置 & 配色 (取自新游牧研究所风格) --- */
         :root {
-            --sand: #D4C5A0;
-            --clay: #8C7A5E;
-            --steppe-green: #2C4A3A;
-            --moss: #4A6B4A;
-            --sage: #A8C4A0;
-            --cream: #F5F2E9;
-            --terracotta: #A05A3A;
-            --gold: #C9A96E;
-            --paper: #FAF7F0;
-            --text-dark: #2A2A1A;
-            --text-muted: #5A5A4A;
-            --shadow: 0 8px 32px rgba(44, 74, 58, 0.10);
+            --color-primary: #1C3D2E;
+            --color-secondary: #4A7856;
+            --color-accent: #9BBF8B;
+            --color-light: #F4F7F0;
+            --color-cream: #FDFBF7;
+            --color-text: #2C3E2E;
+            --color-muted: #5A6E5A;
+            --color-border: #DCE4D6;
             --font-serif: 'Georgia', 'Times New Roman', serif;
-            --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --shadow-card: 0 8px 24px rgba(28, 61, 46, 0.08);
+            --radius-card: 20px;
         }
 
         * {
@@ -39,150 +36,148 @@
 
         body {
             font-family: var(--font-sans);
-            background: var(--paper);
-            color: var(--text-dark);
-            line-height: 1.7;
-            min-height: 100vh;
+            background-color: var(--color-cream);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- Typography --- */
         h1,
         h2,
         h3,
         h4 {
             font-family: var(--font-serif);
             font-weight: 400;
-            letter-spacing: 0.01em;
         }
 
-        /* --- Navigation --- */
-        .nav-header {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* --- 导航栏 --- */
+        .navbar {
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(250, 247, 240, 0.92);
+            background: rgba(253, 251, 247, 0.88);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(140, 122, 94, 0.15);
-            padding: 0.8rem 2rem;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0.8rem 0;
+        }
+
+        .navbar .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.8rem;
         }
 
-        .nav-header .logo {
+        .navbar .logo {
             font-family: var(--font-serif);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            color: var(--steppe-green);
+            color: var(--color-primary);
+            letter-spacing: -0.5px;
         }
-        .nav-header .logo span {
-            color: var(--terracotta);
-            margin-right: 0.3rem;
+
+        .navbar .logo span {
+            color: var(--color-secondary);
         }
-        .nav-header .logo small {
+
+        .navbar .logo small {
             font-size: 0.75rem;
             font-weight: 400;
-            color: var(--text-muted);
             font-family: var(--font-sans);
+            color: var(--color-muted);
             margin-left: 0.5rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 1.8rem;
+            gap: 2rem;
             align-items: center;
             flex-wrap: wrap;
         }
+
         .nav-links a {
+            color: var(--color-muted);
             text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            transition: 0.2s;
+            transition: color 0.2s;
             border-bottom: 2px solid transparent;
             padding-bottom: 0.2rem;
         }
+
         .nav-links a:hover {
-            color: var(--steppe-green);
-            border-bottom-color: var(--terracotta);
-        }
-        .nav-links .cta-link {
-            background: var(--steppe-green);
-            color: white;
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            border-bottom: none;
-        }
-        .nav-links .cta-link:hover {
-            background: var(--moss);
-            color: white;
-            border-bottom: none;
+            color: var(--color-primary);
+            border-bottom-color: var(--color-secondary);
         }
 
-        /* --- Hero --- */
-        .hero {
-            padding: 5rem 2rem 4rem;
-            text-align: center;
-            background: radial-gradient(circle at 20% 30%, #E8E0D0, #D4C5A0, #C4B08A);
-            border-bottom: 6px solid var(--steppe-green);
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::after {
-            content: "⏺";
-            position: absolute;
-            right: -80px;
-            bottom: -120px;
-            font-size: 35rem;
-            color: rgba(44, 74, 58, 0.04);
-            transform: rotate(10deg);
-            pointer-events: none;
-        }
-        .hero .badge {
-            font-family: var(--font-sans);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: var(--terracotta);
+        .nav-links .btn-outline {
+            border: 2px solid var(--color-secondary);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            color: var(--color-secondary);
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            transition: background 0.2s, color 0.2s;
         }
+
+        .nav-links .btn-outline:hover {
+            background: var(--color-secondary);
+            color: white;
+            border-bottom-color: transparent;
+        }
+
+        /* --- 主视觉 (Hero) --- */
+        .hero {
+            padding: 5rem 0 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, #EAF3E5 0%, var(--color-cream) 100%);
+            border-bottom: 1px solid var(--color-border);
+        }
+
         .hero h1 {
-            font-size: 4.2rem;
+            font-size: 3.8rem;
             font-weight: 700;
-            color: var(--steppe-green);
+            color: var(--color-primary);
             line-height: 1.1;
+            max-width: 800px;
+            margin: 0 auto 1rem;
         }
+
         .hero h1 .highlight {
-            background: rgba(255, 255, 255, 0.3);
-            padding: 0 0.3rem;
+            background: rgba(155, 191, 139, 0.25);
+            padding: 0 0.2rem;
             display: inline-block;
         }
+
         .hero p {
             font-size: 1.2rem;
-            max-width: 700px;
-            margin: 1rem auto 0;
-            color: var(--text-muted);
-            font-weight: 400;
+            color: var(--color-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
             font-family: var(--font-serif);
             font-style: italic;
         }
-        .hero .scroll-arrow {
-            margin-top: 2rem;
+
+        .hero .scroll-hint {
             font-size: 2rem;
-            color: var(--steppe-green);
-            animation: bob 2s infinite;
+            color: var(--color-secondary);
+            animation: bob 2.2s infinite;
             cursor: pointer;
             display: inline-block;
         }
+
         @keyframes bob {
             0%,
             100% {
                 transform: translateY(0);
-                opacity: 0.5;
+                opacity: 0.4;
             }
             50% {
                 transform: translateY(10px);
@@ -190,84 +185,91 @@
             }
         }
 
-        /* --- Mission Section --- */
-        .mission {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
+        /* --- 内容区块 (通用) --- */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 2.6rem;
+            color: var(--color-primary);
             text-align: center;
+            margin-bottom: 2.5rem;
         }
-        .mission h2 {
-            font-size: 2.4rem;
-            color: var(--steppe-green);
-            margin-bottom: 1.5rem;
+
+        .section-title span {
+            color: var(--color-secondary);
         }
-        .mission h2 span {
-            color: var(--terracotta);
+
+        .section-sub {
+            text-align: center;
+            max-width: 700px;
+            margin: -1rem auto 2.5rem;
+            color: var(--color-muted);
+            font-size: 1.05rem;
         }
-        .mission p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 800px;
-            margin: 0 auto 1.2rem;
-            line-height: 1.9;
-        }
-        .mission .pillars {
+
+        /* --- 关于 / 使命 --- */
+        .mission-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .mission-text p {
+            font-size: 1.05rem;
+            color: var(--color-text);
+            margin-bottom: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .mission-text strong {
+            color: var(--color-primary);
+        }
+
+        .mission-pillars {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 1.5rem;
-            margin-top: 2.5rem;
         }
-        .mission .pillar {
+
+        .pillar-item {
             background: white;
-            padding: 1.8rem 1.2rem;
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--terracotta);
-            transition: 0.25s;
+            padding: 1.8rem 1.5rem;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            border-left: 4px solid var(--color-secondary);
         }
-        .mission .pillar:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(44, 74, 58, 0.08);
-        }
-        .mission .pillar .icon {
-            font-size: 2.4rem;
+
+        .pillar-item .icon {
+            font-size: 1.8rem;
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
-        .mission .pillar h4 {
+
+        .pillar-item h4 {
             font-family: var(--font-sans);
             font-weight: 700;
             font-size: 1rem;
-            color: var(--steppe-green);
-            letter-spacing: 0.5px;
-        }
-        .mission .pillar p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
-            font-style: normal;
-            font-family: var(--font-sans);
+            color: var(--color-primary);
+            letter-spacing: 0.3px;
         }
 
-        /* --- Atlas Tools --- */
-        .atlas-tools {
-            max-width: 1400px;
-            margin: 1rem auto 0;
-            padding: 0 1.5rem;
+        .pillar-item p {
+            font-size: 0.9rem;
+            color: var(--color-muted);
+            margin-top: 0.2rem;
         }
-        .atlas-header {
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .atlas-header h2 {
-            font-size: 2.6rem;
-            color: var(--steppe-green);
-            font-family: var(--font-serif);
-        }
-        .atlas-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
+
+        /* --- 互动图鉴 (Atlas) 的搜索与选项卡 --- */
+        .atlas-controls {
+            margin-bottom: 2rem;
         }
 
         .search-bar {
@@ -275,33 +277,34 @@
             justify-content: center;
             margin-bottom: 1.2rem;
         }
+
         #searchInput {
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             padding: 0.8rem 1.8rem;
-            border: 2px solid var(--sand);
+            border: 2px solid var(--color-border);
             border-radius: 60px;
             font-size: 1rem;
             background: white;
             outline: none;
-            transition: 0.3s;
-            color: var(--text-dark);
+            transition: border-color 0.25s, box-shadow 0.25s;
             font-family: var(--font-sans);
         }
+
         #searchInput:focus {
-            border-color: var(--steppe-green);
-            box-shadow: 0 0 0 4px rgba(44, 74, 58, 0.12);
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 0 4px rgba(74, 120, 86, 0.15);
         }
 
-        .tabs-container {
+        .tabs {
             display: flex;
             justify-content: center;
             gap: 0.5rem;
             flex-wrap: wrap;
-            border-bottom: 2px solid var(--sand);
+            border-bottom: 2px solid var(--color-border);
             padding-bottom: 0.6rem;
-            margin-bottom: 1.5rem;
         }
+
         .tab-btn {
             background: transparent;
             border: none;
@@ -309,168 +312,182 @@
             border-radius: 40px;
             font-weight: 600;
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: var(--color-muted);
             cursor: pointer;
             transition: 0.25s;
             font-family: var(--font-sans);
         }
+
         .tab-btn:hover {
-            background: var(--sage);
-            color: var(--steppe-green);
-        }
-        .tab-btn.active {
-            background: var(--steppe-green);
-            color: white;
-            box-shadow: 0 4px 16px rgba(44, 74, 58, 0.2);
+            background: var(--color-accent);
+            color: var(--color-primary);
         }
 
-        /* --- Views --- */
+        .tab-btn.active {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: 0 4px 16px rgba(28, 61, 46, 0.15);
+        }
+
+        /* --- 视图容器 --- */
         .view {
             display: none;
-            padding: 0.5rem 0 2rem;
+            padding: 1.5rem 0 0.5rem;
         }
+
         .view.active {
             display: block;
         }
 
-        /* Grid */
+        /* --- 网格视图 (卡片) --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
             gap: 1.5rem;
         }
+
         .card {
             background: white;
-            border-radius: 20px;
+            border-radius: var(--radius-card);
             padding: 1.3rem 1.2rem;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-card);
             cursor: pointer;
             transition: all 0.25s ease;
-            border-bottom: 4px solid var(--sand);
-            border-left: 4px solid var(--sage);
+            border-bottom: 4px solid var(--color-border);
+            border-left: 4px solid var(--color-accent);
         }
+
         .card:hover {
             transform: translateY(-6px);
-            border-bottom-color: var(--steppe-green);
-            border-left-color: var(--terracotta);
-            box-shadow: 0 16px 40px rgba(44, 74, 58, 0.10);
+            border-bottom-color: var(--color-secondary);
+            border-left-color: var(--color-primary);
+            box-shadow: 0 16px 40px rgba(28, 61, 46, 0.08);
         }
+
         .card .id {
             font-size: 0.6rem;
             font-weight: 700;
-            color: var(--clay);
-            background: var(--sand);
+            color: var(--color-secondary);
+            background: var(--color-light);
             display: inline-block;
             padding: 0.1rem 0.7rem;
             border-radius: 40px;
             letter-spacing: 1px;
         }
+
         .card .knowledge-tag {
             font-size: 0.65rem;
             font-weight: 600;
-            color: var(--terracotta);
-            background: #F0E8D8;
+            color: var(--color-primary);
+            background: #EAF3E5;
             display: inline-block;
             padding: 0.1rem 0.7rem;
             border-radius: 40px;
             margin-left: 0.3rem;
-            letter-spacing: 0.3px;
         }
+
         .card h3 {
             font-family: var(--font-serif);
             font-size: 1.4rem;
-            color: var(--steppe-green);
+            color: var(--color-primary);
             margin: 0.2rem 0 0;
         }
+
         .card .chinese-name {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 400;
-            color: var(--text-muted);
+            color: var(--color-muted);
         }
+
         .card .region {
             font-size: 0.75rem;
             font-weight: 500;
-            color: var(--clay);
-            background: var(--paper);
+            color: var(--color-muted);
+            background: var(--color-cream);
             display: inline-block;
             padding: 0.1rem 0.8rem;
             border-radius: 40px;
             margin: 0.3rem 0 0.4rem;
         }
+
         .card .intro-preview {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: var(--color-muted);
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             line-height: 1.5;
         }
+
         .card .population {
             font-size: 0.7rem;
             font-weight: 600;
-            color: var(--moss);
+            color: var(--color-secondary);
             margin-top: 0.3rem;
         }
 
-        /* --- Mandala (Steppe Together) --- */
+        /* --- 莲花图鉴 (Canvas) --- */
         #mandalaView {
             text-align: center;
         }
+
         #mandalaView canvas {
             max-width: 100%;
             height: auto;
             border-radius: 60px;
-            box-shadow: 0 20px 60px rgba(44, 74, 58, 0.12);
-            background: radial-gradient(circle at 30% 20%, #F5F2E9, #E8E0D0);
+            box-shadow: 0 20px 60px rgba(28, 61, 46, 0.08);
+            background: radial-gradient(circle at 30% 20%, #F4F7F0, #EAF3E5);
             cursor: pointer;
             touch-action: none;
             border: 4px solid white;
         }
+
         #mandalaTooltip {
             margin-top: 1rem;
             font-size: 1.1rem;
             font-weight: 500;
-            color: var(--steppe-green);
+            color: var(--color-primary);
             min-height: 2.8rem;
             background: rgba(255, 255, 255, 0.9);
             padding: 0.4rem 2rem;
             border-radius: 60px;
             display: inline-block;
-            border: 1px solid var(--sand);
-            box-shadow: var(--shadow);
-            font-family: var(--font-serif);
-        }
-        #mandalaTooltip small {
-            font-weight: 400;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-family: var(--font-sans);
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-card);
         }
 
-        /* --- Map --- */
+        #mandalaTooltip small {
+            font-weight: 400;
+            color: var(--color-muted);
+            font-size: 0.8rem;
+        }
+
+        /* --- 地图 --- */
         #mapView {
-            padding: 0.5rem;
-            height: 70vh;
-            min-height: 500px;
+            padding: 0.5rem 0;
+            height: 65vh;
+            min-height: 450px;
             background: white;
             border-radius: 32px;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
         }
+
         #mapContainer {
             width: 100%;
             height: 100%;
-            border-radius: 24px;
-            position: relative;
         }
+
         #mapFallback {
             display: none;
             text-align: center;
             padding: 3rem;
-            color: var(--text-muted);
+            color: var(--color-muted);
         }
+
         #mapFallback button {
-            background: var(--steppe-green);
+            background: var(--color-secondary);
             border: none;
             color: white;
             padding: 0.6rem 2rem;
@@ -481,12 +498,13 @@
             transition: 0.2s;
             font-family: var(--font-sans);
         }
+
         #mapFallback button:hover {
-            background: var(--moss);
+            background: var(--color-primary);
             transform: scale(1.02);
         }
 
-        /* --- Modal --- */
+        /* --- 弹窗 (Modal) --- */
         .modal {
             display: none;
             position: fixed;
@@ -494,16 +512,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(44, 74, 58, 0.5);
+            background: rgba(28, 61, 46, 0.5);
             backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             justify-content: center;
             align-items: center;
             z-index: 999;
             padding: 1rem;
         }
+
         .modal.open {
             display: flex;
         }
+
         .modal-content {
             background: white;
             max-width: 520px;
@@ -511,67 +532,76 @@
             padding: 2.2rem 2.2rem;
             border-radius: 40px;
             position: relative;
-            box-shadow: 0 40px 80px rgba(44, 74, 58, 0.3);
+            box-shadow: 0 40px 80px rgba(28, 61, 46, 0.25);
             animation: popIn 0.3s ease;
-            border-top: 8px solid var(--terracotta);
+            border-top: 8px solid var(--color-secondary);
         }
+
         .modal-content .close-btn {
             position: absolute;
             top: 0.8rem;
             right: 1.2rem;
             font-size: 2rem;
             cursor: pointer;
-            color: var(--sand);
+            color: var(--color-border);
             background: none;
             border: none;
             transition: 0.3s;
         }
+
         .modal-content .close-btn:hover {
-            color: var(--steppe-green);
+            color: var(--color-primary);
             transform: rotate(90deg);
         }
+
         .modal-content h2 {
             font-family: var(--font-serif);
-            color: var(--steppe-green);
+            color: var(--color-primary);
             font-size: 2.2rem;
             font-weight: 700;
         }
+
         .modal-content .chinese-name {
             font-size: 1.2rem;
-            color: var(--text-muted);
+            color: var(--color-muted);
             font-weight: 400;
         }
+
         .modal-content .detail-region {
-            background: var(--paper);
+            background: var(--color-light);
             padding: 0.2rem 1rem;
             border-radius: 40px;
             display: inline-block;
             margin: 0.5rem 0;
             font-size: 0.9rem;
-            color: var(--clay);
+            color: var(--color-secondary);
         }
+
         .modal-content .detail-population {
             font-weight: 700;
-            color: var(--terracotta);
+            color: var(--color-secondary);
         }
+
         .modal-content .full-intro {
             margin-top: 1rem;
             line-height: 1.8;
-            color: var(--text-dark);
+            color: var(--color-text);
             font-size: 0.95rem;
         }
+
         .modal-content .knowledge-note {
             margin-top: 1.2rem;
             padding: 1rem 1.2rem;
-            background: var(--paper);
+            background: var(--color-light);
             border-radius: 20px;
-            border-left: 4px solid var(--sage);
+            border-left: 4px solid var(--color-accent);
             font-size: 0.9rem;
-            color: var(--text-muted);
+            color: var(--color-muted);
             font-style: italic;
         }
+
         .modal-content .knowledge-note strong {
-            color: var(--steppe-green);
+            color: var(--color-primary);
             font-style: normal;
         }
 
@@ -586,522 +616,526 @@
             }
         }
 
-        /* --- Programs (NNI Specific) --- */
-        .programs {
-            max-width: 1200px;
-            margin: 3rem auto 2rem;
-            padding: 0 1.5rem;
-        }
-        .programs h2 {
-            font-size: 2.6rem;
-            text-align: center;
-            color: var(--steppe-green);
-            font-family: var(--font-serif);
-            margin-bottom: 2rem;
-        }
-        .programs h2 span {
-            color: var(--terracotta);
-        }
-        .program-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-        .program-card {
-            background: white;
-            padding: 2rem 1.8rem;
-            border-radius: 28px;
-            box-shadow: var(--shadow);
-            border-bottom: 6px solid var(--sage);
-            transition: 0.25s;
-        }
-        .program-card:hover {
-            transform: translateY(-4px);
-            border-bottom-color: var(--steppe-green);
-        }
-        .program-card .emoji {
-            font-size: 2.6rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-        .program-card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.6rem;
-            color: var(--steppe-green);
-            font-weight: 700;
-        }
-        .program-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin: 0.5rem 0 1rem;
-        }
-        .program-card .tag {
-            display: inline-block;
-            background: var(--paper);
-            color: var(--clay);
-            padding: 0.2rem 1rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-right: 0.3rem;
-        }
-
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 3rem 2rem 2rem;
-            border-top: 2px solid var(--sand);
-            background: var(--paper);
+        /* --- 页脚 --- */
+        .footer {
+            background: var(--color-primary);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 3rem 0 2rem;
             margin-top: 2rem;
         }
-        footer .footer-logo {
-            font-family: var(--font-serif);
-            font-size: 1.6rem;
-            color: var(--steppe-green);
-        }
-        footer .footer-logo span {
-            color: var(--terracotta);
-        }
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            max-width: 600px;
-            margin: 0.5rem auto 1rem;
-        }
-        footer .footer-links {
+
+        .footer .container {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
+            justify-content: space-between;
             flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-        footer .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: 0.2s;
-        }
-        footer .footer-links a:hover {
-            color: var(--steppe-green);
-        }
-        footer .copyright {
-            margin-top: 1.5rem;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            opacity: 0.6;
+            gap: 2rem;
         }
 
-        /* --- Responsive --- */
-        @media (max-width: 700px) {
+        .footer .brand {
+            max-width: 300px;
+        }
+
+        .footer .brand .logo {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .footer .brand .logo span {
+            color: var(--color-accent);
+        }
+
+        .footer .brand p {
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-top: 0.5rem;
+        }
+
+        .footer .links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer .links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer .links a:hover {
+            color: white;
+        }
+
+        .footer .copyright {
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        /* --- 响应式 --- */
+        @media (max-width: 900px) {
+            .mission-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-pillars {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 680px) {
             .hero h1 {
                 font-size: 2.6rem;
             }
-            .hero {
-                padding: 3rem 1rem 2.5rem;
-            }
-            .nav-header {
-                padding: 0.6rem 1rem;
-            }
-            .nav-header .logo small {
+
+            .navbar .logo small {
                 display: none;
             }
-            .mission {
-                padding: 2rem 1rem;
-            }
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+
+            .nav-links {
                 gap: 1rem;
             }
-            #mapView {
-                height: 50vh;
-                min-height: 300px;
+
+            .section-title {
+                font-size: 2rem;
             }
-            .program-grid {
+
+            .mission-pillars {
                 grid-template-columns: 1fr;
             }
+
+            .grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+
+            #mapView {
+                height: 45vh;
+                min-height: 280px;
+            }
+
             .modal-content {
                 padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== NAVIGATION ===== -->
-    <header class="nav-header">
-        <div class="logo">
-            <span>⏺</span> Nomadic Atlas
-            <small>New Nomad Institute</small>
+    <!-- ===== 导航栏 ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <span>⏺</span> 游牧智识
+                <small>· 新游牧研究所</small>
+            </div>
+            <div class="nav-links">
+                <a href="#mission">使命</a>
+                <a href="#atlas">图鉴</a>
+                <a href="#mapView" onclick="switchTab('map')">分布</a>
+                <a href="#mission" class="btn-outline">参与我们</a>
+            </div>
         </div>
-        <div class="nav-links">
-            <a href="#mission">Mission</a>
-            <a href="#atlas">Atlas</a>
-            <a href="#programs">Programs</a>
-            <a href="#mapView" onclick="switchTab('map')">Map</a>
-            <a href="#programs" class="cta-link">Get Involved</a>
+    </nav>
+
+    <!-- ===== 主视觉 ===== -->
+    <header class="hero">
+        <div class="container">
+            <h1>
+                游牧的 <span class="highlight">智识</span><br />
+                世界的 <span class="highlight">解法</span>
+            </h1>
+            <p>扎根于游牧传统，融合研究与教育，为当代气候与社会议题提供原住民智慧的视角。</p>
+            <div class="scroll-hint" onclick="document.getElementById('mission').scrollIntoView({behavior:'smooth'})">
+                ⌄
+            </div>
         </div>
     </header>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="hero">
-        <div class="badge">✦ Living Knowledge ✦</div>
-        <h1>
-            Integrating <span class="highlight">Nomadic</span><br />
-            Wisdom for a <span class="highlight">Resilient</span> Future
-        </h1>
-        <p>
-            Research · Education · Narrative · Exchange — rooted in Mongolia's living traditions,
-            addressing climate, society, and technology.
-        </p>
-        <div class="scroll-arrow" onclick="document.getElementById('mission').scrollIntoView({behavior:'smooth'})">
-            ⌄
-        </div>
-    </section>
-
-    <!-- ===== MISSION ===== -->
-    <section class="mission" id="mission">
-        <h2>About the <span>New Nomad</span> Institute</h2>
-        <p>
-            New Nomad Institute (NNI) is a not-for-profit research and action organization dedicated to
-            integrating nomadic and indigenous knowledge in addressing contemporary climate, social, and
-            technological issues. Rooted in Mongolia's living nomadic traditions, NNI works at the
-            intersection of <strong>research</strong>, <strong>education</strong>, and
-            <strong>cultural exchange</strong> to cocreate resilient and sustainable futures.
-        </p>
-        <p>
-            Our work is developed collaboratively with herders, artists, filmmakers, writers, and researchers,
-            aiming to shift dominant narratives and position indigenous knowledge as a critical resource for
-            addressing global challenges.
-        </p>
-
-        <div class="pillars">
-            <div class="pillar">
-                <span class="icon">🌿</span>
-                <h4>Research</h4>
-                <p>Collaborative, situated research with herder communities, international experts, and practitioners.</p>
-            </div>
-            <div class="pillar">
-                <span class="icon">📖</span>
-                <h4>Narrative</h4>
-                <p>Building storytelling movements across media to document, interpret, and share nomadic knowledge.</p>
-            </div>
-            <div class="pillar">
-                <span class="icon">🎓</span>
-                <h4>Education</h4>
-                <p>Knowmadic Arts Lab — immersive, place-based learning bridging liberal arts with nomadic lifeways.</p>
-            </div>
-            <div class="pillar">
-                <span class="icon">🌍</span>
-                <h4>Exchange</h4>
-                <p>Steppe Together — a global platform connecting herders, artists, and researchers across regions.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== ATLAS (The 56 Groups) ===== -->
-    <section class="atlas-tools" id="atlas">
-        <div class="atlas-header">
-            <h2>🌾 The 56 Blossoms</h2>
-            <p>Exploring the cultural and ecological knowledge of China's ethnic groups</p>
-        </div>
-
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search by name, region, or Chinese characters..." />
-        </div>
-
-        <div class="tabs-container">
-            <button class="tab-btn active" data-view="grid">📋 Field Grid</button>
-            <button class="tab-btn" data-view="mandala">⏺ Steppe Mandala</button>
-            <button class="tab-btn" data-view="map">🗺️ Distribution Map</button>
-        </div>
-
-        <!-- Grid View -->
-        <div id="gridView" class="view active">
-            <main id="app">
-                <p style="text-align:center;padding:2rem;color:var(--text-muted);">Loading field data...</p>
-            </main>
-        </div>
-
-        <!-- Mandala View -->
-        <div id="mandalaView" class="view">
-            <canvas id="mandalaCanvas" width="700" height="700"></canvas>
-            <div id="mandalaTooltip">⏺ Hover over a petal <small>✦ click to explore their knowledge</small></div>
-        </div>
-
-        <!-- Map View -->
-        <div id="mapView" class="view">
-            <div id="mapContainer">
-                <div id="mapFallback">
-                    <p>🌾 Loading geographical distribution...</p>
-                    <button onclick="retryMap()">🔄 Reload Map</button>
+    <!-- ===== 使命/关于 ===== -->
+    <section class="section" id="mission">
+        <div class="container">
+            <h2 class="section-title"><span>新游牧</span> 研究所</h2>
+            <div class="mission-grid">
+                <div class="mission-text">
+                    <p>
+                        <strong>新游牧研究所 (New Nomad Institute)</strong> 是一个非营利的研究与行动机构，
+                        致力于将游牧与原住民知识整合到当代气候、社会和技术的议题中。
+                    </p>
+                    <p>
+                        根植于蒙古活态的游牧传统，我们以研究、教育和文化交流为支点，
+                        与牧民、学者、艺术家、电影人共同协作，以创造具有韧性的可持续未来。
+                    </p>
+                    <p>
+                        我们通过跨学科的合作研究，记录和传播游牧知识与生活经验，
+                        旨在重塑关于气候、文化和可持续发展的主流叙事。
+                    </p>
+                </div>
+                <div class="mission-pillars">
+                    <div class="pillar-item">
+                        <span class="icon">🌿</span>
+                        <h4>研究 Research</h4>
+                        <p>与牧民社区、国际专家协作，关注牧区知识、环境管理和适应性实践。</p>
+                    </div>
+                    <div class="pillar-item">
+                        <span class="icon">📖</span>
+                        <h4>叙事 Narrative</h4>
+                        <p>通过多媒介的叙事运动，记录、诠释并传播游牧知识与生活经验。</p>
+                    </div>
+                    <div class="pillar-item">
+                        <span class="icon">🎓</span>
+                        <h4>教育 Education</h4>
+                        <p>Knowmadic Arts Lab 沉浸式项目，将文理教育与实践游牧生活直接相连。</p>
+                    </div>
+                    <div class="pillar-item">
+                        <span class="icon">🌍</span>
+                        <h4>交流 Exchange</h4>
+                        <p>Steppe Together 全球交流平台，连接全球的牧民、艺术家、研究者与实践者。</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== PROGRAMS (NNI) ===== -->
-    <section class="programs" id="programs">
-        <h2>Our <span>Programs</span></h2>
-        <div class="program-grid">
-            <div class="program-card">
-                <span class="emoji">🎓</span>
-                <h3>Knowmadic Arts Lab</h3>
-                <p>An immersive, place-based learning program bringing students, scholars, and practitioners into direct engagement with nomadic lifeways through fieldwork and interdisciplinary dialogue.</p>
-                <span class="tag">🌿 Education</span>
-                <span class="tag">🧭 Fieldwork</span>
+    <!-- ===== 互动图鉴 ===== -->
+    <section class="section" id="atlas">
+        <div class="container">
+            <h2 class="section-title"><span>民族</span> 智识图鉴</h2>
+            <p class="section-sub">
+                五十六个民族，五十六种与自然相处的智慧。
+                点击卡片或莲瓣，探索每一个族群独特的生态与文化知识。
+            </p>
+
+            <div class="atlas-controls">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="搜索民族名称、地区或中文名..." />
+                </div>
+                <div class="tabs">
+                    <button class="tab-btn active" data-view="grid">📋 列表</button>
+                    <button class="tab-btn" data-view="mandala">⏺ 莲瓣图</button>
+                    <button class="tab-btn" data-view="map">🗺️ 分布图</button>
+                </div>
             </div>
-            <div class="program-card">
-                <span class="emoji">🌍</span>
-                <h3>Steppe Together</h3>
-                <p>A global exchange platform connecting herders, artists, researchers, and cultural practitioners. In 2026, convening in conjunction with COP17, hosted in Mongolia.</p>
-                <span class="tag">🤝 Exchange</span>
-                <span class="tag">🌾 COP17</span>
+
+            <!-- 网格视图 -->
+            <div id="gridView" class="view active">
+                <main id="app">
+                    <p style="text-align:center;padding:2rem;color:var(--color-muted);">⏺ 正在加载图鉴数据...</p>
+                </main>
             </div>
-            <div class="program-card">
-                <span class="emoji">📖</span>
-                <h3>Narrative Initiative</h3>
-                <p>Building storytelling movements across multiple media to document, interpret, and share nomadic knowledge and lived experience, shifting dominant narratives.</p>
-                <span class="tag">🎬 Media</span>
-                <span class="tag">📝 Storytelling</span>
+
+            <!-- 莲瓣图 -->
+            <div id="mandalaView" class="view">
+                <canvas id="mandalaCanvas" width="700" height="700"></canvas>
+                <div id="mandalaTooltip">⏺ 悬停于莲瓣之上 <small>✦ 点击查看该民族的智识</small></div>
             </div>
-            <div class="program-card">
-                <span class="emoji">🔬</span>
-                <h3>Collaborative Research</h3>
-                <p>Interdisciplinary research with herder communities, international experts, and practitioners focusing on pastoral knowledge, environmental stewardship, and adaptive practices.</p>
-                <span class="tag">🧪 Research</span>
-                <span class="tag">🌱 Ecology</span>
+
+            <!-- 地图 -->
+            <div id="mapView" class="view">
+                <div id="mapContainer">
+                    <div id="mapFallback">
+                        <p>🌾 正在加载地理分布数据...</p>
+                        <button onclick="retryMap()">🔄 重新加载</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== MODAL ===== -->
+    <!-- ===== 页脚 ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="brand">
+                <div class="logo"><span>⏺</span> 游牧智识 · 新游牧研究所</div>
+                <p>一个支持新游牧研究所使命的活态档案库，根植蒙古，连结世界。</p>
+            </div>
+            <div class="links">
+                <a href="https://newnomad.org" target="_blank">newnomad.org</a>
+                <a href="#mission">使命</a>
+                <a href="#atlas">图鉴</a>
+                <a href="#mapView" onclick="switchTab('map')">分布地图</a>
+            </div>
+            <div class="copyright">
+                ⏺ 新游牧研究所 · 蒙古 · 2026
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== 弹窗 ===== -->
     <div id="detailModal" class="modal">
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal()">✕</button>
-            <h2 id="modalName">Name</h2>
+            <h2 id="modalName">名称</h2>
             <div class="chinese-name" id="modalChinese">中文名</div>
-            <div class="detail-region" id="modalRegion">📍 Region</div>
-            <div class="detail-population" id="modalPopulation">👥 Population</div>
-            <div class="full-intro" id="modalIntro">Description...</div>
+            <div class="detail-region" id="modalRegion">📍 地区</div>
+            <div class="detail-population" id="modalPopulation">👥 人口</div>
+            <div class="full-intro" id="modalIntro">简介...</div>
             <div class="knowledge-note" id="modalKnowledge">
-                <strong>🌾 Nomadic Knowledge:</strong> <span id="modalKnowledgeText">This group's traditional practices offer insights into sustainable land management and ecological resilience.</span>
+                <strong>🌾 游牧智识：</strong>
+                <span id="modalKnowledgeText">该民族的传统文化与生态知识，为可持续生活提供了深刻的智慧。</span>
             </div>
         </div>
     </div>
 
-    <!-- ===== FOOTER ===== -->
-    <footer>
-        <div class="footer-logo"><span>⏺</span> Nomadic Atlas</div>
-        <p>
-            A living archive supporting the New Nomad Institute's mission to integrate indigenous knowledge
-            for a resilient future. Rooted in Mongolia, reaching globally.
-        </p>
-        <div class="footer-links">
-            <a href="https://newnomad.org" target="_blank">newnomad.org</a>
-            <a href="#mission">Mission</a>
-            <a href="#programs">Programs</a>
-            <a href="#atlas">Atlas</a>
-        </div>
-        <div class="copyright">
-            ⏺ New Nomad Institute · Mongolia · 2026
-        </div>
-    </footer>
-
+    <!-- ================================================================
+    JAVASCRIPT — 数据 + 交互逻辑
+    ================================================================ -->
     <script>
-        // ================================================================
-        // 1. DATA — 56 Groups with Knowledge Tags (NNI-aligned)
-        // ================================================================
+        // ============================================================
+        // 1. 数据：五十六个民族（含生态智识标签）
+        // ============================================================
         const allGroups = [
-            { id: "01", name: "Han", chineseName: "汉族", population: "1.28 billion", region: "Nationwide",
-                coords: [116.4, 39.9], knowledge: "Agricultural innovation, Confucian ecological philosophy, and vast historical records of environmental adaptation.",
-                intro: "The largest ethnic group globally, shaping the philosophical, literary, and scientific foundations of East Asia for over 5,000 years." },
-            { id: "02", name: "Zhuang", chineseName: "壮族", population: "19.5 million", region: "Guangxi",
-                coords: [108.3, 22.8], knowledge: "Terrace farming techniques, water management systems, and the preservation of tropical forest ecology.",
-                intro: "China's largest minority group, famous for their colorful brocade textiles, the spectacular Torch Festival, and their unique bronze drum culture." },
-            { id: "03", name: "Hui", chineseName: "回族", population: "11.3 million", region: "Ningxia, Gansu",
-                coords: [106.2, 38.4], knowledge: "Silk Road trading networks, oasis agriculture, and the fusion of Islamic and Chinese ecological wisdom.",
-                intro: "A diverse Muslim community spread across the Silk Road, known for their refined halal culinary arts and vibrant calligraphy." },
-            { id: "04", name: "Manchu", chineseName: "满族", population: "10.4 million", region: "Northeast China",
-                coords: [125.3, 43.8], knowledge: "Boreal forest stewardship, sustainable hunting practices, and the 'Eight Banners' social-ecological system.",
-                intro: "Founders of the Qing Dynasty; keepers of the 'Eight Banners' heritage, Peking opera, and elaborate ceremonial headdresses." },
-            { id: "05", name: "Uyghur", chineseName: "维吾尔族", population: "11.7 million", region: "Xinjiang",
-                coords: [87.6, 43.8], knowledge: "Desert oasis agriculture, irrigation engineering (karez systems), and silk-road ecological exchange.",
-                intro: "A Turkic people with a rich Islamic heritage, famous for their soulful folk dances, sweet Hami melons, and the ancient city of Kashgar." },
-            { id: "06", name: "Miao", chineseName: "苗族", population: "11.0 million", region: "Guizhou, Yunnan",
-                coords: [106.7, 26.5], knowledge: "Mountain terrace farming, silverwork as ecological currency, and deep forest medicinal knowledge.",
-                intro: "Masters of silver-smithing and intricate embroidery; their batik techniques and the Lusheng reed-pipe festival are globally renowned." },
-            { id: "07", name: "Yi", chineseName: "彝族", population: "9.8 million", region: "Sichuan, Yunnan",
-                coords: [102.7, 27.5], knowledge: "Fire ecology, mountain pastoralism, and ancient pictographic records of climate cycles.",
-                intro: "Keepers of an ancient pictographic script; famous for the Torch Festival and elaborate horn-shaped headdresses." },
-            { id: "08", name: "Tujia", chineseName: "土家族", population: "9.5 million", region: "Hunan, Hubei",
-                coords: [110.3, 29.1], knowledge: "Stilt-house architecture (flood adaptation), mountain agriculture, and riverine ecological knowledge.",
-                intro: "Known for the dramatic 'Hand-Waving Dance', stilted wooden architecture, and unique wedding traditions where brides sing farewell." },
-            { id: "09", name: "Tibetan", chineseName: "藏族", population: "7.0 million", region: "Tibet, Qinghai",
-                coords: [91.1, 29.6], knowledge: "High-altitude pastoralism, permafrost adaptation, and Buddhist ecological cosmology (sacred mountains, lakes).",
-                intro: "Deeply spiritual, centered on Tibetan Buddhism; custodians of the Potala Palace, intricate Thangka paintings, and the high-altitude steppe." },
-            { id: "10", name: "Mongol", chineseName: "蒙古族", population: "6.2 million", region: "Inner Mongolia",
-                coords: [111.6, 40.8], knowledge: "Nomadic pastoralism, rotational grazing systems, and deep knowledge of steppe ecology and weather patterns.",
-                intro: "Nomadic spirits of the steppe; keepers of Khoomei throat singing, the horse-head fiddle, and the majestic Naadam festival." },
-            { id: "11", name: "Dong", chineseName: "侗族", population: "3.5 million", region: "Guizhou, Hunan",
-                coords: [109.1, 26.2], knowledge: "Wooden bridge construction (no nails), river ecology, and polyphonic soundscapes as ecological mapping.",
-                intro: "Architects of the famed 'Wind and Rain Bridges' built without nails; famous for their polyphonic folk chorus singing." },
-            { id: "12", name: "Buyei", chineseName: "布依族", population: "3.5 million", region: "Guizhou",
-                coords: [106.2, 26.0], knowledge: "Rice terrace hydrology, batik dyeing using natural pigments, and stone house climatic design.",
-                intro: "Exquisite batik and brocade artisans; their rice terraces and traditional stone houses harmonize with the landscape." },
-            { id: "13", name: "Yao", chineseName: "瑶族", population: "3.3 million", region: "Guangxi, Hunan",
-                coords: [110.0, 25.0], knowledge: "Forest pharmacy (medicinal plants), spirit-mountain relationships, and rotational swidden agriculture.",
-                intro: "Famous for vibrant red and blue embroidered costumes; the 'Panwang Festival' honors their ancestral dragon-dog deity." },
-            { id: "14", name: "Bai", chineseName: "白族", population: "2.1 million", region: "Yunnan",
-                coords: [100.2, 25.6], knowledge: "Lake ecology (Erhai), three-course tea ceremony as social-ecological ritual, and alpine farming.",
-                intro: "Inhabitants of the Erhai Lake region; known for their white attire, three-course tea ceremonies, and the grand 'March Street' fair." },
-            { id: "15", name: "Korean", chineseName: "朝鲜族", population: "1.7 million", region: "Jilin, Liaoning",
-                coords: [126.5, 42.8], knowledge: "Cold-climate agriculture, kimchi fermentation as food preservation, and mountain-spirit rituals.",
-                intro: "Renowned for their love of music, dance, and spicy kimchi; celebrate the 'Dano' festival with swinging competitions." },
-            { id: "16", name: "Hani", chineseName: "哈尼族", population: "1.7 million", region: "Yunnan",
-                coords: [101.2, 23.0], knowledge: "World-class rice terrace hydrology, integrated forest-village-terrace-water systems, and buffalo ceremonial ecology.",
-                intro: "Creators of the breathtaking Yuanyang Rice Terraces; their 'Guzang Jie' festival honors ancestors with buffalo sacrifices." },
-            { id: "17", name: "Li", chineseName: "黎族", population: "1.6 million", region: "Hainan",
-                coords: [110.3, 19.2], knowledge: "Tropical island ecology, brocade weaving from native plants, and typhoon adaptation strategies.",
-                intro: "Indigenous people of tropical Hainan; masters of ancient brocade weaving and keepers of distinctive facial tattoo traditions." },
-            { id: "18", name: "Kazakh", chineseName: "哈萨克族", population: "1.5 million", region: "Xinjiang",
-                coords: [85.0, 45.0], knowledge: "Eagle hunting (berkutchi), high-mountain pastoral transhumance, and felt yurt thermal engineering.",
-                intro: "Nomadic eagle hunters of the Altai mountains; famous for fermented mare's milk (kumis) and intricate felt yurts." },
-            { id: "19", name: "Dai", chineseName: "傣族", population: "1.3 million", region: "Yunnan",
-                coords: [100.8, 21.9], knowledge: "Wetland rice cultivation, bamboo architecture (flood-resistant), and Theravada Buddhist ecology.",
-                intro: "Known for the lively Water Splashing Festival; excel in bamboo architecture, peacock dances, and Buddhist mural paintings." },
-            { id: "20", name: "She", chineseName: "畲族", population: "700,000", region: "Fujian, Zhejiang",
-                coords: [119.3, 26.0], knowledge: "Mountain forest cultivation, phoenix mythology linked to ecological renewal, and herbal medicine traditions.",
-                intro: "Known for the phoenix headdress and folk songs; their mythology involves a dragon-pupiled ancestor." },
-            { id: "21", name: "Lisu", chineseName: "傈僳族", population: "700,000", region: "Yunnan",
-                coords: [98.8, 26.5], knowledge: "Knife-grinding festival (fire-walking) as ecological rite, bamboo weaving, and mountain terraforming.",
-                intro: "Famous for the 'Knife-Grinding Festival' climbing sword ladders; known for bold woven bags and polyphonic singing." },
-            { id: "22", name: "Gelao", chineseName: "仡佬族", population: "600,000", region: "Guizhou",
-                coords: [107.0, 27.5], knowledge: "Karst cave dwellings, ox-horn symbolism for cattle pastoralism, and ancient rice-planting rituals.",
-                intro: "One of the oldest groups in southern China; known for ox-horn headdresses and the 'Eating New Rice' festival." },
-            { id: "23", name: "Lahu", chineseName: "拉祜族", population: "500,000", region: "Yunnan",
-                coords: [99.9, 22.5], knowledge: "Hunting traditions as ecological management, bamboo pipe music, and swidden agriculture systems.",
-                intro: "Known as the 'Tiger Hunters'; strong tradition of oral poetry and polyphonic singing with the reed pipe." },
-            { id: "24", name: "Dongxiang", chineseName: "东乡族", population: "500,000", region: "Gansu",
-                coords: [103.3, 35.7], knowledge: "Arid mountain pastoralism, Islamic water conservation ethics, and drought-resilient farming.",
-                intro: "A Muslim community with rich oral storytelling; resilient farmers in the arid mountain regions." },
-            { id: "25", name: "Va", chineseName: "佤族", population: "480,000", region: "Yunnan",
-                coords: [99.4, 23.1], knowledge: "Wooden drum rituals as ecological calendars, headhunting traditions (historical) as territorial ecology, and forest cosmology.",
-                intro: "Known for striking wooden drum rituals and the vibrant 'New Water Festival'; villages feature intricate wood carvings." },
-            { id: "26", name: "Sui", chineseName: "水族", population: "450,000", region: "Guizhou",
-                coords: [107.9, 25.9], knowledge: "Shui script as one of the few indigenous written ecological knowledge systems, and horse-racing festivals as social-ecological gatherings.",
-                intro: "One of the few with an ancient script (Shui script); famous for horse racing festivals and exquisite dyeing." },
-            { id: "27", name: "Naxi", chineseName: "纳西族", population: "320,000", region: "Yunnan",
-                coords: [100.2, 26.8], knowledge: "Dongba pictographic script (living ecological record), mountain-sacrifice rituals, and alpine water management.",
-                intro: "Keepers of the unique Dongba pictographic script—the only living pictographic language; live in Lijiang." },
-            { id: "28", name: "Qiang", chineseName: "羌族", population: "310,000", region: "Sichuan",
-                coords: [103.5, 31.5], knowledge: "Stone tower construction (seismic resilience), white-stone worship (mountain spirits), and high-altitude pastoralism.",
-                intro: "Known as the 'people of the clouds'; masters of stone towers and elaborate warrior dances." },
-            { id: "29", name: "Tu", chineseName: "土族", population: "300,000", region: "Qinghai",
-                coords: [101.9, 36.5], knowledge: "Rainbow belt weaving (symbolizing seasonal cycles), Tibetan Buddhist ecological ethics, and agro-pastoral systems.",
-                intro: "Known for colorful woven rainbow belts and the 'Nadun' festival featuring masked dances." },
-            { id: "30", name: "Xibe", chineseName: "锡伯族", population: "250,000", region: "Xinjiang, Liaoning",
-                coords: [122.0, 43.0], knowledge: "Archery as ecological discipline, Manchu-derived language preservation, and migratory history of ecological adaptation.",
-                intro: "Descendants of Manchurian hunters; fiercely proud of their archery heritage and Manchu-derived language." },
-            { id: "31", name: "Mulam", chineseName: "仫佬族", population: "240,000", region: "Guangxi",
-                coords: [108.8, 24.7], knowledge: "Dragon-boat ecology (river rituals), phoenix symbolism, and fish-farming traditions in karst waters.",
-                intro: "Known for dragon-boat racing and phoenix headdresses; celebrate a unique 'Fish Festival'." },
-            { id: "32", name: "Kyrgyz", chineseName: "柯尔克孜族", population: "200,000", region: "Xinjiang",
-                coords: [76.5, 39.5], knowledge: "Manas epic (oral ecological history), eagle falconry, and high-mountain seasonal migration routes.",
-                intro: "Epic storytellers of the 'Manas'; traditional eagle hunters and skilled felt crafters." },
-            { id: "33", name: "Daur", chineseName: "达斡尔族", population: "130,000", region: "Inner Mongolia",
-                coords: [123.0, 48.0], knowledge: "Beikou (hockey) as winter ecology sport, river fishing traditions, and steppe fire management.",
-                intro: "Known for their hockey-like sport (Beikou) and rich oral literature; skilled farmers and blacksmiths." },
-            { id: "34", name: "Jingpo", chineseName: "景颇族", population: "150,000", region: "Yunnan",
-                coords: [98.5, 24.0], knowledge: "Wooden drum dance (unity ritual), mountain-rice systems, and ancestor spirit ecology.",
-                intro: "Famous for the 'Wooden Drum Dance' and the grand 'Gunao Jie' festival celebrating unity." },
-            { id: "35", name: "Salar", chineseName: "撒拉族", population: "160,000", region: "Qinghai",
-                coords: [102.3, 35.8], knowledge: "Hua'er folk songs (poetic ecology), Islamic pastoral ethics, and Yellow River irrigation systems.",
-                intro: "A Turkic Muslim group; known for poetic folk songs called 'Hua'er' and sweet pastries." },
-            { id: "36", name: "Blang", chineseName: "布朗族", population: "130,000", region: "Yunnan",
-                coords: [100.2, 21.5], knowledge: "Ancient Pu'er tea cultivation, teeth-blackening as cultural ecology, and animist tea-spirit rituals.",
-                intro: "Master tea growers of the Pu'er region; have unique teeth-blackening traditions." },
-            { id: "37", name: "Maonan", chineseName: "毛南族", population: "130,000", region: "Guangxi",
-                coords: [108.0, 25.0], knowledge: "Bamboo hat craftsmanship, Huaji opera as ecological storytelling, and karst forest resource management.",
-                intro: "Known as the 'people of the bamboo hats'; famous for intricate wood carving and 'Huaji' opera." },
-            { id: "38", name: "Tajik", chineseName: "塔吉克族", population: "50,000", region: "Xinjiang",
-                coords: [75.8, 38.0], knowledge: "High Pamir pastoralism, eagle dance as sky ecology, and adaptation to extreme altitude environments.",
-                intro: "Highland Pamir people; known for striking facial features, vibrant red costumes, and the eagle dance." },
-            { id: "39", name: "Pumi", chineseName: "普米族", population: "45,000", region: "Yunnan",
-                coords: [99.0, 27.0], knowledge: "Woven blankets (textile ecology), Chuanzha festival (love-gift exchange) as social-ecological bonding, and mountain foraging.",
-                intro: "Known for intricate woven blankets and the 'Chuanzha' festival exchanging gifts of love." },
-            { id: "40", name: "Achang", chineseName: "阿昌族", population: "42,000", region: "Yunnan",
-                coords: [98.6, 24.9], knowledge: "Iron-smithing and knife-making (mineral ecology), foot-treading songs, and swidden agriculture.",
-                intro: "Legendary blacksmiths and knife-makers; their carved iron knives are famous across Southeast Asia." },
-            { id: "41", name: "Nu", chineseName: "怒族", population: "36,000", region: "Yunnan",
-                coords: [98.8, 27.5], knowledge: "Cliffside village ecology, Fairy Festival (flower offerings) as plant-based spirituality, and Nu River fishing.",
-                intro: "Indigenous to the Nu River valley; known for cliffside villages and the 'Fairy Festival'." },
-            { id: "42", name: "Ewenki", chineseName: "鄂温克族", population: "34,000", region: "Inner Mongolia",
-                coords: [120.0, 49.0], knowledge: "Reindeer herding, shamanic ecological cosmology, and boreal forest sustainable hunting.",
-                intro: "Reindeer herders of the Greater Khingan Range; practice traditional shamanism." },
-            { id: "43", name: "Gin", chineseName: "京族", population: "33,000", region: "Guangxi",
-                coords: [108.0, 21.5], knowledge: "Coastal fishing culture, Ha opera (maritime storytelling), and seasonal fish migration knowledge.",
-                intro: "Ethnic Vietnamese group on the coast; known for 'Ha' opera and ceremonial fishing festivals." },
-            { id: "44", name: "Jino", chineseName: "基诺族", population: "25,000", region: "Yunnan",
-                coords: [101.0, 22.0], knowledge: "Sun drum dance (solar ecology), Fertility Festival as agricultural cycle, and tropical forest pharmacopoeia.",
-                intro: "One of China's smallest groups; famous for the sun drum dance and 'Fertility Festival'." },
-            { id: "45", name: "De'ang", chineseName: "德昂族", population: "22,000", region: "Yunnan",
-                coords: [98.4, 24.0], knowledge: "Tea-growing traditions (ancient tea trees), silver earring ornamentation as cultural marker, and animist forest rituals.",
-                intro: "Known as the 'tea people'; have ancient tea-growing traditions and wear heavy silver earrings." },
-            { id: "46", name: "Uzbek", chineseName: "乌孜别克族", population: "13,000", region: "Xinjiang",
-                coords: [83.0, 44.0], knowledge: "Silk weaving, gold embroidery (textile ecology), and oasis trading networks.",
-                intro: "Turkic Muslim group with a rich tradition of silk weaving and intricate gold embroidery." },
-            { id: "47", name: "Russian", chineseName: "俄罗斯族", population: "15,000", region: "Xinjiang, Inner Mongolia",
-                coords: [86.0, 47.0], knowledge: "Orthodox ecology (seasonal festivals), accordion music as cultural resilience, and Siberian frontier adaptation.",
-                intro: "Descendants of Russian immigrants; known for Orthodox Easter celebrations and accordion music." },
-            { id: "48", name: "Yugur", chineseName: "裕固族", population: "14,000", region: "Gansu",
-                coords: [98.0, 38.0], knowledge: "Epic folk songs (oral history), Tibetan plateau pastoralism, and yellow-head regalia as ecological identity.",
-                intro: "Descendants of the ancient Uyghur kingdom; known for epic folk songs and Tibetan plateau connections." },
-            { id: "49", name: "Bonan", chineseName: "保安族", population: "20,000", region: "Gansu",
-                coords: [103.0, 35.0], knowledge: "Handmade knives (mineral craft), Islamic warrior traditions, and Yellow River valley agroecology.",
-                intro: "Skilled craftsmen known for handmade knives and intricate brocade; a Muslim group with warrior traditions." },
-            { id: "50", name: "Monba", chineseName: "门巴族", population: "11,000", region: "Tibet",
-                coords: [94.0, 28.0], knowledge: "Bamboo hat-making, Horse Festival as high-altitude equestrian ecology, and Himalayan plant medicine.",
-                intro: "Live in the lower Himalayas; known for unique bamboo hats and the 'Horse Festival'." },
-            { id: "51", name: "Oroqen", chineseName: "鄂伦春族", population: "9,000", region: "Inner Mongolia",
-                coords: [124.0, 50.0], knowledge: "Dog sled hunting, animal-hide clothing (thermal ecology), and boreal forest seasonal tracking.",
-                intro: "Traditional hunters who used dog sleds; wear clothing made of animal hide with intricate patterns." },
-            { id: "52", name: "Derung", chineseName: "独龙族", population: "7,000", region: "Yunnan",
-                coords: [98.2, 28.0], knowledge: "Face-tattooing (cultural ecology), Kaquewa festival (agricultural cycle), and alpine foraging.",
-                intro: "One of the least populated; famous for face-tattooing traditions and the 'Kaquewa' festival." },
-            { id: "53", name: "Tatar", chineseName: "塔塔尔族", population: "3,500", region: "Xinjiang",
-                coords: [82.0, 46.0], knowledge: "Delicate embroidery, ornamental hat-making, and sweet pastry traditions as cultural resilience.",
-                intro: "A small Turkic Muslim group known for delicate embroidery, ornamental hats, and sweet pastries." },
-            { id: "54", name: "Hezhen", chineseName: "赫哲族", population: "5,000", region: "Heilongjiang",
-                coords: [135.0, 48.0], knowledge: "Fish-skin clothing (unique biomaterial), Amur River fishing ecology, and seasonal ice-fishing knowledge.",
-                intro: "One of the smallest; living along the Amur River, known for fish-skin clothing and fishing culture." },
-            { id: "55", name: "Lhoba", chineseName: "珞巴族", population: "3,700", region: "Tibet",
-                coords: [95.0, 29.0], knowledge: "Woven cane helmets, shamanic nature worship, and eastern Himalayan mountain ecology.",
-                intro: "Live in the eastern Himalayas; known for woven cane helmets and deep shamanic nature traditions." },
-            { id: "56", name: "Gaoshan", chineseName: "高山族", population: "300,000 (in Taiwan)", region: "Taiwan",
-                coords: [121.5, 25.0], knowledge: "Wood carving, weaving, Harvest Festival (ecological calendar), and Austronesian maritime migration knowledge.",
-                intro: "Indigenous peoples of Taiwan; comprising multiple tribes, known for wood carving, weaving, and the 'Harvest Festival'." }
+            { id: "01", name: "汉", chineseName: "汉族", population: "12.8亿", region: "全国分布",
+                coords: [116.4, 39.9],
+                knowledge: "农耕文明、儒家生态哲学、浩如烟海的典籍记载了数千年的环境适应智慧。",
+                intro: "全球人口最多的民族，塑造了东亚哲学、文学与科学五千年的根基。" },
+            { id: "02", name: "壮", chineseName: "壮族", population: "1950万", region: "广西",
+                coords: [108.3, 22.8],
+                knowledge: "梯田耕作技术、热带雨林生态管理、铜鼓文化作为社会生态的仪式表达。",
+                intro: "中国最大的少数民族，以绚丽织锦、火把节和铜鼓文化闻名于世。" },
+            { id: "03", name: "回", chineseName: "回族", population: "1130万", region: "宁夏、甘肃",
+                coords: [106.2, 38.4],
+                knowledge: "丝绸之路贸易网络、绿洲农业、伊斯兰生态伦理与中式农耕的融合。",
+                intro: "遍布全国的穆斯林族群，以清真美食与书法艺术著称。" },
+            { id: "04", name: "满", chineseName: "满族", population: "1040万", region: "东北地区",
+                coords: [125.3, 43.8],
+                knowledge: "寒带森林管理、可持续狩猎习俗、八旗制度作为社会-生态组织体系。",
+                intro: "清朝的建立者，保留了八旗传统、京剧与精致的冠饰文化。" },
+            { id: "05", name: "维", chineseName: "维吾尔族", population: "1170万", region: "新疆",
+                coords: [87.6, 43.8],
+                knowledge: "沙漠绿洲农业、坎儿井灌溉系统、丝绸之路的生态与文化交流。",
+                intro: "突厥语系民族，以热烈奔放的舞蹈、哈密瓜和喀什古城闻名。" },
+            { id: "06", name: "苗", chineseName: "苗族", population: "1100万", region: "贵州、云南",
+                coords: [106.7, 26.5],
+                knowledge: "山地梯田耕作、银饰作为生态信仰的载体、丰富的森林药用知识。",
+                intro: "银饰与刺绣工艺大师，芦笙节与蜡染技艺享誉世界。" },
+            { id: "07", name: "彝", chineseName: "彝族", population: "980万", region: "四川、云南",
+                coords: [102.7, 27.5],
+                knowledge: "火文化生态、山地牧业、古彝文记载的气候周期与天文历法。",
+                intro: "拥有古老音节文字的族群，火把节与独特的鹰爪杯是其文化象征。" },
+            { id: "08", name: "土家", chineseName: "土家族", population: "950万", region: "湖南、湖北",
+                coords: [110.3, 29.1],
+                knowledge: "吊脚楼建筑（防洪防潮）、山地农业、武陵山脉的植物生态知识。",
+                intro: "摆手舞与吊脚楼闻名，其独特的婚俗中新娘以歌声告别娘家。" },
+            { id: "09", name: "藏", chineseName: "藏族", population: "700万", region: "西藏、青海",
+                coords: [91.1, 29.6],
+                knowledge: "高海拔牧业、冻土适应性、佛教生态宇宙观（神山圣湖体系）。",
+                intro: "藏传佛教的守护者，布达拉宫、唐卡与高原牧歌是其精神与生活的核心。" },
+            { id: "10", name: "蒙古", chineseName: "蒙古族", population: "620万", region: "内蒙古",
+                coords: [111.6, 40.8],
+                knowledge: "游牧轮牧系统、草原生态学、呼麦与马头琴中的自然聆听。",
+                intro: "草原上的游牧民族，那达慕大会与蒙古包是其文化符号。" },
+            { id: "11", name: "侗", chineseName: "侗族", population: "350万", region: "贵州、湖南",
+                coords: [109.1, 26.2],
+                knowledge: "风雨桥建筑（无钉榫卯）、河流生态管理、复调合唱的声音地图。",
+                intro: "不用一钉一铆建造风雨桥的建筑大师，以多声部大歌闻名。" },
+            { id: "12", name: "布依", chineseName: "布依族", population: "350万", region: "贵州",
+                coords: [106.2, 26.0],
+                knowledge: "梯田水文系统、天然植物染料蜡染、石屋气候调节设计。",
+                intro: "蜡染与织锦工艺精湛，梯田与石板房与自然和谐共生。" },
+            { id: "13", name: "瑶", chineseName: "瑶族", population: "330万", region: "广西、湖南",
+                coords: [110.0, 25.0],
+                knowledge: "森林草药知识、盘瓠神话（人与自然的契约）、山地轮作农业。",
+                intro: "红色与蓝色的刺绣服饰华丽夺目，盘王节是其最重要的祭典。" },
+            { id: "14", name: "白", chineseName: "白族", population: "210万", region: "云南",
+                coords: [100.2, 25.6],
+                knowledge: "洱海湖泊生态、三道茶仪式（社会-生态礼仪）、高山作物种植。",
+                intro: "苍山洱海间的族群，三道茶与三月街是其文化代表。" },
+            { id: "15", name: "朝鲜", chineseName: "朝鲜族", population: "170万", region: "吉林、辽宁",
+                coords: [126.5, 42.8],
+                knowledge: "寒地农耕、泡菜发酵（食物保存智慧）、山神祭自然信仰。",
+                intro: "能歌善舞，以辣白菜和荡秋千、摔跤等端午习俗闻名。" },
+            { id: "16", name: "哈尼", chineseName: "哈尼族", population: "170万", region: "云南",
+                coords: [101.2, 23.0],
+                knowledge: "元阳梯田（森林-村寨-梯田-水系四素同构）、水牛祭祀与农业周期。",
+                intro: "创造了举世闻名的元阳梯田，苦扎扎节是其重要的农耕祭典。" },
+            { id: "17", name: "黎", chineseName: "黎族", population: "160万", region: "海南",
+                coords: [110.3, 19.2],
+                knowledge: "热带海岛生态、植物纺织（树皮布）、台风适应性的聚落选址。",
+                intro: "海南岛的原住民，保留了独特的纹面传统与古老织锦技艺。" },
+            { id: "18", name: "哈萨克", chineseName: "哈萨克族", population: "150万", region: "新疆",
+                coords: [85.0, 45.0],
+                knowledge: "猎鹰文化（伯克特奇）、山地转场牧业、毡房（温度调节工程）。",
+                intro: "阿尔泰山的鹰猎人，以马奶酒和精美的羊毛毡房著称。" },
+            { id: "19", name: "傣", chineseName: "傣族", population: "130万", region: "云南",
+                coords: [100.8, 21.9],
+                knowledge: "湿地水稻种植、竹楼建筑（防潮防洪）、南传佛教生态伦理。",
+                intro: "泼水节是其最热闹的节日，孔雀舞与贝叶经是其文化瑰宝。" },
+            { id: "20", name: "畲", chineseName: "畲族", population: "70万", region: "福建、浙江",
+                coords: [119.3, 26.0],
+                knowledge: "山地森林利用、凤凰崇拜（生态再生）、草医药传统。",
+                intro: "以凤凰冠和山歌闻名，神话中其祖先与犬有密切联系。" },
+            { id: "21", name: "傈僳", chineseName: "傈僳族", population: "70万", region: "云南",
+                coords: [98.8, 26.5],
+                knowledge: "刀杆节（上刀山下火海的生态勇气）、竹编工艺、山地垦殖。",
+                intro: "以“刀杆节”的勇猛著称，其编织袋色彩鲜明，多声部民歌动人。" },
+            { id: "22", name: "仡佬", chineseName: "仡佬族", population: "60万", region: "贵州",
+                coords: [107.0, 27.5],
+                knowledge: "喀斯特洞穴居住、牛角崇拜（牧业文化）、古老水稻种植仪式。",
+                intro: "贵州最古老的民族之一，牛角头饰和“吃新节”是其文化标志。" },
+            { id: "23", name: "拉祜", chineseName: "拉祜族", population: "50万", region: "云南",
+                coords: [99.9, 22.5],
+                knowledge: "狩猎传统（生态管理）、芦笙音乐、轮歇农业系统。",
+                intro: "自称“猎虎的民族”，口传诗歌与复调音乐是其文化核心。" },
+            { id: "24", name: "东乡", chineseName: "东乡族", population: "50万", region: "甘肃",
+                coords: [103.3, 35.7],
+                knowledge: "干旱山区牧业、伊斯兰水伦理、抗旱作物种植系统。",
+                intro: "信仰伊斯兰教的族群，以口传叙事诗和坚韧的山区农耕传统著称。" },
+            { id: "25", name: "佤", chineseName: "佤族", population: "48万", region: "云南",
+                coords: [99.4, 23.1],
+                knowledge: "木鼓仪式（生态历法）、森林宇宙观、山地轮作。",
+                intro: "以木鼓节和新水节闻名，其传统村落中的木雕技艺精湛。" },
+            { id: "26", name: "水", chineseName: "水族", population: "45万", region: "贵州",
+                coords: [107.9, 25.9],
+                knowledge: "水书（罕见的本土文字生态记录）、赛马节（社会-生态聚会）、蓝染工艺。",
+                intro: "拥有古老的水书文字，赛马与铜鼓是其文化重要组成部分。" },
+            { id: "27", name: "纳西", chineseName: "纳西族", population: "32万", region: "云南",
+                coords: [100.2, 26.8],
+                knowledge: "东巴象形文字（活态生态记录）、祭山仪式、高山水资源管理。",
+                intro: "丽江古城的缔造者，世界上唯一活着的象形文字——东巴文的守护者。" },
+            { id: "28", name: "羌", chineseName: "羌族", population: "31万", region: "四川",
+                coords: [103.5, 31.5],
+                knowledge: "碉楼建筑（抗震技术）、白石崇拜（山神信仰）、高海拔牧业。",
+                intro: "被称为“云朵上的民族”，以碉楼建筑和羊皮鼓舞著称。" },
+            { id: "29", name: "土", chineseName: "土族", population: "30万", region: "青海",
+                coords: [101.9, 36.5],
+                knowledge: "彩虹腰带编织（季节符号）、藏传佛教生态伦理、农牧结合。",
+                intro: "以多彩的盘绣和“纳顿节”（面具舞会）闻名。" },
+            { id: "30", name: "锡伯", chineseName: "锡伯族", population: "25万", region: "新疆、辽宁",
+                coords: [122.0, 43.0],
+                knowledge: "射箭（生态纪律）、满语文字保存、迁徙史中的环境适应。",
+                intro: "清代由东北西迁至新疆的族群，保留了精湛的射箭传统。" },
+            { id: "31", name: "仫佬", chineseName: "仫佬族", population: "24万", region: "广西",
+                coords: [108.8, 24.7],
+                knowledge: "龙舟竞渡（河流文化）、凤凰象征、喀斯特水域养殖。",
+                intro: "以龙舟赛和凤凰头饰为特色，有独特的“鱼节”习俗。" },
+            { id: "32", name: "柯尔克孜", chineseName: "柯尔克孜族", population: "20万", region: "新疆",
+                coords: [76.5, 39.5],
+                knowledge: "《玛纳斯》史诗（口述生态史）、鹰猎文化、高山季节性转场。",
+                intro: "《玛纳斯》史诗的传唱者，猎鹰和库姆孜弹唱是其文化灵魂。" },
+            { id: "33", name: "达斡尔", chineseName: "达斡尔族", population: "13万", region: "内蒙古",
+                coords: [123.0, 48.0],
+                knowledge: "贝阔（曲棍球）（冬季生态运动）、河流渔业、草原火生态管理。",
+                intro: "以曲棍球运动（贝阔）和丰富的口头文学闻名。" },
+            { id: "34", name: "景颇", chineseName: "景颇族", population: "15万", region: "云南",
+                coords: [98.5, 24.0],
+                knowledge: "目瑙纵歌（集体舞蹈的生态凝聚力）、山地水稻、祖先灵生态。",
+                intro: "以“目瑙纵歌”（万人舞会）和独特的太阳崇拜闻名。" },
+            { id: "35", name: "撒拉", chineseName: "撒拉族", population: "16万", region: "青海",
+                coords: [102.3, 35.8],
+                knowledge: "花儿民歌（诗性生态）、伊斯兰牧业伦理、黄河水灌溉系统。",
+                intro: "突厥语系穆斯林，以“花儿”民歌和甜美的面食著称。" },
+            { id: "36", name: "布朗", chineseName: "布朗族", population: "13万", region: "云南",
+                coords: [100.2, 21.5],
+                knowledge: "普洱茶古树种植、齿黑（文化生态）、茶树精神信仰。",
+                intro: "普洱茶的古树种植者，有独特的染齿习俗和茶崇拜。" },
+            { id: "37", name: "毛南", chineseName: "毛南族", population: "13万", region: "广西",
+                coords: [108.0, 25.0],
+                knowledge: "竹帽制作、花竹帽（生态编织）、喀斯特森林资源管理。",
+                intro: "“竹帽之乡”的民族，花竹帽是其爱情信物与精美工艺。" },
+            { id: "38", name: "塔吉克", chineseName: "塔吉克族", population: "5万", region: "新疆",
+                coords: [75.8, 38.0],
+                knowledge: "帕米尔高原牧业、鹰舞（天空生态）、极地高海拔生存智慧。",
+                intro: "帕米尔高原上的族群，以鹰舞和鲜艳的服饰闻名。" },
+            { id: "39", name: "普米", chineseName: "普米族", population: "4.5万", region: "云南",
+                coords: [99.0, 27.0],
+                knowledge: "羊毛纺织（生态织物）、搓搓节（社会-生态纽带）、高山采集。",
+                intro: "以精良的羊毛织品和“搓搓节”（青年男女交换礼物的节日）著称。" },
+            { id: "40", name: "阿昌", chineseName: "阿昌族", population: "4.2万", region: "云南",
+                coords: [98.6, 24.9],
+                knowledge: "铁器锻造（矿物生态）、蹬窝罗舞蹈、山地轮作。",
+                intro: "以精湛的户撒刀锻造工艺闻名，被誉为“刀的民族”。" },
+            { id: "41", name: "怒", chineseName: "怒族", population: "3.6万", region: "云南",
+                coords: [98.8, 27.5],
+                knowledge: "悬崖村落生态、仙女节（献花植物仪式）、怒江鱼类知识。",
+                intro: "怒江大峡谷的原住民，以崖壁村落和仙女节传说闻名。" },
+            { id: "42", name: "鄂温克", chineseName: "鄂温克族", population: "3.4万", region: "内蒙古",
+                coords: [120.0, 49.0],
+                knowledge: "驯鹿牧养、萨满生态宇宙观、寒带森林可持续狩猎。",
+                intro: "中国唯一的驯鹿部落，保留了古老的萨满信仰。" },
+            { id: "43", name: "京", chineseName: "京族", population: "3.3万", region: "广西",
+                coords: [108.0, 21.5],
+                knowledge: "沿海渔业文化、哈节（海洋叙事曲）、季节性鱼类洄游知识。",
+                intro: "越南裔的海洋族群，以“哈节”（唱歌节）和独弦琴音乐闻名。" },
+            { id: "44", name: "基诺", chineseName: "基诺族", population: "2.5万", region: "云南",
+                coords: [101.0, 22.0],
+                knowledge: "太阳鼓祭（太阳历）、特懋克节（农耕周期）、热带雨林植物药典。",
+                intro: "中国人口最少的民族之一，以太阳鼓和“特懋克节”闻名。" },
+            { id: "45", name: "德昂", chineseName: "德昂族", population: "2.2万", region: "云南",
+                coords: [98.4, 24.0],
+                knowledge: "古茶树种植、银饰文化、原始森林的精灵信仰。",
+                intro: "被称为“古老的茶农”，茶文化和银饰是其民族标识。" },
+            { id: "46", name: "乌孜别克", chineseName: "乌孜别克族", population: "1.3万", region: "新疆",
+                coords: [83.0, 44.0],
+                knowledge: "丝绸织造、金线刺绣、绿洲贸易网络中的生态知识。",
+                intro: "突厥语系民族，以精美绝伦的金线刺绣和传统舞蹈闻名。" },
+            { id: "47", name: "俄罗斯", chineseName: "俄罗斯族", population: "1.5万", region: "新疆、内蒙古",
+                coords: [86.0, 47.0],
+                knowledge: "东正教节庆文化、手风琴音乐（文化韧性的体现）、寒带边疆生存智慧。",
+                intro: "俄罗斯移民后裔，保留了复活节彩蛋和手风琴音乐传统。" },
+            { id: "48", name: "裕固", chineseName: "裕固族", population: "1.4万", region: "甘肃",
+                coords: [98.0, 38.0],
+                knowledge: "史诗民歌（口述史）、高原牧业、黄头巾（生态文化符号）。",
+                intro: "回鹘后裔，以史诗民歌和独特的黄头巾服饰闻名。" },
+            { id: "49", name: "保安", chineseName: "保安族", population: "2万", region: "甘肃",
+                coords: [103.0, 35.0],
+                knowledge: "保安腰刀锻造（矿物手工艺）、伊斯兰武士传统、黄河谷地农牧业。",
+                intro: "以制作保安腰刀闻名，是甘肃特有的穆斯林民族。" },
+            { id: "50", name: "门巴", chineseName: "门巴族", population: "1.1万", region: "西藏",
+                coords: [94.0, 28.0],
+                knowledge: "竹编工艺、赛马节（高海拔马背文化）、喜马拉雅草药知识。",
+                intro: "喜马拉雅山脉的门隅地区，以竹编和赛马节著称。" },
+            { id: "51", name: "鄂伦春", chineseName: "鄂伦春族", population: "0.9万", region: "内蒙古",
+                coords: [124.0, 50.0],
+                knowledge: "狗拉雪橇狩猎、兽皮衣（极寒热工学）、寒带森林季节性追踪。",
+                intro: "曾经的“森林猎神”，兽皮制作和桦树皮工艺是其文化瑰宝。" },
+            { id: "52", name: "独龙", chineseName: "独龙族", population: "0.7万", region: "云南",
+                coords: [98.2, 28.0],
+                knowledge: "纹面传统（文化生态）、卡雀哇节（农业周期）、高山采集狩猎。",
+                intro: "中国人口最少的民族之一，独特的纹面女传统闻名于世。" },
+            { id: "53", name: "塔塔尔", chineseName: "塔塔尔族", population: "0.35万", region: "新疆",
+                coords: [82.0, 46.0],
+                knowledge: "精细刺绣、小花帽制作、甜蜜点心（文化韧性的美味表达）。",
+                intro: "以精致的刺绣和美味的糕点著称的塔塔尔族。" },
+            { id: "54", name: "赫哲", chineseName: "赫哲族", population: "0.5万", region: "黑龙江",
+                coords: [135.0, 48.0],
+                knowledge: "鱼皮制衣（生物材料）、黑龙江江渔生态、季节性冰捕知识。",
+                intro: "中国唯一以“鱼皮制衣”闻名的民族，黑龙江的渔猎族群。" },
+            { id: "55", name: "珞巴", chineseName: "珞巴族", population: "0.37万", region: "西藏",
+                coords: [95.0, 29.0],
+                knowledge: "藤编头盔、自然崇拜（萨满）、东喜马拉雅山地生态。",
+                intro: "生活在东喜马拉雅山脉的珞瑜地区，保留了原始的自然崇拜。" },
+            { id: "56", name: "高山", chineseName: "高山族", population: "约30万（台湾地区）", region: "台湾",
+                coords: [121.5, 25.0],
+                knowledge: "木雕与织布、丰年祭（生态历法）、南岛语族的海洋迁徙知识。",
+                intro: "台湾地区的原住民族群，包含多个部落，以木雕和丰年祭闻名。" }
         ];
 
-        // ================================================================
-        // 2. GRID VIEW
-        // ================================================================
+        // ============================================================
+        // 2. 网格渲染
+        // ============================================================
         function renderGrid(groups) {
             const app = document.getElementById('app');
             if (!groups.length) {
-                app.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--text-muted);">No groups found.</p>';
+                app.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--color-muted);">未找到任何民族。</p>';
                 return;
             }
+            const tags = ['🌾 牧业', '🌿 生态', '🎵 口述', '🧊 气候', '🎨 工艺', '🔬 医药'];
             let html = '<div class="grid">';
             groups.forEach(g => {
-                const tags = [
-                    '🌾 Pastoral',
-                    '🌿 Eco-Steward',
-                    '🎵 Oral',
-                    '🧊 Climate',
-                    '🎨 Artisan',
-                    '🔬 Medicine'
-                ];
                 const tag = tags[parseInt(g.id) % tags.length];
                 html += `
                         <div class="card" onclick="openDetail('${g.id}')">
@@ -1110,7 +1144,7 @@
                             <h3>${g.name}</h3>
                             <div class="chinese-name">${g.chineseName}</div>
                             <div class="region">📍 ${g.region}</div>
-                            <div class="intro-preview">${g.intro.slice(0, 60)}...</div>
+                            <div class="intro-preview">${g.intro.slice(0, 50)}...</div>
                             <div class="population">👥 ${g.population}</div>
                         </div>
                     `;
@@ -1122,23 +1156,23 @@
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const q = e.target.value.toLowerCase();
             const filtered = allGroups.filter(g =>
-                g.name.toLowerCase().includes(q) ||
+                g.name.includes(q) ||
                 g.chineseName.includes(q) ||
-                g.region.toLowerCase().includes(q)
+                g.region.includes(q)
             );
             renderGrid(filtered);
         });
 
-        // ================================================================
-        // 3. MODAL
-        // ================================================================
+        // ============================================================
+        // 3. 弹窗详情
+        // ============================================================
         function openDetail(id) {
             const g = allGroups.find(x => x.id === id);
             if (!g) return;
-            document.getElementById('modalName').textContent = g.name;
+            document.getElementById('modalName').textContent = g.name + '族';
             document.getElementById('modalChinese').textContent = g.chineseName;
             document.getElementById('modalRegion').textContent = '📍 ' + g.region;
-            document.getElementById('modalPopulation').textContent = '👥 Population: ' + g.population;
+            document.getElementById('modalPopulation').textContent = '👥 人口：' + g.population;
             document.getElementById('modalIntro').textContent = g.intro;
             document.getElementById('modalKnowledgeText').textContent = g.knowledge;
             document.getElementById('detailModal').classList.add('open');
@@ -1154,20 +1188,22 @@
             if (e.key === 'Escape') closeModal();
         });
 
-        // ================================================================
-        // 4. TABS
-        // ================================================================
+        // ============================================================
+        // 4. 标签页切换
+        // ============================================================
         function switchTab(viewName) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.querySelector(`.tab-btn[data-view="${viewName}"]`)?.classList.add('active');
+            const btn = document.querySelector(`.tab-btn[data-view="${viewName}"]`);
+            if (btn) btn.classList.add('active');
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(viewName + 'View').classList.add('active');
-            if (viewName === 'mandala') drawSteppeMandala();
+
+            if (viewName === 'mandala') drawMandala();
             if (viewName === 'map') {
                 setTimeout(() => {
                     if (mapChart) mapChart.resize();
                     else initMap();
-                }, 200);
+                }, 300);
             }
         }
 
@@ -1177,9 +1213,12 @@
             });
         });
 
-        // ================================================================
-        // 5. STEPPE MANDALA (Green/Gold, Thick Petals)
-        // ================================================================
+        // 暴露给全局（用于导航栏跳转）
+        window.switchTab = switchTab;
+
+        // ============================================================
+        // 5. 莲瓣图 (Canvas)
+        // ============================================================
         const canvas = document.getElementById('mandalaCanvas');
         const ctx = canvas.getContext('2d');
         const tooltip = document.getElementById('mandalaTooltip');
@@ -1188,14 +1227,14 @@
         const cx = 350,
             cy = 340;
         const radius = 230;
-        const totalGroups = allGroups.length;
-        let hoveredIndex = -1;
+        const total = allGroups.length;
+        let hoveredIdx = -1;
 
         function drawSparkle(x, y, size) {
             ctx.save();
             ctx.translate(x, y);
-            ctx.fillStyle = 'rgba(44, 74, 58, 0.15)';
-            ctx.shadowColor = 'rgba(44, 74, 58, 0.05)';
+            ctx.fillStyle = 'rgba(44,74,58,0.12)';
+            ctx.shadowColor = 'rgba(44,74,58,0.05)';
             ctx.shadowBlur = 8;
             ctx.beginPath();
             for (let i = 0; i < 8; i++) {
@@ -1209,12 +1248,12 @@
             ctx.restore();
         }
 
-        function drawSteppeMandala() {
+        function drawMandala() {
             ctx.clearRect(0, 0, W, H);
             const bg = ctx.createRadialGradient(cx, cy - 50, 50, cx, cy, 400);
-            bg.addColorStop(0, '#F5F2E9');
-            bg.addColorStop(0.5, '#E8E0D0');
-            bg.addColorStop(1, '#D4C5A0');
+            bg.addColorStop(0, '#F4F7F0');
+            bg.addColorStop(0.6, '#EAF3E5');
+            bg.addColorStop(1, '#DCE4D6');
             ctx.fillStyle = bg;
             ctx.fillRect(0, 0, W, H);
 
@@ -1229,7 +1268,7 @@
             ];
             sp.forEach(([x, y, s]) => drawSparkle(x, y, s));
 
-            // Stem
+            // 花茎
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(cx, cy + 50);
@@ -1238,13 +1277,13 @@
             ctx.strokeStyle = '#8C7A5E';
             ctx.lineWidth = 8;
             ctx.lineCap = 'round';
-            ctx.shadowColor = 'rgba(140, 122, 94, 0.2)';
+            ctx.shadowColor = 'rgba(140,122,94,0.15)';
             ctx.shadowBlur = 12;
             ctx.stroke();
             ctx.shadowBlur = 0;
             ctx.fillStyle = '#A8C4A0';
             ctx.shadowBlur = 6;
-            ctx.shadowColor = 'rgba(140, 122, 94, 0.1)';
+            ctx.shadowColor = 'rgba(140,122,94,0.08)';
             ctx.beginPath();
             ctx.ellipse(cx - 35, cy + 110, 22, 12, -0.4, 0, Math.PI * 2);
             ctx.fill();
@@ -1257,66 +1296,64 @@
             ctx.stroke();
             ctx.restore();
 
-            // Thick petals
-            const slice = (2 * Math.PI) / totalGroups;
-            for (let i = 0; i < totalGroups; i++) {
-                const angle = i * slice - Math.PI / 2;
-                const nextAngle = angle + slice;
-                const midAngle = angle + slice / 2;
+            // 莲瓣
+            const slice = (2 * Math.PI) / total;
+            for (let i = 0; i < total; i++) {
+                const a = i * slice - Math.PI / 2;
+                const na = a + slice;
+                const ma = a + slice / 2;
                 const innerR = 45;
                 const outerR = radius;
-                const x1 = cx + Math.cos(angle) * innerR;
-                const y1 = cy + Math.sin(angle) * innerR;
-                const x2 = cx + Math.cos(nextAngle) * innerR;
-                const y2 = cy + Math.sin(nextAngle) * innerR;
-                const tipX = cx + Math.cos(midAngle) * outerR;
-                const tipY = cy + Math.sin(midAngle) * outerR;
+                const x1 = cx + Math.cos(a) * innerR,
+                    y1 = cy + Math.sin(a) * innerR;
+                const x2 = cx + Math.cos(na) * innerR,
+                    y2 = cy + Math.sin(na) * innerR;
+                const tx = cx + Math.cos(ma) * outerR,
+                    ty = cy + Math.sin(ma) * outerR;
 
-                const cpSpread = slice * 0.32;
-                const cpRadius = outerR * 0.95;
-                const cp1x = cx + Math.cos(angle + cpSpread) * cpRadius;
-                const cp1y = cy + Math.sin(angle + cpSpread) * cpRadius;
-                const cp2x = cx + Math.cos(nextAngle - cpSpread) * cpRadius;
-                const cp2y = cy + Math.sin(nextAngle - cpSpread) * cpRadius;
+                const spread = slice * 0.32;
+                const cpR = outerR * 0.95;
+                const cp1x = cx + Math.cos(a + spread) * cpR,
+                    cp1y = cy + Math.sin(a + spread) * cpR;
+                const cp2x = cx + Math.cos(na - spread) * cpR,
+                    cp2y = cy + Math.sin(na - spread) * cpR;
                 const tipOff = 6;
 
                 ctx.beginPath();
                 ctx.moveTo(x1, y1);
-                ctx.bezierCurveTo(cp1x, cp1y, tipX - Math.cos(midAngle) * tipOff, tipY - Math.sin(midAngle) * tipOff,
-                    tipX, tipY);
-                ctx.bezierCurveTo(tipX + Math.cos(midAngle) * tipOff, tipY + Math.sin(midAngle) * tipOff, cp2x, cp2y,
-                    x2, y2);
+                ctx.bezierCurveTo(cp1x, cp1y, tx - Math.cos(ma) * tipOff, ty - Math.sin(ma) * tipOff, tx, ty);
+                ctx.bezierCurveTo(tx + Math.cos(ma) * tipOff, ty + Math.sin(ma) * tipOff, cp2x, cp2y, x2, y2);
                 ctx.closePath();
 
-                const hue = 120 + (i / totalGroups) * 50;
+                const hue = 120 + (i / total) * 50;
                 const sat = 50 + (i % 4) * 4;
-                const lig = (i === hoveredIndex) ? 70 : 52;
+                const lig = (i === hoveredIdx) ? 70 : 52;
 
                 const grad = ctx.createRadialGradient(
-                    cx + Math.cos(midAngle) * 40, cy + Math.sin(midAngle) * 40, 15,
-                    cx + Math.cos(midAngle) * 90, cy + Math.sin(midAngle) * 90, outerR
+                    cx + Math.cos(ma) * 40, cy + Math.sin(ma) * 40, 15,
+                    cx + Math.cos(ma) * 90, cy + Math.sin(ma) * 90, outerR
                 );
                 grad.addColorStop(0, `hsl(${hue + 15}, ${sat + 10}%, ${lig + 18}%)`);
                 grad.addColorStop(0.6, `hsl(${hue}, ${sat}%, ${lig}%)`);
                 grad.addColorStop(1, `hsl(${hue - 10}, ${sat - 5}%, ${lig - 15}%)`);
 
                 ctx.fillStyle = grad;
-                ctx.shadowColor = (i === hoveredIndex) ? 'rgba(44, 74, 58, 0.4)' : 'rgba(44, 74, 58, 0.08)';
-                ctx.shadowBlur = (i === hoveredIndex) ? 40 : 15;
+                ctx.shadowColor = (i === hoveredIdx) ? 'rgba(44,74,58,0.35)' : 'rgba(44,74,58,0.06)';
+                ctx.shadowBlur = (i === hoveredIdx) ? 40 : 12;
                 ctx.fill();
                 ctx.shadowBlur = 0;
-                ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
                 ctx.lineWidth = 1.2;
                 ctx.stroke();
 
                 const lR = radius * 0.6;
-                const lx = cx + Math.cos(midAngle) * lR;
-                const ly = cy + Math.sin(midAngle) * lR;
+                const lx = cx + Math.cos(ma) * lR,
+                    ly = cy + Math.sin(ma) * lR;
                 ctx.beginPath();
                 ctx.arc(lx, ly, 13, 0, 2 * Math.PI);
-                ctx.fillStyle = 'rgba(255,255,255,0.5)';
+                ctx.fillStyle = 'rgba(255,255,255,0.45)';
                 ctx.fill();
-                ctx.fillStyle = (i === hoveredIndex) ? '#2C4A3A' : 'rgba(44, 74, 58, 0.8)';
+                ctx.fillStyle = (i === hoveredIdx) ? '#1C3D2E' : 'rgba(28,61,46,0.75)';
                 ctx.font = 'bold 10px "Inter", sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -1326,12 +1363,12 @@
                 ctx.shadowBlur = 0;
             }
 
-            // Center: Golden Earth Pearl
+            // 花心
             const pearl = ctx.createRadialGradient(cx - 15, cy - 20, 5, cx, cy, 50);
             pearl.addColorStop(0, '#FDE8C8');
             pearl.addColorStop(0.5, '#C9A96E');
             pearl.addColorStop(1, '#8C7A5E');
-            ctx.shadowColor = 'rgba(201, 169, 110, 0.5)';
+            ctx.shadowColor = 'rgba(201,169,110,0.4)';
             ctx.shadowBlur = 50;
             ctx.beginPath();
             ctx.arc(cx, cy, 45, 0, 2 * Math.PI);
@@ -1344,66 +1381,65 @@
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Inner motif
             ctx.beginPath();
             for (let i = 0; i < 8; i++) {
                 const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
                 const r = 20;
-                const px = cx + Math.cos(a) * r;
-                const py = cy + Math.sin(a) * r;
+                const px = cx + Math.cos(a) * r,
+                    py = cy + Math.sin(a) * r;
                 if (i === 0) ctx.moveTo(px, py);
                 else ctx.lineTo(px, py);
             }
             ctx.closePath();
-            ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
             ctx.lineWidth = 1.2;
             ctx.stroke();
         }
 
-        // --- Interactions ---
-        function getIndex(e) {
+        // --- 交互 ---
+        function getIdx(e) {
             const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
+            const scaleX = canvas.width / rect.width,
+                scaleY = canvas.height / rect.height;
             let cx2, cy2;
             if (e.touches) { cx2 = e.touches[0].clientX;
                 cy2 = e.touches[0].clientY;
                 e.preventDefault(); } else { cx2 = e.clientX;
                 cy2 = e.clientY; }
-            const x = (cx2 - rect.left) * scaleX;
-            const y = (cy2 - rect.top) * scaleY;
+            const x = (cx2 - rect.left) * scaleX,
+                y = (cy2 - rect.top) * scaleY;
             const dx = x - cx,
                 dy = y - cy;
             const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist > radius || dist < 35) return -1;
             let a = Math.atan2(dy, dx) + Math.PI / 2;
             if (a < 0) a += 2 * Math.PI;
-            const s = (2 * Math.PI) / totalGroups;
+            const s = (2 * Math.PI) / total;
             const idx = Math.floor(a / s);
-            if (idx >= totalGroups) return 0;
+            if (idx >= total) return 0;
             return idx;
         }
 
         function onMove(e) {
-            const idx = getIndex(e);
-            if (idx !== hoveredIndex) {
-                hoveredIndex = idx;
-                drawSteppeMandala();
-                if (idx >= 0 && idx < totalGroups) {
+            const idx = getIdx(e);
+            if (idx !== hoveredIdx) {
+                hoveredIdx = idx;
+                drawMandala();
+                if (idx >= 0 && idx < total) {
                     const g = allGroups[idx];
                     tooltip.innerHTML =
-                        `⏺ ${g.name} (${g.chineseName}) <small>✦ ${g.region} · ${g.population}</small>`;
+                        `⏺ ${g.name}族 (${g.chineseName}) <small>✦ ${g.region} · ${g.population}</small>`;
                     canvas.style.cursor = 'pointer';
                 } else {
-                    tooltip.innerHTML = '⏺ Hover over a petal <small>✦ click to explore their knowledge</small>';
+                    tooltip.innerHTML = '⏺ 悬停于莲瓣之上 <small>✦ 点击查看该民族的智识</small>';
                     canvas.style.cursor = 'default';
                 }
             }
         }
 
         function onClick(e) {
-            const idx = getIndex(e);
-            if (idx >= 0 && idx < totalGroups) openDetail(allGroups[idx].id);
+            const idx = getIdx(e);
+            if (idx >= 0 && idx < total) openDetail(allGroups[idx].id);
         }
 
         canvas.addEventListener('mousemove', onMove);
@@ -1412,9 +1448,9 @@
             onClick(e); });
         canvas.addEventListener('touchmove', (e) => { onMove(e); });
 
-        // ================================================================
-        // 6. MAP
-        // ================================================================
+        // ============================================================
+        // 6. 地图 (ECharts)
+        // ============================================================
         let mapChart = null;
         let mapAttempts = 0;
 
@@ -1430,7 +1466,7 @@
             if (mapChart) { mapChart.resize(); return; }
 
             fallback.style.display = 'block';
-            fallback.innerHTML = '<p>🌾 Loading geographical distribution...</p>';
+            fallback.innerHTML = '<p>🌾 正在加载地理分布数据...</p>';
 
             mapChart = echarts.init(container);
             const controller = new AbortController();
@@ -1438,14 +1474,14 @@
 
             fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json', { signal: controller.signal })
                 .then(res => {
-                    if (!res.ok) throw new Error('Network error');
+                    if (!res.ok) throw new Error('网络错误');
                     return res.json();
                 })
                 .then(data => {
                     clearTimeout(timeout);
                     echarts.registerMap('china', data);
                     const scatter = allGroups.map(g => ({
-                        name: g.name,
+                        name: g.name + '族',
                         value: [...g.coords, 1],
                         chineseName: g.chineseName,
                         region: g.region,
@@ -1464,7 +1500,7 @@
                                 return p.name;
                             }
                         },
-                        visualMap: { show: false, min: 0, max: 1, inRange: { color: ['#D8F3DC', '#2C4A3A'] } },
+                        visualMap: { show: false, min: 0, max: 1, inRange: { color: ['#EAF3E5', '#2C4A3A'] } },
                         geo: {
                             map: 'china',
                             roam: true,
@@ -1487,7 +1523,7 @@
                                 show: true,
                                 formatter: (p) => p.name,
                                 position: 'right',
-                                color: '#2C4A3A',
+                                color: '#1C3D2E',
                                 fontSize: 9,
                                 fontWeight: '600',
                                 textShadowColor: 'white',
@@ -1526,21 +1562,27 @@
                     mapAttempts++;
                     fallback.style.display = 'block';
                     fallback.innerHTML = `
-                            <p>🌾 Map data temporarily unavailable (Attempt ${mapAttempts}).</p>
-                            <p style="font-size:0.9rem;color:var(--text-muted);">The server may be busy. Try again or explore the Grid / Mandala.</p>
-                            <button onclick="retryMap()">🔄 Reload Map</button>
+                            <p>🌾 地图数据暂时无法加载（尝试 ${mapAttempts} 次）。</p>
+                            <p style="font-size:0.9rem;color:var(--color-muted);">服务器可能繁忙，请稍后重试，或探索列表与莲瓣图。</p>
+                            <button onclick="retryMap()">🔄 重新加载</button>
                         `;
                     if (mapChart) { mapChart.dispose();
                         mapChart = null; }
                 });
         }
 
-        // ================================================================
-        // 7. INIT
-        // ================================================================
+        // ============================================================
+        // 7. 初始化
+        // ============================================================
         renderGrid(allGroups);
-        drawSteppeMandala();
+        drawMandala();
         setTimeout(initMap, 1200);
+
+        // 暴露函数到全局
+        window.retryMap = retryMap;
+        window.initMap = initMap;
+        window.openDetail = openDetail;
+        window.closeModal = closeModal;
     </script>
 
 </body>
