@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🌸 Petal Atlas — 56 Ethnic Groups</title>
-    <!-- ECharts CDN for the interactive map -->
     <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js">
     </script>
     <style>
@@ -420,7 +419,7 @@
         </main>
     </div>
 
-    <!-- ===== FLOWER VIEW (KAWAII LOTUS) ===== -->
+    <!-- ===== FLOWER VIEW ===== -->
     <div id="flowerView" class="view">
         <canvas id="flowerCanvas" width="700" height="700"></canvas>
         <div id="flowerTooltip">🌸 Hover over a petal <small>✦ click to learn more</small></div>
@@ -695,7 +694,7 @@
         });
 
         // ================================================================
-        // 4. TAB SWITCHING
+        // 4. TAB SWITCHING (FIXED MAP RESIZE)
         // ================================================================
         const tabs = document.querySelectorAll('.tab-btn');
         const views = {
@@ -713,7 +712,17 @@
                     views[key].classList.toggle('active', key === view);
                 });
                 if (view === 'flower') drawKawaiiLotus();
-                if (view === 'map') setTimeout(initMap, 100);
+                if (view === 'map') {
+                    // CRITICAL FIX: Force resize after the container becomes visible
+                    setTimeout(() => {
+                        if (mapChart) {
+                            mapChart.resize();
+                        } else {
+                            // If not initialized yet, init it now
+                            initMap();
+                        }
+                    }, 200);
+                }
             });
         });
 
@@ -731,14 +740,12 @@
         const totalGroups = allGroups.length;
         let hoveredIndex = -1;
 
-        // --- Draw Sparkles (Kawaii) ---
         function drawSparkle(x, y, size, color) {
             ctx.save();
             ctx.translate(x, y);
             ctx.fillStyle = color || 'rgba(255, 255, 255, 0.8)';
             ctx.shadowColor = 'rgba(255, 255, 255, 0.6)';
             ctx.shadowBlur = 10;
-            // 4-point star
             ctx.beginPath();
             for (let i = 0; i < 8; i++) {
                 const angle = (i / 8) * Math.PI * 2;
@@ -755,7 +762,6 @@
         function drawKawaiiLotus() {
             ctx.clearRect(0, 0, W, H);
 
-            // --- Background: Soft pink radiance ---
             const bgGrad = ctx.createRadialGradient(cx, cy - 50, 50, cx, cy, 400);
             bgGrad.addColorStop(0, '#FFF5F7');
             bgGrad.addColorStop(0.5, '#FCE4EC');
@@ -763,7 +769,6 @@
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, W, H);
 
-            // --- Draw floating sparkles in background ---
             const sparklePositions = [
                 [100, 100, 6],
                 [600, 90, 8],
@@ -779,7 +784,7 @@
                 drawSparkle(x, y, s, 'rgba(255, 255, 255, 0.5)');
             });
 
-            // --- Draw STEM (Cute, soft curve) ---
+            // Stem
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(cx, cy + 50);
@@ -792,46 +797,37 @@
             ctx.shadowBlur = 10;
             ctx.stroke();
             ctx.shadowBlur = 0;
-
-            // Cute leaves
             ctx.fillStyle = '#E8C8C8';
             ctx.shadowBlur = 8;
             ctx.shadowColor = 'rgba(180, 120, 120, 0.15)';
-            // Left leaf
             ctx.beginPath();
             ctx.ellipse(cx - 35, cy + 110, 20, 10, -0.4, 0, Math.PI * 2);
             ctx.fill();
             ctx.strokeStyle = '#D4A0A0';
             ctx.lineWidth = 1.5;
             ctx.stroke();
-            // Right leaf
             ctx.beginPath();
             ctx.ellipse(cx + 40, cy + 150, 22, 11, 0.4, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
             ctx.restore();
 
-            // --- Draw 56 LOTUS PETALS ---
+            // Petals
             const slice = (2 * Math.PI) / totalGroups;
-
             for (let i = 0; i < totalGroups; i++) {
                 const angle = i * slice - Math.PI / 2;
                 const nextAngle = angle + slice;
                 const midAngle = angle + slice / 2;
 
-                // Lotus petal shape: Wide, rounded, plush
                 const innerR = 35;
                 const outerR = radius;
-
                 const x1 = cx + Math.cos(angle) * innerR;
                 const y1 = cy + Math.sin(angle) * innerR;
                 const x2 = cx + Math.cos(nextAngle) * innerR;
                 const y2 = cy + Math.sin(nextAngle) * innerR;
-
                 const tipX = cx + Math.cos(midAngle) * outerR;
                 const tipY = cy + Math.sin(midAngle) * outerR;
 
-                // Control points for plump lotus shape
                 const cp1x = cx + Math.cos(angle + slice * 0.15) * (outerR * 0.85);
                 const cp1y = cy + Math.sin(angle + slice * 0.15) * (outerR * 0.85);
                 const cp2x = cx + Math.cos(nextAngle - slice * 0.15) * (outerR * 0.85);
@@ -843,8 +839,7 @@
                 ctx.bezierCurveTo(tipX + Math.cos(midAngle) * 10, tipY + Math.sin(midAngle) * 10, cp2x, cp2y, x2, y2);
                 ctx.closePath();
 
-                // Colors: Soft pinks, coral, lavender
-                const hue = 330 + (i / totalGroups) * 40; // 330 (pink) to 370 (coral/pink)
+                const hue = 330 + (i / totalGroups) * 40;
                 const sat = 60 + (i % 5) * 5;
                 const lig = (i === hoveredIndex) ? 78 : 65;
 
@@ -861,23 +856,17 @@
                 ctx.shadowBlur = (i === hoveredIndex) ? 35 : 12;
                 ctx.fill();
                 ctx.shadowBlur = 0;
-
-                // Delicate outline
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
                 ctx.lineWidth = 1.2;
                 ctx.stroke();
 
-                // Tiny cute number in a soft circle
                 const labelR = radius * 0.6;
                 const lx = cx + Math.cos(midAngle) * labelR;
                 const ly = cy + Math.sin(midAngle) * labelR;
-
-                // Little white halo behind number
                 ctx.beginPath();
                 ctx.arc(lx, ly, 12, 0, 2 * Math.PI);
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
                 ctx.fill();
-
                 ctx.fillStyle = (i === hoveredIndex) ? '#4A2C4A' : 'rgba(74, 44, 74, 0.7)';
                 ctx.font = 'bold 9px "Quicksand", "Segoe UI", sans-serif';
                 ctx.textAlign = 'center';
@@ -888,7 +877,7 @@
                 ctx.shadowBlur = 0;
             }
 
-            // --- Draw CENTER: Glowing Pearl (No Text!) ---
+            // Center Pearl
             const pearlGrad = ctx.createRadialGradient(cx - 15, cy - 20, 5, cx, cy, 50);
             pearlGrad.addColorStop(0, '#FFFFFF');
             pearlGrad.addColorStop(0.3, '#FFE4EC');
@@ -901,21 +890,17 @@
             ctx.fillStyle = pearlGrad;
             ctx.fill();
             ctx.shadowBlur = 0;
-
-            // Inner glow ring
             ctx.beginPath();
             ctx.arc(cx, cy, 35, 0, 2 * Math.PI);
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
             ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Small sparkles around pearl
             drawSparkle(cx - 25, cy - 25, 6, 'rgba(255, 255, 255, 0.9)');
             drawSparkle(cx + 30, cy + 20, 5, 'rgba(255, 255, 255, 0.8)');
             drawSparkle(cx - 30, cy + 30, 7, 'rgba(255, 255, 255, 0.7)');
             drawSparkle(cx + 35, cy - 30, 5, 'rgba(255, 255, 255, 0.8)');
 
-            // Tiny delicate lotus motif in center (just a tiny outline)
             ctx.beginPath();
             for (let i = 0; i < 8; i++) {
                 const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
@@ -931,12 +916,11 @@
             ctx.stroke();
         }
 
-        // --- Interaction for the Lotus ---
+        // --- Flower Interactions ---
         function getFlowerIndex(e) {
             const rect = canvas.getBoundingClientRect();
             const scaleX = canvas.width / rect.width;
             const scaleY = canvas.height / rect.height;
-
             let clientX, clientY;
             if (e.touches) {
                 clientX = e.touches[0].clientX;
@@ -946,20 +930,15 @@
                 clientX = e.clientX;
                 clientY = e.clientY;
             }
-
             const x = (clientX - rect.left) * scaleX;
             const y = (clientY - rect.top) * scaleY;
-
             const dx = x - cx;
             const dy = y - cy;
             const dist = Math.sqrt(dx * dx + dy * dy);
-
             if (dist > radius || dist < 30) return -1;
-
             let angle = Math.atan2(dy, dx);
             let adjusted = angle + Math.PI / 2;
             if (adjusted < 0) adjusted += 2 * Math.PI;
-
             const slice = (2 * Math.PI) / totalGroups;
             const index = Math.floor(adjusted / slice);
             if (index >= totalGroups) return 0;
@@ -1001,20 +980,32 @@
         });
 
         // ================================================================
-        // 6. INTERACTIVE MAP (ECharts)
+        // 6. INTERACTIVE MAP (FIXED: Resize + Retry)
         // ================================================================
         let mapChart = null;
+        let mapDataLoaded = false;
 
         function initMap() {
             const container = document.getElementById('mapContainer');
-            if (!mapChart) {
-                mapChart = echarts.init(container);
+            if (!container) return;
+
+            // If chart already exists, just resize it
+            if (mapChart) {
+                mapChart.resize();
+                return;
             }
 
+            mapChart = echarts.init(container);
+
+            // Fetch GeoJSON
             fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json')
-                .then(res => res.json())
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
                 .then(chinaJson => {
                     echarts.registerMap('china', chinaJson);
+                    mapDataLoaded = true;
 
                     const scatterData = allGroups.map(g => ({
                         name: g.name,
@@ -1107,6 +1098,7 @@
                     };
 
                     mapChart.setOption(option);
+                    mapChart.resize(); // Force immediate resize
 
                     mapChart.off('click');
                     mapChart.on('click', function(params) {
@@ -1118,14 +1110,26 @@
                         }
                     });
 
+                    // Handle window resize
                     window.addEventListener('resize', () => {
                         if (mapChart) mapChart.resize();
                     });
+
+                    // Special resize for the map tab visibility
+                    const mapTabBtn = document.querySelector('.tab-btn[data-view="map"]');
+                    if (mapTabBtn) {
+                        mapTabBtn.addEventListener('click', () => {
+                            setTimeout(() => {
+                                if (mapChart) mapChart.resize();
+                            }, 300);
+                        });
+                    }
+
                 })
                 .catch(err => {
+                    console.error('Map load error:', err);
                     container.innerHTML =
-                        `<p style="text-align:center;padding:2rem;color:#b09ab0;">✦ Map data failed to load. Please refresh.</p>`;
-                    console.error(err);
+                        `<p style="text-align:center;padding:2rem;color:#b09ab0;">✦ Map data failed to load. Please refresh or try again later.<br><small>${err.message}</small></p>`;
                 });
         }
 
@@ -1135,7 +1139,9 @@
         renderGrid(allGroups);
         updateStats(allGroups);
         drawKawaiiLotus();
-        setTimeout(initMap, 500);
+
+        // Pre-load map in background with a small delay
+        setTimeout(initMap, 600);
     </script>
 
 </body>
