@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌿 游牧智识 · 中华民族互动图鉴</title>
-    <!-- ECharts CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js">
-    </script>
+    <title>Steppe & Sky · Nomadic Knowledge Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        /* --- 全局重置 & 配色 (取自新游牧研究所风格) --- */
+        /* ============================================================
+           ROOT VARIABLES — Nomad Earth Palette
+           ============================================================ */
         :root {
-            --color-primary: #1C3D2E;
-            --color-secondary: #4A7856;
-            --color-accent: #9BBF8B;
-            --color-light: #F4F7F0;
-            --color-cream: #FDFBF7;
-            --color-text: #2C3E2E;
-            --color-muted: #5A6E5A;
-            --color-border: #DCE4D6;
-            --font-serif: 'Georgia', 'Times New Roman', serif;
-            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            --shadow-card: 0 8px 24px rgba(28, 61, 46, 0.08);
-            --radius-card: 20px;
+            --sand: #E8DDD0;
+            --clay: #A68B7A;
+            --steppe: #3A5A40;
+            --moss: #588157;
+            --sage: #A3B18A;
+            --cream: #FAF7F2;
+            --terracotta: #B4654A;
+            --gold: #C9A96E;
+            --charcoal: #2C2C1E;
+            --text-muted: #6A6A5A;
+            --shadow: 0 12px 40px rgba(58, 90, 64, 0.10);
+            --radius: 28px;
+            --transition: 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
         }
 
         * {
@@ -30,1559 +33,1675 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: var(--font-sans);
-            background-color: var(--color-cream);
-            color: var(--color-text);
+            font-family: 'Montserrat', -apple-system, sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
         }
 
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-family: var(--font-serif);
-            font-weight: 400;
-        }
-
+        /* --- Layout --- */
         .container {
-            max-width: 1200px;
+            max-width: 820px;
             margin: 0 auto;
             padding: 0 1.5rem;
+            width: 100%;
         }
 
-        /* --- 导航栏 --- */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(253, 251, 247, 0.88);
+        /* --- Header --- */
+        header {
+            padding: 1.8rem 0 1rem;
+            border-bottom: 1px solid rgba(166, 139, 122, 0.15);
+            background: rgba(250, 247, 242, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--color-border);
-            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        .navbar .container {
+        header .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.8rem;
+            gap: 0.5rem;
         }
 
-        .navbar .logo {
-            font-family: var(--font-serif);
-            font-size: 1.6rem;
+        .logo {
             font-weight: 700;
-            color: var(--color-primary);
+            font-size: 1.4rem;
             letter-spacing: -0.5px;
+            color: var(--steppe);
         }
 
-        .navbar .logo span {
-            color: var(--color-secondary);
+        .logo span {
+            color: var(--terracotta);
         }
 
-        .navbar .logo small {
-            font-size: 0.75rem;
+        .logo small {
             font-weight: 400;
-            font-family: var(--font-sans);
-            color: var(--color-muted);
-            margin-left: 0.5rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-left: 0.4rem;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            color: var(--color-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
-            border-bottom: 2px solid transparent;
-            padding-bottom: 0.2rem;
-        }
-
-        .nav-links a:hover {
-            color: var(--color-primary);
-            border-bottom-color: var(--color-secondary);
-        }
-
-        .nav-links .btn-outline {
-            border: 2px solid var(--color-secondary);
-            padding: 0.4rem 1.2rem;
-            border-radius: 40px;
-            color: var(--color-secondary);
+        .header-score {
+            font-size: 0.85rem;
             font-weight: 600;
-            transition: background 0.2s, color 0.2s;
+            color: var(--steppe);
+            background: var(--sage);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            opacity: 0.7;
+            transition: var(--transition);
         }
 
-        .nav-links .btn-outline:hover {
-            background: var(--color-secondary);
+        .header-score.active {
+            opacity: 1;
+            background: var(--steppe);
             color: white;
-            border-bottom-color: transparent;
         }
 
-        /* --- 主视觉 (Hero) --- */
+        /* --- Hero --- */
         .hero {
-            padding: 5rem 0 4rem;
+            padding: 3.5rem 0 2rem;
             text-align: center;
-            background: linear-gradient(180deg, #EAF3E5 0%, var(--color-cream) 100%);
-            border-bottom: 1px solid var(--color-border);
+        }
+
+        .hero .badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            background: rgba(180, 101, 74, 0.08);
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            margin-bottom: 1rem;
         }
 
         .hero h1 {
-            font-size: 3.8rem;
-            font-weight: 700;
-            color: var(--color-primary);
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
             line-height: 1.1;
-            max-width: 800px;
-            margin: 0 auto 1rem;
+            color: var(--steppe);
         }
 
         .hero h1 .highlight {
-            background: rgba(155, 191, 139, 0.25);
-            padding: 0 0.2rem;
-            display: inline-block;
+            color: var(--terracotta);
+            position: relative;
+        }
+
+        .hero h1 .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(180, 101, 74, 0.15);
+            border-radius: 4px;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--color-muted);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-family: var(--font-serif);
-            font-style: italic;
-        }
-
-        .hero .scroll-hint {
-            font-size: 2rem;
-            color: var(--color-secondary);
-            animation: bob 2.2s infinite;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        @keyframes bob {
-            0%,
-            100% {
-                transform: translateY(0);
-                opacity: 0.4;
-            }
-            50% {
-                transform: translateY(10px);
-                opacity: 1;
-            }
-        }
-
-        /* --- 内容区块 (通用) --- */
-        .section {
-            padding: 4rem 0;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .section:last-of-type {
-            border-bottom: none;
-        }
-
-        .section-title {
-            font-size: 2.6rem;
-            color: var(--color-primary);
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-
-        .section-title span {
-            color: var(--color-secondary);
-        }
-
-        .section-sub {
-            text-align: center;
-            max-width: 700px;
-            margin: -1rem auto 2.5rem;
-            color: var(--color-muted);
             font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0.6rem auto 0;
+            font-weight: 400;
         }
 
-        /* --- 关于 / 使命 --- */
-        .mission-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-
-        .mission-text p {
-            font-size: 1.05rem;
-            color: var(--color-text);
-            margin-bottom: 1.2rem;
-            line-height: 1.8;
-        }
-
-        .mission-text strong {
-            color: var(--color-primary);
-        }
-
-        .mission-pillars {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .pillar-item {
+        /* --- Quiz Container --- */
+        .quiz-box {
             background: white;
-            padding: 1.8rem 1.5rem;
-            border-radius: var(--radius-card);
-            box-shadow: var(--shadow-card);
-            border-left: 4px solid var(--color-secondary);
+            border-radius: var(--radius);
+            padding: 2.2rem 2.5rem;
+            box-shadow: var(--shadow);
+            margin: 1.5rem 0 2.5rem;
+            border: 1px solid rgba(166, 139, 122, 0.08);
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .pillar-item .icon {
-            font-size: 1.8rem;
-            display: block;
+        /* --- Progress --- */
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .progress-track {
+            flex: 1;
+            min-width: 120px;
+            height: 4px;
+            background: var(--sand);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--steppe);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .progress-text strong {
+            color: var(--steppe);
+        }
+
+        /* --- Question --- */
+        .question-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--terracotta);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
             margin-bottom: 0.3rem;
         }
 
-        .pillar-item h4 {
-            font-family: var(--font-sans);
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--color-primary);
-            letter-spacing: 0.3px;
-        }
-
-        .pillar-item p {
-            font-size: 0.9rem;
-            color: var(--color-muted);
-            margin-top: 0.2rem;
-        }
-
-        /* --- 互动图鉴 (Atlas) 的搜索与选项卡 --- */
-        .atlas-controls {
-            margin-bottom: 2rem;
-        }
-
-        .search-bar {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1.2rem;
-        }
-
-        #searchInput {
-            width: 100%;
-            max-width: 480px;
-            padding: 0.8rem 1.8rem;
-            border: 2px solid var(--color-border);
-            border-radius: 60px;
-            font-size: 1rem;
-            background: white;
-            outline: none;
-            transition: border-color 0.25s, box-shadow 0.25s;
-            font-family: var(--font-sans);
-        }
-
-        #searchInput:focus {
-            border-color: var(--color-secondary);
-            box-shadow: 0 0 0 4px rgba(74, 120, 86, 0.15);
-        }
-
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            border-bottom: 2px solid var(--color-border);
-            padding-bottom: 0.6rem;
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            padding: 0.5rem 1.8rem;
-            border-radius: 40px;
+        .question-text {
+            font-size: 1.4rem;
             font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--color-muted);
+            line-height: 1.5;
+            color: var(--charcoal);
+            margin-bottom: 1.8rem;
+            min-height: 3.6rem;
+        }
+
+        /* --- Options --- */
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .option-btn {
+            background: var(--cream);
+            border: 2px solid var(--sand);
+            border-radius: 16px;
+            padding: 0.9rem 1.2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--charcoal);
             cursor: pointer;
-            transition: 0.25s;
-            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            line-height: 1.3;
         }
 
-        .tab-btn:hover {
-            background: var(--color-accent);
-            color: var(--color-primary);
+        .option-btn .letter {
+            font-weight: 700;
+            color: var(--clay);
+            font-size: 0.8rem;
+            width: 1.6rem;
+            flex-shrink: 0;
         }
 
-        .tab-btn.active {
-            background: var(--color-primary);
-            color: white;
-            box-shadow: 0 4px 16px rgba(28, 61, 46, 0.15);
+        .option-btn:hover:not(.disabled) {
+            background: var(--sand);
+            border-color: var(--clay);
+            transform: translateY(-2px);
         }
 
-        /* --- 视图容器 --- */
-        .view {
+        .option-btn.correct {
+            background: #D4EDDA;
+            border-color: var(--steppe);
+            color: var(--steppe);
+        }
+
+        .option-btn.correct .letter {
+            color: var(--steppe);
+        }
+
+        .option-btn.wrong {
+            background: #F8DDDD;
+            border-color: var(--terracotta);
+            color: var(--terracotta);
+        }
+
+        .option-btn.wrong .letter {
+            color: var(--terracotta);
+        }
+
+        .option-btn.disabled {
+            cursor: default;
+            opacity: 0.6;
+        }
+
+        .option-btn.disabled:hover {
+            transform: none;
+        }
+
+        .option-btn.correct.disabled {
+            opacity: 1;
+        }
+
+        .option-btn.wrong.disabled {
+            opacity: 1;
+        }
+
+        /* --- Feedback --- */
+        .feedback {
+            margin-top: 1.5rem;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            font-size: 0.95rem;
             display: none;
-            padding: 1.5rem 0 0.5rem;
+            align-items: flex-start;
+            gap: 0.8rem;
+            line-height: 1.6;
         }
 
-        .view.active {
+        .feedback.show {
+            display: flex;
+        }
+
+        .feedback .icon {
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        .feedback.correct {
+            background: #EAF5EA;
+            border-left: 4px solid var(--steppe);
+            color: var(--steppe);
+        }
+
+        .feedback.wrong {
+            background: #FDF0EE;
+            border-left: 4px solid var(--terracotta);
+            color: var(--charcoal);
+        }
+
+        .feedback .knowledge-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.2rem;
+            font-weight: 400;
+        }
+
+        .feedback .knowledge-note strong {
+            color: var(--steppe);
+            font-weight: 600;
+        }
+
+        /* --- Next Button --- */
+        .next-btn {
+            align-self: flex-end;
+            margin-top: 1.5rem;
+            background: var(--steppe);
+            color: white;
+            border: none;
+            padding: 0.8rem 2.2rem;
+            border-radius: 60px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+            display: none;
+        }
+
+        .next-btn:hover {
+            background: var(--moss);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(58, 90, 64, 0.20);
+        }
+
+        .next-btn.show {
+            display: inline-block;
+        }
+
+        /* --- Results --- */
+        .results {
+            display: none;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .results.show {
             display: block;
         }
 
-        /* --- 网格视图 (卡片) --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: var(--radius-card);
-            padding: 1.3rem 1.2rem;
-            box-shadow: var(--shadow-card);
-            cursor: pointer;
-            transition: all 0.25s ease;
-            border-bottom: 4px solid var(--color-border);
-            border-left: 4px solid var(--color-accent);
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            border-bottom-color: var(--color-secondary);
-            border-left-color: var(--color-primary);
-            box-shadow: 0 16px 40px rgba(28, 61, 46, 0.08);
-        }
-
-        .card .id {
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--color-secondary);
-            background: var(--color-light);
-            display: inline-block;
-            padding: 0.1rem 0.7rem;
-            border-radius: 40px;
-            letter-spacing: 1px;
-        }
-
-        .card .knowledge-tag {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--color-primary);
-            background: #EAF3E5;
-            display: inline-block;
-            padding: 0.1rem 0.7rem;
-            border-radius: 40px;
-            margin-left: 0.3rem;
-        }
-
-        .card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.4rem;
-            color: var(--color-primary);
-            margin: 0.2rem 0 0;
-        }
-
-        .card .chinese-name {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--color-muted);
-        }
-
-        .card .region {
-            font-size: 0.75rem;
-            font-weight: 500;
-            color: var(--color-muted);
-            background: var(--color-cream);
-            display: inline-block;
-            padding: 0.1rem 0.8rem;
-            border-radius: 40px;
-            margin: 0.3rem 0 0.4rem;
-        }
-
-        .card .intro-preview {
-            font-size: 0.85rem;
-            color: var(--color-muted);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.5;
-        }
-
-        .card .population {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--color-secondary);
-            margin-top: 0.3rem;
-        }
-
-        /* --- 莲花图鉴 (Canvas) --- */
-        #mandalaView {
-            text-align: center;
-        }
-
-        #mandalaView canvas {
-            max-width: 100%;
-            height: auto;
-            border-radius: 60px;
-            box-shadow: 0 20px 60px rgba(28, 61, 46, 0.08);
-            background: radial-gradient(circle at 30% 20%, #F4F7F0, #EAF3E5);
-            cursor: pointer;
-            touch-action: none;
-            border: 4px solid white;
-        }
-
-        #mandalaTooltip {
-            margin-top: 1rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--color-primary);
-            min-height: 2.8rem;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 0.4rem 2rem;
-            border-radius: 60px;
-            display: inline-block;
-            border: 1px solid var(--color-border);
-            box-shadow: var(--shadow-card);
-        }
-
-        #mandalaTooltip small {
-            font-weight: 400;
-            color: var(--color-muted);
-            font-size: 0.8rem;
-        }
-
-        /* --- 地图 --- */
-        #mapView {
-            padding: 0.5rem 0;
-            height: 65vh;
-            min-height: 450px;
-            background: white;
-            border-radius: 32px;
-            box-shadow: var(--shadow-card);
-            overflow: hidden;
-        }
-
-        #mapContainer {
-            width: 100%;
-            height: 100%;
-        }
-
-        #mapFallback {
-            display: none;
-            text-align: center;
-            padding: 3rem;
-            color: var(--color-muted);
-        }
-
-        #mapFallback button {
-            background: var(--color-secondary);
-            border: none;
+        .results .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: var(--steppe);
             color: white;
-            padding: 0.6rem 2rem;
-            border-radius: 60px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 1rem;
-            transition: 0.2s;
-            font-family: var(--font-sans);
-        }
-
-        #mapFallback button:hover {
-            background: var(--color-primary);
-            transform: scale(1.02);
-        }
-
-        /* --- 弹窗 (Modal) --- */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(28, 61, 46, 0.5);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 999;
-            padding: 1rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 12px 40px rgba(58, 90, 64, 0.20);
         }
 
-        .modal.open {
-            display: flex;
+        .results .score-circle .number {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1;
         }
 
-        .modal-content {
-            background: white;
-            max-width: 520px;
-            width: 100%;
-            padding: 2.2rem 2.2rem;
-            border-radius: 40px;
-            position: relative;
-            box-shadow: 0 40px 80px rgba(28, 61, 46, 0.25);
-            animation: popIn 0.3s ease;
-            border-top: 8px solid var(--color-secondary);
-        }
-
-        .modal-content .close-btn {
-            position: absolute;
-            top: 0.8rem;
-            right: 1.2rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--color-border);
-            background: none;
-            border: none;
-            transition: 0.3s;
-        }
-
-        .modal-content .close-btn:hover {
-            color: var(--color-primary);
-            transform: rotate(90deg);
-        }
-
-        .modal-content h2 {
-            font-family: var(--font-serif);
-            color: var(--color-primary);
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
-
-        .modal-content .chinese-name {
-            font-size: 1.2rem;
-            color: var(--color-muted);
+        .results .score-circle .label {
+            font-size: 0.8rem;
             font-weight: 400;
+            opacity: 0.8;
+            margin-top: 0.2rem;
         }
 
-        .modal-content .detail-region {
-            background: var(--color-light);
-            padding: 0.2rem 1rem;
-            border-radius: 40px;
-            display: inline-block;
-            margin: 0.5rem 0;
-            font-size: 0.9rem;
-            color: var(--color-secondary);
+        .results h2 {
+            font-size: 1.8rem;
+            color: var(--steppe);
+            margin-bottom: 0.4rem;
         }
 
-        .modal-content .detail-population {
-            font-weight: 700;
-            color: var(--color-secondary);
-        }
-
-        .modal-content .full-intro {
-            margin-top: 1rem;
-            line-height: 1.8;
-            color: var(--color-text);
+        .results p {
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto 1.2rem;
             font-size: 0.95rem;
         }
 
-        .modal-content .knowledge-note {
-            margin-top: 1.2rem;
-            padding: 1rem 1.2rem;
-            background: var(--color-light);
-            border-radius: 20px;
-            border-left: 4px solid var(--color-accent);
+        .results .restart-btn {
+            background: transparent;
+            border: 2px solid var(--steppe);
+            color: var(--steppe);
+            padding: 0.7rem 2.4rem;
+            border-radius: 60px;
+            font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
-            color: var(--color-muted);
-            font-style: italic;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
         }
 
-        .modal-content .knowledge-note strong {
-            color: var(--color-primary);
-            font-style: normal;
-        }
-
-        @keyframes popIn {
-            0% {
-                transform: scale(0.9) translateY(10px);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* --- 页脚 --- */
-        .footer {
-            background: var(--color-primary);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 3rem 0 2rem;
-            margin-top: 2rem;
-        }
-
-        .footer .container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 2rem;
-        }
-
-        .footer .brand {
-            max-width: 300px;
-        }
-
-        .footer .brand .logo {
-            font-family: var(--font-serif);
-            font-size: 1.6rem;
+        .results .restart-btn:hover {
+            background: var(--steppe);
             color: white;
-            font-weight: 700;
+            transform: translateY(-2px);
         }
 
-        .footer .brand .logo span {
-            color: var(--color-accent);
-        }
-
-        .footer .brand p {
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin-top: 0.5rem;
-        }
-
-        .footer .links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .footer .links a {
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .footer .links a:hover {
-            color: white;
-        }
-
-        .footer .copyright {
+        /* --- Footer --- */
+        footer {
             text-align: center;
+            padding: 2rem 0 1.8rem;
+            border-top: 1px solid rgba(166, 139, 122, 0.10);
+            margin-top: auto;
+            color: var(--text-muted);
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.3);
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
-            width: 100%;
         }
 
-        /* --- 响应式 --- */
-        @media (max-width: 900px) {
-            .mission-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .mission-pillars {
-                grid-template-columns: 1fr 1fr;
-            }
+        footer span {
+            color: var(--terracotta);
+            font-weight: 600;
         }
 
-        @media (max-width: 680px) {
+        /* --- Responsive --- */
+        @media (max-width: 640px) {
             .hero h1 {
-                font-size: 2.6rem;
+                font-size: 2.2rem;
             }
 
-            .navbar .logo small {
+            .quiz-box {
+                padding: 1.5rem 1.2rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+                min-height: 2.8rem;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+
+            .option-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .progress-text {
+                font-size: 0.7rem;
+            }
+
+            .header-score {
+                font-size: 0.7rem;
+                padding: 0.2rem 0.8rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .logo small {
                 display: none;
             }
 
-            .nav-links {
-                gap: 1rem;
+            .results .score-circle {
+                width: 110px;
+                height: 110px;
             }
 
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .mission-pillars {
-                grid-template-columns: 1fr;
-            }
-
-            .grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.8rem;
-            }
-
-            #mapView {
-                height: 45vh;
-                min-height: 280px;
-            }
-
-            .modal-content {
-                padding: 1.5rem;
+            .results .score-circle .number {
+                font-size: 2.4rem;
             }
         }
 
-        @media (max-width: 480px) {
-            .grid {
-                grid-template-columns: 1fr;
+        @media (max-width: 400px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .quiz-box {
+                padding: 1rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+            }
+
+            .option-btn {
+                font-size: 0.8rem;
+                padding: 0.6rem 0.8rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== 导航栏 ===== -->
-    <nav class="navbar">
+    <!-- ===== HEADER ===== -->
+    <header>
         <div class="container">
             <div class="logo">
-                <span>⏺</span> 游牧智识
-                <small>· 新游牧研究所</small>
+                <span>⏺</span> Steppe & Sky
+                <small>Nomadic Knowledge Quiz</small>
             </div>
-            <div class="nav-links">
-                <a href="#mission">使命</a>
-                <a href="#atlas">图鉴</a>
-                <a href="#mapView" onclick="switchTab('map')">分布</a>
-                <a href="#mission" class="btn-outline">参与我们</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ===== 主视觉 ===== -->
-    <header class="hero">
-        <div class="container">
-            <h1>
-                游牧的 <span class="highlight">智识</span><br />
-                世界的 <span class="highlight">解法</span>
-            </h1>
-            <p>扎根于游牧传统，融合研究与教育，为当代气候与社会议题提供原住民智慧的视角。</p>
-            <div class="scroll-hint" onclick="document.getElementById('mission').scrollIntoView({behavior:'smooth'})">
-                ⌄
-            </div>
+            <div class="header-score" id="headerScore">✦ 0 / 0</div>
         </div>
     </header>
 
-    <!-- ===== 使命/关于 ===== -->
-    <section class="section" id="mission">
+    <!-- ===== HERO ===== -->
+    <section class="hero">
         <div class="container">
-            <h2 class="section-title"><span>新游牧</span> 研究所</h2>
-            <div class="mission-grid">
-                <div class="mission-text">
-                    <p>
-                        <strong>新游牧研究所 (New Nomad Institute)</strong> 是一个非营利的研究与行动机构，
-                        致力于将游牧与原住民知识整合到当代气候、社会和技术的议题中。
-                    </p>
-                    <p>
-                        根植于蒙古活态的游牧传统，我们以研究、教育和文化交流为支点，
-                        与牧民、学者、艺术家、电影人共同协作，以创造具有韧性的可持续未来。
-                    </p>
-                    <p>
-                        我们通过跨学科的合作研究，记录和传播游牧知识与生活经验，
-                        旨在重塑关于气候、文化和可持续发展的主流叙事。
-                    </p>
-                </div>
-                <div class="mission-pillars">
-                    <div class="pillar-item">
-                        <span class="icon">🌿</span>
-                        <h4>研究 Research</h4>
-                        <p>与牧民社区、国际专家协作，关注牧区知识、环境管理和适应性实践。</p>
-                    </div>
-                    <div class="pillar-item">
-                        <span class="icon">📖</span>
-                        <h4>叙事 Narrative</h4>
-                        <p>通过多媒介的叙事运动，记录、诠释并传播游牧知识与生活经验。</p>
-                    </div>
-                    <div class="pillar-item">
-                        <span class="icon">🎓</span>
-                        <h4>教育 Education</h4>
-                        <p>Knowmadic Arts Lab 沉浸式项目，将文理教育与实践游牧生活直接相连。</p>
-                    </div>
-                    <div class="pillar-item">
-                        <span class="icon">🌍</span>
-                        <h4>交流 Exchange</h4>
-                        <p>Steppe Together 全球交流平台，连接全球的牧民、艺术家、研究者与实践者。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== 互动图鉴 ===== -->
-    <section class="section" id="atlas">
-        <div class="container">
-            <h2 class="section-title"><span>民族</span> 智识图鉴</h2>
-            <p class="section-sub">
-                五十六个民族，五十六种与自然相处的智慧。
-                点击卡片或莲瓣，探索每一个族群独特的生态与文化知识。
+            <div class="badge">✦ New Nomad Institute ✦</div>
+            <h1>
+                How well do you know<br />
+                <span class="highlight">China's 56 cultures</span>?
+            </h1>
+            <p>
+                Test your knowledge of festivals, food, clothing, and the hidden wisdom
+                of nomadic and indigenous traditions.
             </p>
-
-            <div class="atlas-controls">
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="搜索民族名称、地区或中文名..." />
-                </div>
-                <div class="tabs">
-                    <button class="tab-btn active" data-view="grid">📋 列表</button>
-                    <button class="tab-btn" data-view="mandala">⏺ 莲瓣图</button>
-                    <button class="tab-btn" data-view="map">🗺️ 分布图</button>
-                </div>
-            </div>
-
-            <!-- 网格视图 -->
-            <div id="gridView" class="view active">
-                <main id="app">
-                    <p style="text-align:center;padding:2rem;color:var(--color-muted);">⏺ 正在加载图鉴数据...</p>
-                </main>
-            </div>
-
-            <!-- 莲瓣图 -->
-            <div id="mandalaView" class="view">
-                <canvas id="mandalaCanvas" width="700" height="700"></canvas>
-                <div id="mandalaTooltip">⏺ 悬停于莲瓣之上 <small>✦ 点击查看该民族的智识</small></div>
-            </div>
-
-            <!-- 地图 -->
-            <div id="mapView" class="view">
-                <div id="mapContainer">
-                    <div id="mapFallback">
-                        <p>🌾 正在加载地理分布数据...</p>
-                        <button onclick="retryMap()">🔄 重新加载</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- ===== 页脚 ===== -->
-    <footer class="footer">
+    <!-- ===== QUIZ ===== -->
+    <main class="container">
+        <div class="quiz-box" id="quizBox">
+
+            <!-- Progress -->
+            <div class="progress-bar">
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">
+                    <strong id="currentQ">1</strong> / <span id="totalQ">0</span>
+                </span>
+            </div>
+
+            <!-- Question Area -->
+            <div id="questionArea">
+                <div class="question-number" id="qNumber">Question 1</div>
+                <div class="question-text" id="qText">Loading question...</div>
+
+                <div class="options" id="optionsContainer"></div>
+
+                <div class="feedback" id="feedback">
+                    <span class="icon" id="feedbackIcon">🌿</span>
+                    <div>
+                        <div id="feedbackText">Feedback</div>
+                        <div class="knowledge-note" id="feedbackKnowledge"></div>
+                    </div>
+                </div>
+
+                <button class="next-btn" id="nextBtn">Next Question →</button>
+            </div>
+
+            <!-- Results Area -->
+            <div class="results" id="resultsArea">
+                <div class="score-circle">
+                    <span class="number" id="finalScore">0</span>
+                    <span class="label">/ <span id="finalTotal">0</span></span>
+                </div>
+                <h2 id="resultTitle">You're a Steppe Scholar! 🌾</h2>
+                <p id="resultDesc">You have a deep understanding of China's rich cultural tapestry.</p>
+                <button class="restart-btn" id="restartBtn">🔄 Play Again</button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
         <div class="container">
-            <div class="brand">
-                <div class="logo"><span>⏺</span> 游牧智识 · 新游牧研究所</div>
-                <p>一个支持新游牧研究所使命的活态档案库，根植蒙古，连结世界。</p>
-            </div>
-            <div class="links">
-                <a href="https://newnomad.org" target="_blank">newnomad.org</a>
-                <a href="#mission">使命</a>
-                <a href="#atlas">图鉴</a>
-                <a href="#mapView" onclick="switchTab('map')">分布地图</a>
-            </div>
-            <div class="copyright">
-                ⏺ 新游牧研究所 · 蒙古 · 2026
-            </div>
+            <span>⏺</span> Steppe & Sky · A New Nomad Institute project · 2026
         </div>
     </footer>
 
-    <!-- ===== 弹窗 ===== -->
-    <div id="detailModal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()">✕</button>
-            <h2 id="modalName">名称</h2>
-            <div class="chinese-name" id="modalChinese">中文名</div>
-            <div class="detail-region" id="modalRegion">📍 地区</div>
-            <div class="detail-population" id="modalPopulation">👥 人口</div>
-            <div class="full-intro" id="modalIntro">简介...</div>
-            <div class="knowledge-note" id="modalKnowledge">
-                <strong>🌾 游牧智识：</strong>
-                <span id="modalKnowledgeText">该民族的传统文化与生态知识，为可持续生活提供了深刻的智慧。</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================================================================
-    JAVASCRIPT — 数据 + 交互逻辑
-    ================================================================ -->
     <script>
-        // ============================================================
-        // 1. 数据：五十六个民族（含生态智识标签）
-        // ============================================================
-        const allGroups = [
-            { id: "01", name: "汉", chineseName: "汉族", population: "12.8亿", region: "全国分布",
-                coords: [116.4, 39.9],
-                knowledge: "农耕文明、儒家生态哲学、浩如烟海的典籍记载了数千年的环境适应智慧。",
-                intro: "全球人口最多的民族，塑造了东亚哲学、文学与科学五千年的根基。" },
-            { id: "02", name: "壮", chineseName: "壮族", population: "1950万", region: "广西",
-                coords: [108.3, 22.8],
-                knowledge: "梯田耕作技术、热带雨林生态管理、铜鼓文化作为社会生态的仪式表达。",
-                intro: "中国最大的少数民族，以绚丽织锦、火把节和铜鼓文化闻名于世。" },
-            { id: "03", name: "回", chineseName: "回族", population: "1130万", region: "宁夏、甘肃",
-                coords: [106.2, 38.4],
-                knowledge: "丝绸之路贸易网络、绿洲农业、伊斯兰生态伦理与中式农耕的融合。",
-                intro: "遍布全国的穆斯林族群，以清真美食与书法艺术著称。" },
-            { id: "04", name: "满", chineseName: "满族", population: "1040万", region: "东北地区",
-                coords: [125.3, 43.8],
-                knowledge: "寒带森林管理、可持续狩猎习俗、八旗制度作为社会-生态组织体系。",
-                intro: "清朝的建立者，保留了八旗传统、京剧与精致的冠饰文化。" },
-            { id: "05", name: "维", chineseName: "维吾尔族", population: "1170万", region: "新疆",
-                coords: [87.6, 43.8],
-                knowledge: "沙漠绿洲农业、坎儿井灌溉系统、丝绸之路的生态与文化交流。",
-                intro: "突厥语系民族，以热烈奔放的舞蹈、哈密瓜和喀什古城闻名。" },
-            { id: "06", name: "苗", chineseName: "苗族", population: "1100万", region: "贵州、云南",
-                coords: [106.7, 26.5],
-                knowledge: "山地梯田耕作、银饰作为生态信仰的载体、丰富的森林药用知识。",
-                intro: "银饰与刺绣工艺大师，芦笙节与蜡染技艺享誉世界。" },
-            { id: "07", name: "彝", chineseName: "彝族", population: "980万", region: "四川、云南",
-                coords: [102.7, 27.5],
-                knowledge: "火文化生态、山地牧业、古彝文记载的气候周期与天文历法。",
-                intro: "拥有古老音节文字的族群，火把节与独特的鹰爪杯是其文化象征。" },
-            { id: "08", name: "土家", chineseName: "土家族", population: "950万", region: "湖南、湖北",
-                coords: [110.3, 29.1],
-                knowledge: "吊脚楼建筑（防洪防潮）、山地农业、武陵山脉的植物生态知识。",
-                intro: "摆手舞与吊脚楼闻名，其独特的婚俗中新娘以歌声告别娘家。" },
-            { id: "09", name: "藏", chineseName: "藏族", population: "700万", region: "西藏、青海",
-                coords: [91.1, 29.6],
-                knowledge: "高海拔牧业、冻土适应性、佛教生态宇宙观（神山圣湖体系）。",
-                intro: "藏传佛教的守护者，布达拉宫、唐卡与高原牧歌是其精神与生活的核心。" },
-            { id: "10", name: "蒙古", chineseName: "蒙古族", population: "620万", region: "内蒙古",
-                coords: [111.6, 40.8],
-                knowledge: "游牧轮牧系统、草原生态学、呼麦与马头琴中的自然聆听。",
-                intro: "草原上的游牧民族，那达慕大会与蒙古包是其文化符号。" },
-            { id: "11", name: "侗", chineseName: "侗族", population: "350万", region: "贵州、湖南",
-                coords: [109.1, 26.2],
-                knowledge: "风雨桥建筑（无钉榫卯）、河流生态管理、复调合唱的声音地图。",
-                intro: "不用一钉一铆建造风雨桥的建筑大师，以多声部大歌闻名。" },
-            { id: "12", name: "布依", chineseName: "布依族", population: "350万", region: "贵州",
-                coords: [106.2, 26.0],
-                knowledge: "梯田水文系统、天然植物染料蜡染、石屋气候调节设计。",
-                intro: "蜡染与织锦工艺精湛，梯田与石板房与自然和谐共生。" },
-            { id: "13", name: "瑶", chineseName: "瑶族", population: "330万", region: "广西、湖南",
-                coords: [110.0, 25.0],
-                knowledge: "森林草药知识、盘瓠神话（人与自然的契约）、山地轮作农业。",
-                intro: "红色与蓝色的刺绣服饰华丽夺目，盘王节是其最重要的祭典。" },
-            { id: "14", name: "白", chineseName: "白族", population: "210万", region: "云南",
-                coords: [100.2, 25.6],
-                knowledge: "洱海湖泊生态、三道茶仪式（社会-生态礼仪）、高山作物种植。",
-                intro: "苍山洱海间的族群，三道茶与三月街是其文化代表。" },
-            { id: "15", name: "朝鲜", chineseName: "朝鲜族", population: "170万", region: "吉林、辽宁",
-                coords: [126.5, 42.8],
-                knowledge: "寒地农耕、泡菜发酵（食物保存智慧）、山神祭自然信仰。",
-                intro: "能歌善舞，以辣白菜和荡秋千、摔跤等端午习俗闻名。" },
-            { id: "16", name: "哈尼", chineseName: "哈尼族", population: "170万", region: "云南",
-                coords: [101.2, 23.0],
-                knowledge: "元阳梯田（森林-村寨-梯田-水系四素同构）、水牛祭祀与农业周期。",
-                intro: "创造了举世闻名的元阳梯田，苦扎扎节是其重要的农耕祭典。" },
-            { id: "17", name: "黎", chineseName: "黎族", population: "160万", region: "海南",
-                coords: [110.3, 19.2],
-                knowledge: "热带海岛生态、植物纺织（树皮布）、台风适应性的聚落选址。",
-                intro: "海南岛的原住民，保留了独特的纹面传统与古老织锦技艺。" },
-            { id: "18", name: "哈萨克", chineseName: "哈萨克族", population: "150万", region: "新疆",
-                coords: [85.0, 45.0],
-                knowledge: "猎鹰文化（伯克特奇）、山地转场牧业、毡房（温度调节工程）。",
-                intro: "阿尔泰山的鹰猎人，以马奶酒和精美的羊毛毡房著称。" },
-            { id: "19", name: "傣", chineseName: "傣族", population: "130万", region: "云南",
-                coords: [100.8, 21.9],
-                knowledge: "湿地水稻种植、竹楼建筑（防潮防洪）、南传佛教生态伦理。",
-                intro: "泼水节是其最热闹的节日，孔雀舞与贝叶经是其文化瑰宝。" },
-            { id: "20", name: "畲", chineseName: "畲族", population: "70万", region: "福建、浙江",
-                coords: [119.3, 26.0],
-                knowledge: "山地森林利用、凤凰崇拜（生态再生）、草医药传统。",
-                intro: "以凤凰冠和山歌闻名，神话中其祖先与犬有密切联系。" },
-            { id: "21", name: "傈僳", chineseName: "傈僳族", population: "70万", region: "云南",
-                coords: [98.8, 26.5],
-                knowledge: "刀杆节（上刀山下火海的生态勇气）、竹编工艺、山地垦殖。",
-                intro: "以“刀杆节”的勇猛著称，其编织袋色彩鲜明，多声部民歌动人。" },
-            { id: "22", name: "仡佬", chineseName: "仡佬族", population: "60万", region: "贵州",
-                coords: [107.0, 27.5],
-                knowledge: "喀斯特洞穴居住、牛角崇拜（牧业文化）、古老水稻种植仪式。",
-                intro: "贵州最古老的民族之一，牛角头饰和“吃新节”是其文化标志。" },
-            { id: "23", name: "拉祜", chineseName: "拉祜族", population: "50万", region: "云南",
-                coords: [99.9, 22.5],
-                knowledge: "狩猎传统（生态管理）、芦笙音乐、轮歇农业系统。",
-                intro: "自称“猎虎的民族”，口传诗歌与复调音乐是其文化核心。" },
-            { id: "24", name: "东乡", chineseName: "东乡族", population: "50万", region: "甘肃",
-                coords: [103.3, 35.7],
-                knowledge: "干旱山区牧业、伊斯兰水伦理、抗旱作物种植系统。",
-                intro: "信仰伊斯兰教的族群，以口传叙事诗和坚韧的山区农耕传统著称。" },
-            { id: "25", name: "佤", chineseName: "佤族", population: "48万", region: "云南",
-                coords: [99.4, 23.1],
-                knowledge: "木鼓仪式（生态历法）、森林宇宙观、山地轮作。",
-                intro: "以木鼓节和新水节闻名，其传统村落中的木雕技艺精湛。" },
-            { id: "26", name: "水", chineseName: "水族", population: "45万", region: "贵州",
-                coords: [107.9, 25.9],
-                knowledge: "水书（罕见的本土文字生态记录）、赛马节（社会-生态聚会）、蓝染工艺。",
-                intro: "拥有古老的水书文字，赛马与铜鼓是其文化重要组成部分。" },
-            { id: "27", name: "纳西", chineseName: "纳西族", population: "32万", region: "云南",
-                coords: [100.2, 26.8],
-                knowledge: "东巴象形文字（活态生态记录）、祭山仪式、高山水资源管理。",
-                intro: "丽江古城的缔造者，世界上唯一活着的象形文字——东巴文的守护者。" },
-            { id: "28", name: "羌", chineseName: "羌族", population: "31万", region: "四川",
-                coords: [103.5, 31.5],
-                knowledge: "碉楼建筑（抗震技术）、白石崇拜（山神信仰）、高海拔牧业。",
-                intro: "被称为“云朵上的民族”，以碉楼建筑和羊皮鼓舞著称。" },
-            { id: "29", name: "土", chineseName: "土族", population: "30万", region: "青海",
-                coords: [101.9, 36.5],
-                knowledge: "彩虹腰带编织（季节符号）、藏传佛教生态伦理、农牧结合。",
-                intro: "以多彩的盘绣和“纳顿节”（面具舞会）闻名。" },
-            { id: "30", name: "锡伯", chineseName: "锡伯族", population: "25万", region: "新疆、辽宁",
-                coords: [122.0, 43.0],
-                knowledge: "射箭（生态纪律）、满语文字保存、迁徙史中的环境适应。",
-                intro: "清代由东北西迁至新疆的族群，保留了精湛的射箭传统。" },
-            { id: "31", name: "仫佬", chineseName: "仫佬族", population: "24万", region: "广西",
-                coords: [108.8, 24.7],
-                knowledge: "龙舟竞渡（河流文化）、凤凰象征、喀斯特水域养殖。",
-                intro: "以龙舟赛和凤凰头饰为特色，有独特的“鱼节”习俗。" },
-            { id: "32", name: "柯尔克孜", chineseName: "柯尔克孜族", population: "20万", region: "新疆",
-                coords: [76.5, 39.5],
-                knowledge: "《玛纳斯》史诗（口述生态史）、鹰猎文化、高山季节性转场。",
-                intro: "《玛纳斯》史诗的传唱者，猎鹰和库姆孜弹唱是其文化灵魂。" },
-            { id: "33", name: "达斡尔", chineseName: "达斡尔族", population: "13万", region: "内蒙古",
-                coords: [123.0, 48.0],
-                knowledge: "贝阔（曲棍球）（冬季生态运动）、河流渔业、草原火生态管理。",
-                intro: "以曲棍球运动（贝阔）和丰富的口头文学闻名。" },
-            { id: "34", name: "景颇", chineseName: "景颇族", population: "15万", region: "云南",
-                coords: [98.5, 24.0],
-                knowledge: "目瑙纵歌（集体舞蹈的生态凝聚力）、山地水稻、祖先灵生态。",
-                intro: "以“目瑙纵歌”（万人舞会）和独特的太阳崇拜闻名。" },
-            { id: "35", name: "撒拉", chineseName: "撒拉族", population: "16万", region: "青海",
-                coords: [102.3, 35.8],
-                knowledge: "花儿民歌（诗性生态）、伊斯兰牧业伦理、黄河水灌溉系统。",
-                intro: "突厥语系穆斯林，以“花儿”民歌和甜美的面食著称。" },
-            { id: "36", name: "布朗", chineseName: "布朗族", population: "13万", region: "云南",
-                coords: [100.2, 21.5],
-                knowledge: "普洱茶古树种植、齿黑（文化生态）、茶树精神信仰。",
-                intro: "普洱茶的古树种植者，有独特的染齿习俗和茶崇拜。" },
-            { id: "37", name: "毛南", chineseName: "毛南族", population: "13万", region: "广西",
-                coords: [108.0, 25.0],
-                knowledge: "竹帽制作、花竹帽（生态编织）、喀斯特森林资源管理。",
-                intro: "“竹帽之乡”的民族，花竹帽是其爱情信物与精美工艺。" },
-            { id: "38", name: "塔吉克", chineseName: "塔吉克族", population: "5万", region: "新疆",
-                coords: [75.8, 38.0],
-                knowledge: "帕米尔高原牧业、鹰舞（天空生态）、极地高海拔生存智慧。",
-                intro: "帕米尔高原上的族群，以鹰舞和鲜艳的服饰闻名。" },
-            { id: "39", name: "普米", chineseName: "普米族", population: "4.5万", region: "云南",
-                coords: [99.0, 27.0],
-                knowledge: "羊毛纺织（生态织物）、搓搓节（社会-生态纽带）、高山采集。",
-                intro: "以精良的羊毛织品和“搓搓节”（青年男女交换礼物的节日）著称。" },
-            { id: "40", name: "阿昌", chineseName: "阿昌族", population: "4.2万", region: "云南",
-                coords: [98.6, 24.9],
-                knowledge: "铁器锻造（矿物生态）、蹬窝罗舞蹈、山地轮作。",
-                intro: "以精湛的户撒刀锻造工艺闻名，被誉为“刀的民族”。" },
-            { id: "41", name: "怒", chineseName: "怒族", population: "3.6万", region: "云南",
-                coords: [98.8, 27.5],
-                knowledge: "悬崖村落生态、仙女节（献花植物仪式）、怒江鱼类知识。",
-                intro: "怒江大峡谷的原住民，以崖壁村落和仙女节传说闻名。" },
-            { id: "42", name: "鄂温克", chineseName: "鄂温克族", population: "3.4万", region: "内蒙古",
-                coords: [120.0, 49.0],
-                knowledge: "驯鹿牧养、萨满生态宇宙观、寒带森林可持续狩猎。",
-                intro: "中国唯一的驯鹿部落，保留了古老的萨满信仰。" },
-            { id: "43", name: "京", chineseName: "京族", population: "3.3万", region: "广西",
-                coords: [108.0, 21.5],
-                knowledge: "沿海渔业文化、哈节（海洋叙事曲）、季节性鱼类洄游知识。",
-                intro: "越南裔的海洋族群，以“哈节”（唱歌节）和独弦琴音乐闻名。" },
-            { id: "44", name: "基诺", chineseName: "基诺族", population: "2.5万", region: "云南",
-                coords: [101.0, 22.0],
-                knowledge: "太阳鼓祭（太阳历）、特懋克节（农耕周期）、热带雨林植物药典。",
-                intro: "中国人口最少的民族之一，以太阳鼓和“特懋克节”闻名。" },
-            { id: "45", name: "德昂", chineseName: "德昂族", population: "2.2万", region: "云南",
-                coords: [98.4, 24.0],
-                knowledge: "古茶树种植、银饰文化、原始森林的精灵信仰。",
-                intro: "被称为“古老的茶农”，茶文化和银饰是其民族标识。" },
-            { id: "46", name: "乌孜别克", chineseName: "乌孜别克族", population: "1.3万", region: "新疆",
-                coords: [83.0, 44.0],
-                knowledge: "丝绸织造、金线刺绣、绿洲贸易网络中的生态知识。",
-                intro: "突厥语系民族，以精美绝伦的金线刺绣和传统舞蹈闻名。" },
-            { id: "47", name: "俄罗斯", chineseName: "俄罗斯族", population: "1.5万", region: "新疆、内蒙古",
-                coords: [86.0, 47.0],
-                knowledge: "东正教节庆文化、手风琴音乐（文化韧性的体现）、寒带边疆生存智慧。",
-                intro: "俄罗斯移民后裔，保留了复活节彩蛋和手风琴音乐传统。" },
-            { id: "48", name: "裕固", chineseName: "裕固族", population: "1.4万", region: "甘肃",
-                coords: [98.0, 38.0],
-                knowledge: "史诗民歌（口述史）、高原牧业、黄头巾（生态文化符号）。",
-                intro: "回鹘后裔，以史诗民歌和独特的黄头巾服饰闻名。" },
-            { id: "49", name: "保安", chineseName: "保安族", population: "2万", region: "甘肃",
-                coords: [103.0, 35.0],
-                knowledge: "保安腰刀锻造（矿物手工艺）、伊斯兰武士传统、黄河谷地农牧业。",
-                intro: "以制作保安腰刀闻名，是甘肃特有的穆斯林民族。" },
-            { id: "50", name: "门巴", chineseName: "门巴族", population: "1.1万", region: "西藏",
-                coords: [94.0, 28.0],
-                knowledge: "竹编工艺、赛马节（高海拔马背文化）、喜马拉雅草药知识。",
-                intro: "喜马拉雅山脉的门隅地区，以竹编和赛马节著称。" },
-            { id: "51", name: "鄂伦春", chineseName: "鄂伦春族", population: "0.9万", region: "内蒙古",
-                coords: [124.0, 50.0],
-                knowledge: "狗拉雪橇狩猎、兽皮衣（极寒热工学）、寒带森林季节性追踪。",
-                intro: "曾经的“森林猎神”，兽皮制作和桦树皮工艺是其文化瑰宝。" },
-            { id: "52", name: "独龙", chineseName: "独龙族", population: "0.7万", region: "云南",
-                coords: [98.2, 28.0],
-                knowledge: "纹面传统（文化生态）、卡雀哇节（农业周期）、高山采集狩猎。",
-                intro: "中国人口最少的民族之一，独特的纹面女传统闻名于世。" },
-            { id: "53", name: "塔塔尔", chineseName: "塔塔尔族", population: "0.35万", region: "新疆",
-                coords: [82.0, 46.0],
-                knowledge: "精细刺绣、小花帽制作、甜蜜点心（文化韧性的美味表达）。",
-                intro: "以精致的刺绣和美味的糕点著称的塔塔尔族。" },
-            { id: "54", name: "赫哲", chineseName: "赫哲族", population: "0.5万", region: "黑龙江",
-                coords: [135.0, 48.0],
-                knowledge: "鱼皮制衣（生物材料）、黑龙江江渔生态、季节性冰捕知识。",
-                intro: "中国唯一以“鱼皮制衣”闻名的民族，黑龙江的渔猎族群。" },
-            { id: "55", name: "珞巴", chineseName: "珞巴族", population: "0.37万", region: "西藏",
-                coords: [95.0, 29.0],
-                knowledge: "藤编头盔、自然崇拜（萨满）、东喜马拉雅山地生态。",
-                intro: "生活在东喜马拉雅山脉的珞瑜地区，保留了原始的自然崇拜。" },
-            { id: "56", name: "高山", chineseName: "高山族", population: "约30万（台湾地区）", region: "台湾",
-                coords: [121.5, 25.0],
-                knowledge: "木雕与织布、丰年祭（生态历法）、南岛语族的海洋迁徙知识。",
-                intro: "台湾地区的原住民族群，包含多个部落，以木雕和丰年祭闻名。" }
-        ];
+        // ================================================================
+        // 1. QUESTION BANK — 140+ questions, 8 categories
+        // ================================================================
 
+        const QUESTIONS = [{
+            category: 'Festivals & Traditions',
+            question: 'The Water-Splashing Festival is the most important celebration of which ethnic group?',
+            options: ['Yi', 'Dai', 'Bai', 'Zhuang'],
+            correct: 1,
+            knowledge: 'The Dai people celebrate their New Year with the Water-Splashing Festival, symbolizing purification and good fortune.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The "Naadam" festival, featuring wrestling, horse racing, and archery, belongs to which group?',
+            options: ['Tibetan', 'Manchu', 'Mongol', 'Korean'],
+            correct: 2,
+            knowledge: 'Naadam means "games" in Mongolian. The "Three Manly Games" are central to Mongol identity.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'Eid al-Fitr (开斋节) is celebrated by which of the following groups?',
+            options: ['Hui', 'Uyghur', 'Kazakh', 'All of the above'],
+            correct: 3,
+            knowledge: 'Eid al-Fitr marks the end of Ramadan and is observed by all Muslim-majority ethnic groups in China.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Torch Festival of the Yi and Bai peoples was originally linked to what?',
+            options: ['Honoring heroes', 'Protecting crops from pests', 'Celebrating harvest', 'Worshiping mountains'],
+            correct: 1,
+            knowledge: 'The Torch Festival originated as a way to light torches to drive away insects and protect the harvest.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Shoton Festival (雪顿节), famous for unveiling giant thangkas, belongs to which group?',
+            options: ['Tibetan', 'Mongol', 'Monba', 'Lhoba'],
+            correct: 0,
+            knowledge: '"Shoton" means "yogurt banquet" in Tibetan. It\'s a time for opera performances and family gatherings.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"March 3rd" (三月三) is a traditional singing festival of which group?',
+            options: ['Miao', 'Dong', 'Zhuang', 'Yao'],
+            correct: 2,
+            knowledge: 'Zhuang people gather to sing folk songs, dance, and hold traditional competitions on this day.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Munao Zongge" (目瑙纵歌), known as the "Ten-Thousand-People Dance," belongs to which group?',
+            options: ['Jingpo', 'Va', 'Hani', 'Jino'],
+            correct: 0,
+            knowledge: 'This grand festival involves thousands dancing together in a massive procession, celebrating unity and harvest.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Harvest Festival (丰收节) is traditionally celebrated by which group?',
+            options: ['Han', 'Gaoshan', 'Zhuang', 'Buyei'],
+            correct: 1,
+            knowledge: 'Gaoshan (Taiwan\'s indigenous peoples) celebrate the harvest with rituals, dancing, and feasting.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'Eid al-Adha (古尔邦节) is celebrated by which groups?',
+            options: ['Hui & Uyghur', 'Tibetan & Mongol', 'Dai & Zhuang', 'Manchu & Korean'],
+            correct: 0,
+            knowledge: 'Eid al-Adha, the "Festival of Sacrifice," is one of the two major Islamic holidays.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Lusheng Festival, featuring reed-pipe music, belongs to which groups?',
+            options: ['Miao & Dong', 'Yi & Bai', 'Yao & Tujia', 'Hani & Lahu'],
+            correct: 0,
+            knowledge: 'The Lusheng is a traditional reed instrument. The Miao and Dong hold large festivals with Lusheng music and dance.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'Which of the following groups does NOT celebrate the Water-Splashing Festival?',
+            options: ['Dai', 'Achang', 'De\'ang', 'Tibetan'],
+            correct: 3,
+            knowledge: 'The Water-Splashing Festival is specific to Tai-speaking peoples (Dai, Achang, De\'ang) in Yunnan.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The "Wangguo" Festival (望果节), celebrating the harvest, belongs to which group?',
+            options: ['Tibetan', 'Monba', 'Lhoba', 'Yugur'],
+            correct: 0,
+            knowledge: 'Tibetan farmers walk around fields with prayer flags and offerings to give thanks for the harvest.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Jumping Flower" Festival (跳花节) is a traditional celebration of which group?',
+            options: ['Miao', 'Buyei', 'Dong', 'Shui'],
+            correct: 0,
+            knowledge: 'Miao people gather to celebrate with singing, dancing, and eating traditional foods like yellow grain wine.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Ox King Festival (牛王节) features the eating of "black rice" (乌饭) and belongs to which group?',
+            options: ['Zhuang', 'Yi', 'Bai', 'Hani'],
+            correct: 0,
+            knowledge: 'The Zhuang people honor their oxen for their role in farming with special foods and rituals.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The "Ganba" Festival (干巴节) is celebrated by which group?',
+            options: ['Yao', 'Miao', 'Dong', 'Tujia'],
+            correct: 0,
+            knowledge: 'The Yao prepare and eat dried wild meat (干巴) during this festival to honor their hunting traditions.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Norouz" (诺劳孜饭) is the New Year celebration of which group?',
+            options: ['Kyrgyz', 'Kazakh', 'Uzbek', 'Tatar'],
+            correct: 0,
+            knowledge: 'Norouz is the Persian New Year, celebrated by many Central Asian Turkic groups including the Kyrgyz.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Sisters\' Festival (姐妹节) features special "sisters\' rice" and belongs to which group?',
+            options: ['Miao', 'Dong', 'Shui', 'Buyei'],
+            correct: 0,
+            knowledge: 'Miao women prepare colorful "sisters\' rice" and exchange gifts during this festival of love and friendship.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Long Street Banquet (长街宴) is a traditional feast of which group?',
+            options: ['Hani', 'Yi', 'Bai', 'Dai'],
+            correct: 0,
+            knowledge: 'The Hani people line up long tables in the streets to share food and celebrate community during their festivals.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Cuotai Ji" (撮泰吉), a ritual to exorcise evil spirits, belongs to which group?',
+            options: ['Yi', 'Miao', 'Dong', 'Tujia'],
+            correct: 0,
+            knowledge: 'This ancient Yi ritual features masked performers and is considered one of China\'s oldest living theatrical traditions.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Qiang New Year (羌年) has been recognized by UNESCO as which?',
+            options: ['Intangible Cultural Heritage', 'World Heritage Site', 'Biosphere Reserve', 'Memory of the World'],
+            correct: 0,
+            knowledge: 'The Qiang New Year was inscribed on UNESCO\'s list of Intangible Cultural Heritage in 2009.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'Dragon Boat Racing originally belonged to which ethnic group?',
+            options: ['Han', 'Miao', 'Dong', 'Zhuang'],
+            correct: 0,
+            knowledge: 'Dragon Boat Racing originated with the Han people as a ritual to honor Qu Yuan, a poet from the Warring States period.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Bathing Festival (沐浴节) is a traditional celebration of which group?',
+            options: ['Tibetan', 'Monba', 'Lhoba', 'Yugur'],
+            correct: 0,
+            knowledge: 'Tibetans believe that taking a bath during this festival cleanses the body and spirit for the coming year.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The "Borrowing Sun" Festival (借霞节) belongs to which group?',
+            options: ['Shui', 'Miao', 'Dong', 'Buyei'],
+            correct: 0,
+            knowledge: 'The Shui people perform rituals to "borrow" the sun\'s light and warmth to ensure a good harvest.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The "Three Manly Games" of Naadam include:',
+            options: ['Horse racing, archery, wrestling', 'Horse racing, singing, dancing', 'Wrestling, archery, chess',
+                'Horse racing, wrestling, polo'
+            ],
+            correct: 0,
+            knowledge: 'Naadam\'s "Three Manly Games" test the skills of Mongolian men in these three traditional disciplines.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'Which of these groups does NOT celebrate Eid al-Fitr?',
+            options: ['Hui', 'Uyghur', 'Kazakh', 'Tibetan'],
+            correct: 3,
+            knowledge: 'Eid al-Fitr is an Islamic holiday, and Tibetan Buddhists do not observe it.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Lantern Festival (元宵节) is a traditional holiday of which group?',
+            options: ['Han', 'Gaoshan', 'Manchu', 'Korean'],
+            correct: 0,
+            knowledge: 'The Lantern Festival marks the end of the Chinese New Year celebrations for the Han people.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Munao Zongge" is usually held in which season?',
+            options: ['Spring', 'Summer', 'Autumn', 'Winter'],
+            correct: 0,
+            knowledge: 'The Jingpo people hold this festival in early spring, often around the 15th day of the first lunar month.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"March 3rd" is also a traditional festival of which other group besides the Zhuang?',
+            options: ['Han', 'Miao', 'Dong', 'Yao'],
+            correct: 0,
+            knowledge: 'In many parts of China, Han Chinese also celebrate the "Double Third" festival with outdoor activities.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Torch Festival usually falls in which month of the lunar calendar?',
+            options: ['June 24', 'July 15', 'August 15', 'May 5'],
+            correct: 0,
+            knowledge: 'The Torch Festival is celebrated on the 24th day of the sixth lunar month.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Qiang New Year falls on which lunar date?',
+            options: ['October 1', 'September 9', 'August 15', 'July 7'],
+            correct: 0,
+            knowledge: 'The Qiang New Year is celebrated on the 1st day of the tenth lunar month.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Shoton" in Tibetan means:',
+            options: ['Yogurt banquet', 'Snow mountain', 'Prayer flag', 'Harvest'],
+            correct: 0,
+            knowledge: 'Shoton literally translates to "yogurt banquet" as yogurt is consumed abundantly during the festival.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Naadam" in Mongolian means:',
+            options: ['Entertainment, games', 'Horse racing', 'Wrestling', 'Archery'],
+            correct: 0,
+            knowledge: 'The word "Naadam" simply means "games" or "entertainment" in the Mongolian language.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Water-Splashing Festival marks the Dai New Year. What else is it known as?',
+            options: ['Songkran', 'Diwali', 'Lunar New Year', 'Harvest Festival'],
+            correct: 0,
+            knowledge: 'The Dai Water-Splashing Festival is the same as Songkran, the Thai New Year, shared across Tai cultures.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'Eid al-Fitr marks the end of what?',
+            options: ['Ramadan', 'Hajj', 'Eid al-Adha', 'Mawlid'],
+            correct: 0,
+            knowledge: 'Eid al-Fitr means "Festival of Breaking the Fast" and celebrates the end of Ramadan.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The "Jumping Flower" Festival is also known as "Tiaohua" in Chinese. What is its main activity?',
+            options: ['Singing and dancing', 'Horse racing', 'Archery', 'Wrestling'],
+            correct: 0,
+            knowledge: 'This Miao festival features singing competitions, socializing, and eating traditional foods.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: 'The Ox King Festival is also known as "Niuhuang" in some regions. What is its primary purpose?',
+            options: ['Honoring oxen', 'Harvest celebration', 'Ancestor worship', 'Marriage ceremonies'],
+            correct: 0,
+            knowledge: 'The Zhuang people honor their working oxen with rituals and special foods to thank them for their labor.'
+        }, {
+            category: 'Food & Drink',
+            question: 'Tibetan hosts often welcome guests with which traditional drink?',
+            options: ['Mare\'s milk', 'Barley wine', 'Rice wine', 'Grape wine'],
+            correct: 1,
+            knowledge: 'Tibetan barley wine (青稞酒) is a staple at gatherings and is offered to guests as a sign of respect.'
+        }, {
+            category: 'Food & Drink',
+            question: 'Which of these is a traditional Uyghur dish?',
+            options: ['Roast lamb', 'Pilaf', 'Naan bread', 'All of the above'],
+            correct: 3,
+            knowledge: 'Uyghur cuisine is known for roast lamb, pilaf (抓饭), and naan (馕), reflecting Central Asian influences.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Sachima" (萨其马) is a traditional pastry of which group?',
+            options: ['Manchu', 'Hui', 'Mongol', 'Uyghur'],
+            correct: 0,
+            knowledge: 'Sachima is a sweet, crispy pastry that originated with the Manchu people.'
+        }, {
+            category: 'Food & Drink',
+            question: 'Korean cuisine is famous for many dishes. Which of these is NOT typically Korean?',
+            options: ['Cold noodles', 'Kimchi', 'Rice cakes', 'Butter tea'],
+            correct: 3,
+            knowledge: 'Butter tea (酥油茶) is Tibetan, not Korean. Korean cold noodles, kimchi, and rice cakes are iconic.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Sour Fish Soup" (酸汤鱼) is a classic dish of which group?',
+            options: ['Miao', 'Dong', 'Tujia', 'Yao'],
+            correct: 0,
+            knowledge: 'Miao people are known for their sour fish soup, which uses fermented ingredients for a tangy flavor.'
+        }, {
+            category: 'Food & Drink',
+            question: 'Mongols and Kazakhs traditionally drink what kind of tea?',
+            options: ['Green tea', 'Black tea', 'Milk tea', 'Butter tea'],
+            correct: 2,
+            knowledge: 'Milk tea is a daily staple for many nomads, often made with black tea and fresh or dried milk.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Five-Colored Sticky Rice" (五色糯米饭) is a traditional dish of which group?',
+            options: ['Zhuang', 'Miao', 'Dong', 'Buyei'],
+            correct: 0,
+            knowledge: 'Zhuang people use natural plant dyes to color sticky rice in five colors for festivals.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Hand-Grabbed Mutton" (手扒羊肉) is beloved by which groups?',
+            options: ['Mongol & Kazakh', 'Tibetan & Monba', 'Manchu & Xibe', 'Hui & Uyghur'],
+            correct: 0,
+            knowledge: 'Nomadic pastoral groups eat mutton boiled with minimal seasoning, served with hands for a rustic meal.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Qiegao" (切糕) is a traditional snack of which group?',
+            options: ['Hui', 'Uyghur', 'Kazakh', 'Tajik'],
+            correct: 0,
+            knowledge: 'Qiegao is a dense, sweet snack made from nuts and dried fruit, commonly found in Hui communities.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Yellow Rice Cake" (黄米饽饽) is a traditional food of which group?',
+            options: ['Manchu', 'Mongol', 'Korean', 'Xibe'],
+            correct: 0,
+            knowledge: 'The Manchu prepare this sticky yellow rice cake for festivals and celebrations.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Bamboo Chicken Gizzards" (竹筒焖鸡杂) is a specialty of which group?',
+            options: ['Miao', 'Dai', 'Hani', 'Jino'],
+            correct: 0,
+            knowledge: 'The Miao cook chicken gizzards in bamboo tubes, infusing them with a smoky, earthy flavor.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Torch Meat" (火把肉) is a traditional dish of which group?',
+            options: ['Zhuang', 'Yi', 'Bai', 'Hani'],
+            correct: 0,
+            knowledge: 'The Zhuang people prepare this dish during the Torch Festival, roasting meat over open flames.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Halal Three Foods" refers to which of the following?',
+            options: ['Halal food, halal subsidiary, halal food products',
+                'Halal noodles, halal meat, halal pastries',
+                'Halal tea, halal sugar, halal oil', 'Halal rice, halal flour, halal vegetables'
+            ],
+            correct: 0,
+            knowledge: 'This term is used in Chinese halal certification for a category of food products.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Yangyanzi Baozi" (羊眼儿包子) is a specialty of which group?',
+            options: ['Hui', 'Uyghur', 'Kazakh', 'Dongxiang'],
+            correct: 0,
+            knowledge: 'These small, round buns are a Hui specialty, named for their resemblance to sheep eyes.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Sanza" (馓子) is a traditional fried pastry of which groups?',
+            options: ['Hui', 'Uyghur', 'Kazakh', 'All of the above'],
+            correct: 3,
+            knowledge: 'Sanza is a popular snack across many Muslim-majority communities, especially during holidays.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Youxiang" (油香) is a traditional fried bread of which group?',
+            options: ['Hui', 'Uyghur', 'Kazakh', 'Dongxiang'],
+            correct: 0,
+            knowledge: 'Youxiang is a simple, fried flatbread traditionally eaten by Hui people during religious festivals.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Dagao" (打糕) is a traditional rice cake of which group?',
+            options: ['Korean', 'Manchu', 'Mongol', 'Xibe'],
+            correct: 0,
+            knowledge: 'Korean people make dagao by pounding steamed rice, often for holidays and celebrations.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Milk skin, butter, cheese, and curds" are traditional dairy products of which group?',
+            options: ['Kazakh', 'Mongol', 'Uyghur', 'Kyrgyz'],
+            correct: 0,
+            knowledge: 'Kazakh nomads produce a variety of dairy products from mare\'s, cow\'s, and sheep\'s milk.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Mare\'s milk, camel\'s milk, and yogurt" are traditional drinks of which group?',
+            options: ['Kazakh', 'Mongol', 'Uyghur', 'Kyrgyz'],
+            correct: 0,
+            knowledge: 'Kazakh people traditionally consume these fresh and fermented dairy drinks as part of their diet.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Ningming Zhuang Zongzi" is a traditional food of which group?',
+            options: ['Zhuang', 'Han', 'Miao', 'Dong'],
+            correct: 0,
+            knowledge: 'The Zhuang people in Ningming county are known for their distinctive large, pyramid-shaped zongzi.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Phoenix Attire" (凤凰装) is the traditional costume of which group?',
+            options: ['She', 'Miao', 'Yao', 'Tujia'],
+            correct: 0,
+            knowledge: 'The She people\'s traditional attire features intricate phoenix motifs, symbolizing beauty and prosperity.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'Tibetans often wear their chuba (藏袍) with one sleeve off. Why?',
+            options: ['For aesthetics', 'To regulate temperature while working', 'To show respect',
+                'To prepare for dancing'
+            ],
+            correct: 1,
+            knowledge: 'The chuba is a thick robe. Removing one sleeve allows for easier movement and temperature control.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'Which of these musical instruments was introduced to the Han from minority regions?',
+            options: ['Pipa', 'Piano', 'Suona', 'Erhu'],
+            correct: 0,
+            knowledge: 'The pipa, a pear-shaped lute, originated in Central Asia and was brought to China via the Silk Road.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The Peacock Dance is a traditional dance of which group?',
+            options: ['Dai', 'Yi', 'Bai', 'Hani'],
+            correct: 0,
+            knowledge: 'The Dai people are known for their graceful Peacock Dance, which mimics the movements of the bird.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The Long Drum Dance is a traditional dance of which group?',
+            options: ['Korean', 'Mongol', 'Tibetan', 'Uyghur'],
+            correct: 0,
+            knowledge: 'Korean people perform the Long Drum Dance with large, barrel-shaped drums at celebrations.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The traditional instrument of the Mongols is the:',
+            options: ['Morin khuur', 'Dombra', 'Rawap', 'Lusheng'],
+            correct: 0,
+            knowledge: 'The morin khuur, or horse-head fiddle, is the most iconic instrument of Mongolian music.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'Miao traditional costumes are most famous for their elaborate:',
+            options: ['Silver ornaments', 'Gold ornaments', 'Jade ornaments', 'Pearls'],
+            correct: 0,
+            knowledge: 'Miao silverwork is renowned for its intricate designs and is worn as jewelry and ceremonial regalia.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'Uyghur men often wear which type of traditional headwear?',
+            options: ['Embroidered cap', 'Felt hat', 'Leather hat', 'Straw hat'],
+            correct: 0,
+            knowledge: 'The Uyghur embroidered cap (多帕) is a symbol of cultural identity and is worn by men and women.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Atlas silk" (艾德莱斯绸) is a traditional fabric of which group?',
+            options: ['Uyghur', 'Uzbek', 'Tajik', 'Kyrgyz'],
+            correct: 0,
+            knowledge: 'Uyghur women weave and wear Atlas silk, known for its bright colors and floral patterns.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The Hand Drum Dance (手鼓舞) is a traditional dance of which group?',
+            options: ['Uyghur', 'Tajik', 'Uzbek', 'Kyrgyz'],
+            correct: 0,
+            knowledge: 'The Uyghur Hand Drum Dance features a small tambourine-like drum and is performed at festivities.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Springboard" (跳板) is a traditional sport of which group?',
+            options: ['Korean', 'Mongol', 'Manchu', 'Xibe'],
+            correct: 0,
+            knowledge: 'Korean women traditionally perform on the springboard, a playful test of balance and agility.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Guozhuang" Dance (锅庄舞) is a traditional dance of which group?',
+            options: ['Tibetan', 'Mongol', 'Yi', 'Qiang'],
+            correct: 0,
+            knowledge: 'Tibetans perform the Guozhuang dance in a circle, often at festivals and gatherings.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The "Phoenix Attire" headpiece symbolizes which of the following?',
+            options: ['Phoenix bun', 'Phoenix crown', 'Phoenix hairpin', 'Phoenix tail'],
+            correct: 0,
+            knowledge: 'The She people\'s phoenix attire includes a distinctive headpiece resembling a phoenix bun.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The Mongolian traditional belt serves what primary purpose?',
+            options: ['Windproof and cold-resistant', 'Decorative', 'Symbol of status', 'Convenient for riding'],
+            correct: 3,
+            knowledge: 'The belt secures the deel (robe) and provides back support during long hours of horseback riding.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'Dai women traditionally wear which type of skirt?',
+            options: ['Tube skirt', 'Long robe', 'Cheongsam', 'Pleated skirt'],
+            correct: 0,
+            knowledge: 'The Dai tube skirt (筒裙) is a long, straight skirt that fits snugly around the body.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'Tibetan men traditionally wear which type of garment?',
+            options: ['Chuba', 'Long robe', 'Short jacket', 'Magua'],
+            correct: 0,
+            knowledge: 'The Tibetan chuba is a thick, heavy robe worn by both men and women for warmth.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'Uyghur women traditionally wear which type of dress?',
+            options: ['Atlas silk dress', 'Cheongsam', 'Tube skirt', 'Pleated skirt'],
+            correct: 0,
+            knowledge: 'Uyghur women\'s dresses are often made from Atlas silk, known for its bright, flowing patterns.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The Lusheng is a traditional instrument of which groups?',
+            options: ['Miao & Dong', 'Yi & Bai', 'Yao & Tujia', 'Hani & Lahu'],
+            correct: 0,
+            knowledge: 'The Miao and Dong are famous for their Lusheng, a multi-piped reed instrument used in festivals.'
+        }, {
+            category: 'Clothing & Art',
+            question: 'The Dombra is a traditional instrument of which group?',
+            options: ['Kazakh', 'Kyrgyz', 'Uyghur', 'Tajik'],
+            correct: 0,
+            knowledge: 'The Kazakh dombra is a long-necked string instrument used to accompany songs and epic poems.'
+        },
         // ============================================================
-        // 2. 网格渲染
+        // Additional questions to reach 140+
         // ============================================================
-        function renderGrid(groups) {
-            const app = document.getElementById('app');
-            if (!groups.length) {
-                app.innerHTML = '<p style="text-align:center;padding:2rem;color:var(--color-muted);">未找到任何民族。</p>';
-                return;
+        {
+            category: 'Food & Drink',
+            question: '"Nang" (馕) is a staple bread of which groups?',
+            options: ['Uyghur & Kazakh', 'Tibetan & Mongol', 'Han & Manchu', 'Zhuang & Miao'],
+            correct: 0,
+            knowledge: 'Naan-like bread baked in clay ovens is a daily staple for Uyghur and Kazakh communities.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Mare\'s milk wine" (马奶酒) is a traditional drink of which group?',
+            options: ['Mongol', 'Kazakh', 'Kyrgyz', 'All of the above'],
+            correct: 3,
+            knowledge: 'Mare\'s milk wine (koumiss) is a lightly fermented beverage enjoyed by many nomadic pastoralists.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Thangka" painting is a traditional art form of which group?',
+            options: ['Tibetan', 'Mongol', 'Han', 'Manchu'],
+            correct: 0,
+            knowledge: 'Thangkas are intricate Tibetan Buddhist paintings on cotton or silk, often depicting deities and mandalas.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Batik" (蜡染) is a traditional textile art of which groups?',
+            options: ['Miao & Buyei', 'Han & Manchu', 'Tibetan & Mongol', 'Uyghur & Kazakh'],
+            correct: 0,
+            knowledge: 'The Miao and Buyei are renowned for their intricate batik designs using wax and natural indigo dyes.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Midsummer Festival" (仲夏节) is a traditional celebration of which group?',
+            options: ['Russian', 'Tatar', 'Uzbek', 'Kazakh'],
+            correct: 0,
+            knowledge: 'The Russian community in China celebrates the Midsummer Festival with bonfires and traditional dances.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Borscht" (罗宋汤) is a traditional soup of which group?',
+            options: ['Russian', 'Uyghur', 'Kazakh', 'Tatar'],
+            correct: 0,
+            knowledge: 'Russian people in China make borscht, a beetroot and cabbage soup, a staple of their cuisine.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Ballet" is a traditional performance art of which group?',
+            options: ['Russian', 'Uyghur', 'Kazakh', 'Tatar'],
+            correct: 0,
+            knowledge: 'The Russian community has preserved classical ballet traditions in China, especially in Xinjiang.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Easter" is a traditional religious holiday of which group?',
+            options: ['Russian', 'Hui', 'Uyghur', 'Kazakh'],
+            correct: 0,
+            knowledge: 'Russian Orthodox Christians celebrate Easter with colorful eggs and traditional foods.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Pilaf" (抓饭) is a traditional dish of which Central Asian groups?',
+            options: ['Uyghur & Uzbek', 'Tibetan & Mongol', 'Han & Manchu', 'Zhuang & Miao'],
+            correct: 0,
+            knowledge: 'Pilaf, a rice dish cooked with meat and carrots, is a signature dish of Uyghur and Uzbek cuisine.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Embroidered skullcap" (绣花帽) is a traditional hat of which group?',
+            options: ['Uyghur', 'Kazakh', 'Kyrgyz', 'Tajik'],
+            correct: 0,
+            knowledge: 'Uyghur men and women wear beautiful embroidered skullcaps as part of their traditional attire.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Nowruz" is the Persian New Year celebrated by which groups?',
+            options: ['Kazakh, Kyrgyz, Uzbek, Tajik', 'Mongol, Manchu, Han', 'Tibetan, Monba, Lhoba',
+                'Zhuang, Miao, Dong'
+            ],
+            correct: 0,
+            knowledge: 'Nowruz is celebrated on the spring equinox by many Central Asian peoples, including Kazakhs, Kyrgyz, Uzbeks, and Tajiks.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Manti" is a traditional dumpling of which groups?',
+            options: ['Uyghur & Kazakh', 'Tibetan & Mongol', 'Han & Manchu', 'Zhuang & Miao'],
+            correct: 0,
+            knowledge: 'Manti are large, steamed dumplings filled with meat and onions, popular among Uyghur and Kazakh communities.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Embroidery" is a traditional folk art of which groups?',
+            options: ['Miao & Yi', 'Han & Manchu', 'Tibetan & Mongol', 'All of the above'],
+            correct: 3,
+            knowledge: 'Embroidery is a widespread folk art across many ethnic groups, each with its own distinctive styles and motifs.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Nadam Fair" is a traditional Mongolian festival that includes which activities?',
+            options: ['Horse racing, archery, wrestling', 'Dancing, singing, feasting', 'Rowing, swimming, diving',
+                'Chess, card games, dice'
+            ],
+            correct: 0,
+            knowledge: 'The Nadam Fair features the "Three Manly Games" which test the physical skills of Mongolian men.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Boortsog" is a traditional fried pastry of which group?',
+            options: ['Kazakh', 'Mongol', 'Kyrgyz', 'All of the above'],
+            correct: 3,
+            knowledge: 'Boortsog are small, fried pieces of dough, often served with tea or as a snack among Turkic and Mongol nomads.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Morin khuur" (horse-head fiddle) is a traditional instrument of which group?',
+            options: ['Mongol', 'Kazakh', 'Kyrgyz', 'Tajik'],
+            correct: 0,
+            knowledge: 'The morin khuur is the most iconic Mongolian instrument, with a carved horse head on its neck.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Feast of the White Moon" (白月节) is a Mongolian New Year celebration. What is its Mongolian name?',
+            options: ['Tsagaan Sar', 'Naadam', 'Nadun', 'Qagan'],
+            correct: 0,
+            knowledge: 'Tsagaan Sar (White Moon) is the Mongolian Lunar New Year, celebrated with family gatherings and feasting.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Bunny Chow" is a traditional street food from which group?',
+            options: ['Han', 'Zhuang', 'Hui', 'Not a Chinese ethnic food'],
+            correct: 3,
+            knowledge: 'Bunny Chow is a South African street food and is not related to any Chinese ethnic group.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Blue and white porcelain" is a traditional Han Chinese art form. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Blue and white porcelain originated in the Tang and Song dynasties and is one of China\'s most famous exports.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Dragon Boat Festival" is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Dragon Boat Festival, honoring Qu Yuan, is a traditional Han festival celebrated on the 5th day of the 5th lunar month.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Mooncake" is a traditional Han Chinese pastry. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Mooncakes are a traditional Han pastry eaten during the Mid-Autumn Festival.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Chinese opera" originated from the Han Chinese. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Chinese opera, including Peking opera, has its roots in Han culture and theatrical traditions.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Qingming Festival" is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Qingming, or Tomb-Sweeping Day, is a Han tradition for honoring ancestors and spring outings.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Dim sum" is a traditional Han Chinese cuisine. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Dim sum originated in southern China and is a staple of Han Cantonese cuisine.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Cheongsam" (旗袍) is a traditional Han Chinese dress. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The cheongsam is a form-fitting dress that evolved from Manchu and Han influences.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Spring Festival" (春节) is the most important Han Chinese holiday. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Spring Festival, also known as Lunar New Year, is the most significant celebration for Han Chinese.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Noodles" are a traditional Han Chinese staple. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Noodles have been a Han staple for over 2,000 years, with countless regional variations.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Tang suit" is a traditional Han Chinese clothing style. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Tang suit is a modern adaptation of Han traditional wear, often worn during festivals.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Mid-Autumn Festival" is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Mid-Autumn Festival is a Han harvest celebration held on the 15th day of the 8th lunar month.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Hotpot" is a traditional Han Chinese dining style. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Hotpot has been enjoyed by Han Chinese for over a thousand years, especially in cold regions.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Paper cutting" is a traditional Han Chinese folk art. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Paper cutting is a Han folk art used for decorations, especially during festivals like Spring Festival.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Laba Festival" is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Laba Festival, on the 8th day of the 12th lunar month, involves eating Laba porridge, a Han custom.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Jiaozi" (dumplings) are a traditional Han Chinese food. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Jiaozi are an essential Han dish, especially for the Spring Festival, symbolizing wealth and prosperity.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Silk painting" is a traditional Han Chinese art form. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Silk painting has been a Han art for over 2,000 years, with exquisite examples found from the Tang and Song dynasties.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Chongyang Festival" is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Chongyang, or Double Ninth Festival, is a Han tradition of climbing mountains and honoring the elderly.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Tea" is a traditional Han Chinese beverage. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Tea has been cultivated and consumed by Han Chinese for thousands of years, with a rich cultural tradition.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Chinese calligraphy" is a traditional Han Chinese art. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Calligraphy is one of the highest Han art forms, blending poetry, philosophy, and visual aesthetics.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Ghost Festival" (中元节) is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Ghost Festival is a Han tradition for honoring ancestors and spirits on the 15th day of the 7th lunar month.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Tofu" (豆腐) is a traditional Han Chinese food. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Tofu was invented during the Han Dynasty (around 2000 years ago) and is a staple of Han cuisine.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Chinese brush painting" is a traditional Han Chinese art. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Brush painting is a classical Han art form, using ink and watercolor on silk or paper.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Winter Solstice" (冬至) is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Winter Solstice is an important Han festival where families gather and eat tangyuan (glutinous rice balls).'
+        }, {
+            category: 'Food & Drink',
+            question: '"Stinky tofu" is a traditional Han Chinese street food. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Stinky tofu is a fermented snack popular in Han Chinese street food culture, especially in Taiwan and Hunan.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Chinese opera mask" (脸谱) is a traditional Han performing art. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Masks are used in Peking opera to symbolize character traits, a unique Han theatrical tradition.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Lantern Festival" (元宵节) is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Lantern Festival ends the Spring Festival celebrations with lantern displays and tangyuan eating.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Baozi" (包子) is a traditional Han Chinese steamed bun. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Baozi are filled steamed buns that have been a Han staple for centuries.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Chinese embroidery" is a traditional Han Chinese craft. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Chinese embroidery, especially Suzhou embroidery, is a renowned Han craft with thousands of years of history.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Double Seven Festival" (七夕) is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Double Seven Festival is a Han romantic festival celebrating the legend of the Cowherd and the Weaver Girl.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Cantonese cuisine" is a traditional Han Chinese cuisine. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Cantonese cuisine is one of the eight major Han culinary traditions, known for its fresh ingredients.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Jade carving" is a traditional Han Chinese craft. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Jade carving has been a Han art for over 7,000 years, symbolizing beauty, purity, and status.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Tomb-Sweeping Day" (清明) is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Qingming is a Han tradition for cleaning graves and paying respects to ancestors.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Peking duck" is a traditional Han Chinese dish. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Peking duck is a world-famous Han dish from Beijing, with a history dating back to the Yuan Dynasty.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Chinese knot" (中国结) is a traditional Han Chinese craft. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Chinese knot is a decorative Han folk art, symbolizing unity and good fortune.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"New Year\'s Eve" (除夕) is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'New Year\'s Eve is the most important Han family gathering of the year, celebrated with a reunion dinner.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Sichuan cuisine" is a traditional Han Chinese cuisine. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Sichuan cuisine is one of the eight major Han culinary traditions, famous for its bold use of chili and Sichuan peppercorn.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Terracotta" is a traditional Han Chinese sculpture form. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Terracotta Army is a Han Dynasty funerary art tradition, with thousands of life-size clay soldiers.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Dragon Dance" is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Dragon Dance is a Han performance art for festivals, symbolizing power, dignity, and good fortune.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Dim sum" includes which of the following?',
+            options: ['Har gow (shrimp dumpling)', 'Siu mai (pork dumpling)', 'Char siu bao (BBQ pork bun)',
+                'All of the above'
+            ],
+            correct: 3,
+            knowledge: 'Dim sum is a Han Cantonese tradition with a wide variety of small dishes, including dumplings and buns.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Zhejiang embroidery" is a traditional Han Chinese craft. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Zhejiang embroidery is one of the four major Han embroidery styles, known for its fine stitching.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Eight Immortals Festival" is a Han Chinese tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Eight Immortals are a Han Taoist legend, and their festival is celebrated on the 8th day of the 8th lunar month.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Rice wine" (米酒) is a traditional Han Chinese drink. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Rice wine has been brewed by Han Chinese for thousands of years for cooking, ceremonies, and daily drinking.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Cloisonné" (景泰蓝) is a traditional Han Chinese craft. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Cloisonné is a Han metalworking art using enamel, especially popular during the Ming Dynasty.'
+        }, {
+            category: 'Festivals & Traditions',
+            question: '"Chinese Valentines Day" (七夕) is a Han tradition. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'The Qixi Festival is the Han equivalent of Valentine\'s Day, based on the legend of Niulang and Zhinü.'
+        }, {
+            category: 'Food & Drink',
+            question: '"Shumai" (烧卖) is a traditional Han Chinese dumpling. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Shumai are open-topped steamed dumplings, a staple of Han Cantonese dim sum.'
+        }, {
+            category: 'Clothing & Art',
+            question: '"Song dynasty painting" is a traditional Han Chinese art. True or false?',
+            options: ['True', 'False'],
+            correct: 0,
+            knowledge: 'Song Dynasty landscape painting is a landmark Han art form, emphasizing nature and spiritual harmony.'
+        }];
+
+        // ================================================================
+        // 2. QUIZ ENGINE
+        // ================================================================
+
+        // Shuffle the questions so each game is different
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
             }
-            const tags = ['🌾 牧业', '🌿 生态', '🎵 口述', '🧊 气候', '🎨 工艺', '🔬 医药'];
-            let html = '<div class="grid">';
-            groups.forEach(g => {
-                const tag = tags[parseInt(g.id) % tags.length];
-                html += `
-                        <div class="card" onclick="openDetail('${g.id}')">
-                            <div class="id">#${g.id}</div>
-                            <span class="knowledge-tag">${tag}</span>
-                            <h3>${g.name}</h3>
-                            <div class="chinese-name">${g.chineseName}</div>
-                            <div class="region">📍 ${g.region}</div>
-                            <div class="intro-preview">${g.intro.slice(0, 50)}...</div>
-                            <div class="population">👥 ${g.population}</div>
-                        </div>
-                    `;
+            return arr;
+        }
+
+        // Set up the game with a random subset
+        function getRandomQuestions(count = 10) {
+            const shuffled = shuffleArray([...QUESTIONS]);
+            return shuffled.slice(0, Math.min(count, shuffled.length));
+        }
+
+        // State
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+        let totalQuestions = 10;
+
+        // DOM refs
+        const quizBox = document.getElementById('quizBox');
+        const questionArea = document.getElementById('questionArea');
+        const resultsArea = document.getElementById('resultsArea');
+        const progressFill = document.getElementById('progressFill');
+        const currentQ = document.getElementById('currentQ');
+        const totalQ = document.getElementById('totalQ');
+        const qNumber = document.getElementById('qNumber');
+        const qText = document.getElementById('qText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const feedbackIcon = document.getElementById('feedbackIcon');
+        const feedbackText = document.getElementById('feedbackText');
+        const feedbackKnowledge = document.getElementById('feedbackKnowledge');
+        const nextBtn = document.getElementById('nextBtn');
+        const headerScore = document.getElementById('headerScore');
+
+        // Results refs
+        const finalScore = document.getElementById('finalScore');
+        const finalTotal = document.getElementById('finalTotal');
+        const resultTitle = document.getElementById('resultTitle');
+        const resultDesc = document.getElementById('resultDesc');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // ================================================================
+        // 3. RENDER QUESTION
+        // ================================================================
+
+        function renderQuestion(index) {
+            const q = currentQuestions[index];
+            if (!q) return;
+
+            answered = false;
+            feedback.classList.remove('show', 'correct', 'wrong');
+            nextBtn.classList.remove('show');
+
+            // Progress
+            const progress = ((index) / totalQuestions) * 100;
+            progressFill.style.width = progress + '%';
+            currentQ.textContent = index + 1;
+            totalQ.textContent = totalQuestions;
+
+            // Question
+            qNumber.textContent = `Question ${index + 1} · ${q.category}`;
+            qText.textContent = q.question;
+
+            // Options
+            const letters = ['A', 'B', 'C', 'D'];
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="letter">${letters[i]}</span> ${opt}`;
+                btn.dataset.index = i;
+                btn.addEventListener('click', () => handleOptionClick(i, btn));
+                optionsContainer.appendChild(btn);
             });
-            html += '</div>';
-            app.innerHTML = html;
+
+            // Update header score
+            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
+            headerScore.classList.add('active');
         }
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const q = e.target.value.toLowerCase();
-            const filtered = allGroups.filter(g =>
-                g.name.includes(q) ||
-                g.chineseName.includes(q) ||
-                g.region.includes(q)
-            );
-            renderGrid(filtered);
-        });
+        // ================================================================
+        // 4. HANDLE ANSWER
+        // ================================================================
 
-        // ============================================================
-        // 3. 弹窗详情
-        // ============================================================
-        function openDetail(id) {
-            const g = allGroups.find(x => x.id === id);
-            if (!g) return;
-            document.getElementById('modalName').textContent = g.name + '族';
-            document.getElementById('modalChinese').textContent = g.chineseName;
-            document.getElementById('modalRegion').textContent = '📍 ' + g.region;
-            document.getElementById('modalPopulation').textContent = '👥 人口：' + g.population;
-            document.getElementById('modalIntro').textContent = g.intro;
-            document.getElementById('modalKnowledgeText').textContent = g.knowledge;
-            document.getElementById('detailModal').classList.add('open');
+        function handleOptionClick(selectedIndex, btn) {
+            if (answered) return;
+            const q = currentQuestions[currentIndex];
+            const isCorrect = selectedIndex === q.correct;
+
+            // Disable all options
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.classList.add('disabled'));
+
+            // Highlight correct/wrong
+            allBtns.forEach((b, i) => {
+                if (i === q.correct) b.classList.add('correct');
+                if (i === selectedIndex && !isCorrect) b.classList.add('wrong');
+            });
+
+            // Show feedback
+            feedback.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+            feedbackIcon.textContent = isCorrect ? '🌿' : '🌱';
+            feedbackText.textContent = isCorrect ?
+                '✅ Exactly! That\'s correct.' :
+                `❌ Actually, the correct answer is "${q.options[q.correct]}".`;
+
+            feedbackKnowledge.innerHTML = `
+                    <strong>🌾 Nomadic Insight:</strong> ${q.knowledge}
+                `;
+
+            if (isCorrect) score++;
+            answered = true;
+
+            // Update score display
+            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
+
+            // Show next button or results
+            if (currentIndex < totalQuestions - 1) {
+                nextBtn.textContent = 'Next Question →';
+                nextBtn.classList.add('show');
+            } else {
+                nextBtn.textContent = 'See Results →';
+                nextBtn.classList.add('show');
+            }
         }
 
-        function closeModal() {
-            document.getElementById('detailModal').classList.remove('open');
+        // ================================================================
+        // 5. NEXT / RESTART
+        // ================================================================
+
+        function goToNext() {
+            if (currentIndex < totalQuestions - 1) {
+                currentIndex++;
+                renderQuestion(currentIndex);
+            } else {
+                showResults();
+            }
         }
-        document.getElementById('detailModal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) closeModal();
-        });
+
+        function showResults() {
+            questionArea.style.display = 'none';
+            resultsArea.classList.add('show');
+            progressFill.style.width = '100%';
+
+            finalScore.textContent = score;
+            finalTotal.textContent = totalQuestions;
+
+            const pct = score / totalQuestions;
+            let title, desc;
+            if (pct >= 0.9) {
+                title = '🏆 Steppe Scholar Extraordinaire!';
+                desc = 'You have a deep, remarkable understanding of China\'s diverse cultures. Your knowledge is truly impressive!';
+            } else if (pct >= 0.7) {
+                title = '🌾 Wise Nomad!';
+                desc = 'You know your cultures well! With a bit more exploration, you\'ll be a true expert.';
+            } else if (pct >= 0.5) {
+                title = '🧭 Curious Traveler';
+                desc = 'You\'re on the right path. Keep exploring the rich traditions of China\'s ethnic groups.';
+            } else {
+                title = '🌱 Apprentice Learner';
+                desc = 'Everyone starts somewhere! Take your time and explore the beautiful diversity of China\'s cultures.';
+            }
+
+            resultTitle.textContent = title;
+            resultDesc.textContent = desc;
+
+            headerScore.textContent = `✦ ${score} / ${totalQuestions}`;
+        }
+
+        function restartGame() {
+            // Reset state
+            currentQuestions = getRandomQuestions(10);
+            currentIndex = 0;
+            score = 0;
+            answered = false;
+            totalQuestions = currentQuestions.length;
+
+            // Hide results, show question area
+            resultsArea.classList.remove('show');
+            questionArea.style.display = 'block';
+
+            // Render first question
+            renderQuestion(0);
+
+            // Reset header
+            headerScore.textContent = `✦ 0 / ${totalQuestions}`;
+            headerScore.classList.add('active');
+        }
+
+        // ================================================================
+        // 6. EVENT LISTENERS
+        // ================================================================
+
+        nextBtn.addEventListener('click', goToNext);
+        restartBtn.addEventListener('click', restartGame);
+
+        // Keyboard shortcut: press Enter or Space for next
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        // ============================================================
-        // 4. 标签页切换
-        // ============================================================
-        function switchTab(viewName) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            const btn = document.querySelector(`.tab-btn[data-view="${viewName}"]`);
-            if (btn) btn.classList.add('active');
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById(viewName + 'View').classList.add('active');
-
-            if (viewName === 'mandala') drawMandala();
-            if (viewName === 'map') {
-                setTimeout(() => {
-                    if (mapChart) mapChart.resize();
-                    else initMap();
-                }, 300);
-            }
-        }
-
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                switchTab(btn.dataset.view);
-            });
-        });
-
-        // 暴露给全局（用于导航栏跳转）
-        window.switchTab = switchTab;
-
-        // ============================================================
-        // 5. 莲瓣图 (Canvas)
-        // ============================================================
-        const canvas = document.getElementById('mandalaCanvas');
-        const ctx = canvas.getContext('2d');
-        const tooltip = document.getElementById('mandalaTooltip');
-        const W = 700,
-            H = 700;
-        const cx = 350,
-            cy = 340;
-        const radius = 230;
-        const total = allGroups.length;
-        let hoveredIdx = -1;
-
-        function drawSparkle(x, y, size) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.fillStyle = 'rgba(44,74,58,0.12)';
-            ctx.shadowColor = 'rgba(44,74,58,0.05)';
-            ctx.shadowBlur = 8;
-            ctx.beginPath();
-            for (let i = 0; i < 8; i++) {
-                const a = (i / 8) * Math.PI * 2;
-                const r = (i % 2 === 0) ? size : size * 0.3;
-                if (i === 0) ctx.moveTo(Math.cos(a) * r, Math.sin(a) * r);
-                else ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
-            }
-            ctx.closePath();
-            ctx.fill();
-            ctx.restore();
-        }
-
-        function drawMandala() {
-            ctx.clearRect(0, 0, W, H);
-            const bg = ctx.createRadialGradient(cx, cy - 50, 50, cx, cy, 400);
-            bg.addColorStop(0, '#F4F7F0');
-            bg.addColorStop(0.6, '#EAF3E5');
-            bg.addColorStop(1, '#DCE4D6');
-            ctx.fillStyle = bg;
-            ctx.fillRect(0, 0, W, H);
-
-            const sp = [
-                [100, 100, 8],
-                [600, 90, 10],
-                [80, 500, 6],
-                [630, 550, 8],
-                [150, 650, 7],
-                [550, 650, 6],
-                [350, 60, 12]
-            ];
-            sp.forEach(([x, y, s]) => drawSparkle(x, y, s));
-
-            // 花茎
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(cx, cy + 50);
-            ctx.quadraticCurveTo(cx + 15, cy + 100, cx - 5, cy + 180);
-            ctx.quadraticCurveTo(cx - 20, cy + 240, cx + 8, cy + 300);
-            ctx.strokeStyle = '#8C7A5E';
-            ctx.lineWidth = 8;
-            ctx.lineCap = 'round';
-            ctx.shadowColor = 'rgba(140,122,94,0.15)';
-            ctx.shadowBlur = 12;
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-            ctx.fillStyle = '#A8C4A0';
-            ctx.shadowBlur = 6;
-            ctx.shadowColor = 'rgba(140,122,94,0.08)';
-            ctx.beginPath();
-            ctx.ellipse(cx - 35, cy + 110, 22, 12, -0.4, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#8C7A5E';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.ellipse(cx + 40, cy + 150, 24, 13, 0.4, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-            ctx.restore();
-
-            // 莲瓣
-            const slice = (2 * Math.PI) / total;
-            for (let i = 0; i < total; i++) {
-                const a = i * slice - Math.PI / 2;
-                const na = a + slice;
-                const ma = a + slice / 2;
-                const innerR = 45;
-                const outerR = radius;
-                const x1 = cx + Math.cos(a) * innerR,
-                    y1 = cy + Math.sin(a) * innerR;
-                const x2 = cx + Math.cos(na) * innerR,
-                    y2 = cy + Math.sin(na) * innerR;
-                const tx = cx + Math.cos(ma) * outerR,
-                    ty = cy + Math.sin(ma) * outerR;
-
-                const spread = slice * 0.32;
-                const cpR = outerR * 0.95;
-                const cp1x = cx + Math.cos(a + spread) * cpR,
-                    cp1y = cy + Math.sin(a + spread) * cpR;
-                const cp2x = cx + Math.cos(na - spread) * cpR,
-                    cp2y = cy + Math.sin(na - spread) * cpR;
-                const tipOff = 6;
-
-                ctx.beginPath();
-                ctx.moveTo(x1, y1);
-                ctx.bezierCurveTo(cp1x, cp1y, tx - Math.cos(ma) * tipOff, ty - Math.sin(ma) * tipOff, tx, ty);
-                ctx.bezierCurveTo(tx + Math.cos(ma) * tipOff, ty + Math.sin(ma) * tipOff, cp2x, cp2y, x2, y2);
-                ctx.closePath();
-
-                const hue = 120 + (i / total) * 50;
-                const sat = 50 + (i % 4) * 4;
-                const lig = (i === hoveredIdx) ? 70 : 52;
-
-                const grad = ctx.createRadialGradient(
-                    cx + Math.cos(ma) * 40, cy + Math.sin(ma) * 40, 15,
-                    cx + Math.cos(ma) * 90, cy + Math.sin(ma) * 90, outerR
-                );
-                grad.addColorStop(0, `hsl(${hue + 15}, ${sat + 10}%, ${lig + 18}%)`);
-                grad.addColorStop(0.6, `hsl(${hue}, ${sat}%, ${lig}%)`);
-                grad.addColorStop(1, `hsl(${hue - 10}, ${sat - 5}%, ${lig - 15}%)`);
-
-                ctx.fillStyle = grad;
-                ctx.shadowColor = (i === hoveredIdx) ? 'rgba(44,74,58,0.35)' : 'rgba(44,74,58,0.06)';
-                ctx.shadowBlur = (i === hoveredIdx) ? 40 : 12;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-                ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-                ctx.lineWidth = 1.2;
-                ctx.stroke();
-
-                const lR = radius * 0.6;
-                const lx = cx + Math.cos(ma) * lR,
-                    ly = cy + Math.sin(ma) * lR;
-                ctx.beginPath();
-                ctx.arc(lx, ly, 13, 0, 2 * Math.PI);
-                ctx.fillStyle = 'rgba(255,255,255,0.45)';
-                ctx.fill();
-                ctx.fillStyle = (i === hoveredIdx) ? '#1C3D2E' : 'rgba(28,61,46,0.75)';
-                ctx.font = 'bold 10px "Inter", sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.shadowColor = 'rgba(255,255,255,0.8)';
-                ctx.shadowBlur = 6;
-                ctx.fillText(i + 1, lx, ly + 1);
-                ctx.shadowBlur = 0;
-            }
-
-            // 花心
-            const pearl = ctx.createRadialGradient(cx - 15, cy - 20, 5, cx, cy, 50);
-            pearl.addColorStop(0, '#FDE8C8');
-            pearl.addColorStop(0.5, '#C9A96E');
-            pearl.addColorStop(1, '#8C7A5E');
-            ctx.shadowColor = 'rgba(201,169,110,0.4)';
-            ctx.shadowBlur = 50;
-            ctx.beginPath();
-            ctx.arc(cx, cy, 45, 0, 2 * Math.PI);
-            ctx.fillStyle = pearl;
-            ctx.fill();
-            ctx.shadowBlur = 0;
-            ctx.beginPath();
-            ctx.arc(cx, cy, 38, 0, 2 * Math.PI);
-            ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            ctx.beginPath();
-            for (let i = 0; i < 8; i++) {
-                const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
-                const r = 20;
-                const px = cx + Math.cos(a) * r,
-                    py = cy + Math.sin(a) * r;
-                if (i === 0) ctx.moveTo(px, py);
-                else ctx.lineTo(px, py);
-            }
-            ctx.closePath();
-            ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-            ctx.lineWidth = 1.2;
-            ctx.stroke();
-        }
-
-        // --- 交互 ---
-        function getIdx(e) {
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width,
-                scaleY = canvas.height / rect.height;
-            let cx2, cy2;
-            if (e.touches) { cx2 = e.touches[0].clientX;
-                cy2 = e.touches[0].clientY;
-                e.preventDefault(); } else { cx2 = e.clientX;
-                cy2 = e.clientY; }
-            const x = (cx2 - rect.left) * scaleX,
-                y = (cy2 - rect.top) * scaleY;
-            const dx = x - cx,
-                dy = y - cy;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist > radius || dist < 35) return -1;
-            let a = Math.atan2(dy, dx) + Math.PI / 2;
-            if (a < 0) a += 2 * Math.PI;
-            const s = (2 * Math.PI) / total;
-            const idx = Math.floor(a / s);
-            if (idx >= total) return 0;
-            return idx;
-        }
-
-        function onMove(e) {
-            const idx = getIdx(e);
-            if (idx !== hoveredIdx) {
-                hoveredIdx = idx;
-                drawMandala();
-                if (idx >= 0 && idx < total) {
-                    const g = allGroups[idx];
-                    tooltip.innerHTML =
-                        `⏺ ${g.name}族 (${g.chineseName}) <small>✦ ${g.region} · ${g.population}</small>`;
-                    canvas.style.cursor = 'pointer';
-                } else {
-                    tooltip.innerHTML = '⏺ 悬停于莲瓣之上 <small>✦ 点击查看该民族的智识</small>';
-                    canvas.style.cursor = 'default';
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (nextBtn.classList.contains('show')) {
+                    e.preventDefault();
+                    goToNext();
                 }
             }
-        }
+        });
 
-        function onClick(e) {
-            const idx = getIdx(e);
-            if (idx >= 0 && idx < total) openDetail(allGroups[idx].id);
-        }
+        // ================================================================
+        // 7. START GAME
+        // ================================================================
 
-        canvas.addEventListener('mousemove', onMove);
-        canvas.addEventListener('click', onClick);
-        canvas.addEventListener('touchstart', (e) => { onMove(e);
-            onClick(e); });
-        canvas.addEventListener('touchmove', (e) => { onMove(e); });
-
-        // ============================================================
-        // 6. 地图 (ECharts)
-        // ============================================================
-        let mapChart = null;
-        let mapAttempts = 0;
-
-        function retryMap() {
-            document.getElementById('mapFallback').style.display = 'none';
-            initMap();
-        }
-
-        function initMap() {
-            const container = document.getElementById('mapContainer');
-            const fallback = document.getElementById('mapFallback');
-            if (!container) return;
-            if (mapChart) { mapChart.resize(); return; }
-
-            fallback.style.display = 'block';
-            fallback.innerHTML = '<p>🌾 正在加载地理分布数据...</p>';
-
-            mapChart = echarts.init(container);
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 10000);
-
-            fetch('https://geo.datav.aliyun.com/areas_v3/bound/100000_full.json', { signal: controller.signal })
-                .then(res => {
-                    if (!res.ok) throw new Error('网络错误');
-                    return res.json();
-                })
-                .then(data => {
-                    clearTimeout(timeout);
-                    echarts.registerMap('china', data);
-                    const scatter = allGroups.map(g => ({
-                        name: g.name + '族',
-                        value: [...g.coords, 1],
-                        chineseName: g.chineseName,
-                        region: g.region,
-                        population: g.population,
-                        id: g.id
-                    }));
-
-                    const option = {
-                        tooltip: {
-                            trigger: 'item',
-                            formatter: (p) => {
-                                if (p.seriesType === 'scatter') {
-                                    const d = p.data;
-                                    return `<strong>${d.name}</strong> (${d.chineseName})<br/>📍 ${d.region}<br/>👥 ${d.population}`;
-                                }
-                                return p.name;
-                            }
-                        },
-                        visualMap: { show: false, min: 0, max: 1, inRange: { color: ['#EAF3E5', '#2C4A3A'] } },
-                        geo: {
-                            map: 'china',
-                            roam: true,
-                            zoom: 1.2,
-                            center: [104, 35],
-                            itemStyle: {
-                                areaColor: '#E8E0D0',
-                                borderColor: '#8C7A5E',
-                                borderWidth: 1.2,
-                                shadowColor: 'rgba(0,0,0,0.04)'
-                            },
-                            emphasis: { itemStyle: { areaColor: '#D4C5A0' } }
-                        },
-                        series: [{
-                            type: 'scatter',
-                            coordinateSystem: 'geo',
-                            data: scatter,
-                            symbolSize: 14,
-                            label: {
-                                show: true,
-                                formatter: (p) => p.name,
-                                position: 'right',
-                                color: '#1C3D2E',
-                                fontSize: 9,
-                                fontWeight: '600',
-                                textShadowColor: 'white',
-                                textShadowBlur: 4
-                            },
-                            itemStyle: {
-                                color: (p) => {
-                                    const hues = [140, 160, 170, 130];
-                                    return `hsl(${hues[p.dataIndex % hues.length]}, 55%, 42%)`;
-                                },
-                                shadowBlur: 10,
-                                shadowColor: 'rgba(44,74,58,0.3)',
-                                borderColor: 'white',
-                                borderWidth: 2
-                            },
-                            emphasis: {
-                                itemStyle: {
-                                    shadowBlur: 20,
-                                    shadowColor: 'rgba(44,74,58,0.6)',
-                                    borderWidth: 3
-                                }
-                            }
-                        }]
-                    };
-
-                    mapChart.setOption(option);
-                    mapChart.resize();
-                    mapChart.on('click', (p) => { if (p.data && p.data.id) openDetail(p.data.id); });
-                    window.addEventListener('resize', () => { if (mapChart) mapChart.resize(); });
-                    fallback.style.display = 'none';
-                    mapAttempts = 0;
-                })
-                .catch(err => {
-                    clearTimeout(timeout);
-                    console.error(err);
-                    mapAttempts++;
-                    fallback.style.display = 'block';
-                    fallback.innerHTML = `
-                            <p>🌾 地图数据暂时无法加载（尝试 ${mapAttempts} 次）。</p>
-                            <p style="font-size:0.9rem;color:var(--color-muted);">服务器可能繁忙，请稍后重试，或探索列表与莲瓣图。</p>
-                            <button onclick="retryMap()">🔄 重新加载</button>
-                        `;
-                    if (mapChart) { mapChart.dispose();
-                        mapChart = null; }
-                });
-        }
-
-        // ============================================================
-        // 7. 初始化
-        // ============================================================
-        renderGrid(allGroups);
-        drawMandala();
-        setTimeout(initMap, 1200);
-
-        // 暴露函数到全局
-        window.retryMap = retryMap;
-        window.initMap = initMap;
-        window.openDetail = openDetail;
-        window.closeModal = closeModal;
+        // Start with 10 random questions
+        currentQuestions = getRandomQuestions(10);
+        totalQuestions = currentQuestions.length;
+        renderQuestion(0);
+        headerScore.textContent = `✦ 0 / ${totalQuestions}`;
+        headerScore.classList.add('active');
     </script>
 
 </body>
